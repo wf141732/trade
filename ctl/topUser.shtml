@@ -1,0 +1,87 @@
+<div id="dvTopUser" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span3">
+                    <label for="q_b_tu_code">
+                        登录号码</label>
+                    <input type="text" id="q_b_user_code" value="" placeholder="输入登录号码" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <label for="q_c_tu_status">
+                        状态</label>
+                    <select id="q_c_tu_status"><option></option><option value="on">已启用</option>
+                        <option value="of">已停用</option></select>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link">号码</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">状态</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">启用</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">停止</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">上次更新时间</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="dvTopUserLov" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            选择<c>淘宝用户</c>
+        </h3>
+    </div>
+    <div class="modal-body report-results">
+        <table class="table table-condensed table-striped" style="">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">淘宝用户</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">状态</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn close" data-dismiss="modal">关闭</a>
+    </div>
+</div>

@@ -1,0 +1,442 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>商贸批发管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="针对中小企业，淘宝电商，分销商，代理商提供专业的ERP支持">
+    <meta name="author" content="fan.w">
+
+    <!-- Le styles -->
+      <link href="ui/bootstrap/css/other.css" rel="stylesheet" type="text/css" />
+      <link href="ui/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+      <link href="ui/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+      <link href="ui/bootstrap/css/font-awesome.css" rel="stylesheet" type="text/css" />
+      <link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+      body {padding-top: 60px;padding-bottom: 40px;}
+      .sidebar-nav {padding: 9px 0;}
+      label, input[type=text],input[type=number], button, select, textarea {font-size: 12px;font-weight: normal;line-height: 18px;}
+      .nav-list li{height:27px;}
+      .nav-list li:not([for]) a{ color:Gray;}
+      .nav-list a{font-size:12px;}
+      .nav-header{font-size:16px;}
+      .btn{font-size:12px;margin-right:20px;}
+      .progress{margin-bottom: 0px;height: 15px;}    
+      td.number,label.number{text-align:right}
+      h3{margin-bottom: 0px;margin-left: 0px;margin-right: 0px;margin-top: 0px;}
+     .bigModal{width:940px;   margin-left:-470px;}
+     .formModal{width:840px;   margin-left:-420px;}
+     .modal-body {padding-top: 10px;}
+     .icon-erp-po{background-position: -38px -15px;}
+     .icon-erp-stock{background-position: -97px -15px;}
+     .icon-erp-change{background-position: -97px -53px;}
+     .icon-ck-in{background-position: -44px -7px;}
+     .icon-ck-out{background-position: -83px -7px;}     
+     .icon-ck-kc{background-position: -83px -33px;}
+     .pagination{margin-top: 0px;margin-bottom: 0px;}
+     .span-right{text-align: right;}
+     .pagination a{height: 30px;line-height: 30px;}
+     .modal-body .sidemenu li{ border-right:1px solid #CCC}
+     .block.withsidebar .block_content .sidebar ul.sidemenu li:hover,.sidebar ul.sidemenu li.active,.block.withsidebar .block_content .sidebar ul.sidemenu li:hover a{ border-right:none}
+     td[contenteditable]{border-bottom:2px solid #B9DDFF;}
+     td[contenteditable]:focus{border-color: rgba(82, 168, 236, 0.8);outline: 0;outline: thin dotted 9;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+        -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);}
+     .nav .nav-header {font-size: 16px;letter-spacing: 3px;}
+     .nav-list a {font-size: 14px;letter-spacing: 2px;}
+     .mutHead .modal-body{max-height:300px;}
+     .modal .modal-form th{text-align:right;font-weight: normal;padding-right: 10px;vertical-align: top;font-size:12px;}
+     .row-fluid [class*='dvMain']{display:none;}
+     .dropdown-menu{min-width:100px;}
+     #dvPartnerLov tbody tr{cursor:pointer;}
+     .modal .table td .del{cursor:pointer;}
+     .span4.lov input{max-width:284px;}
+     .span3.lov input{max-width:200px}
+     .span3.lov .btn{margin-top: -7px;}
+        #dvPrint{display:none;}
+        input.error{background-color:Red;color:white;}
+     .lov input{width: 84%;border-right: none;}
+     .lov button{width: 15%;margin-top: -8px;border-left: none;padding-right: 0px;margin-left: -5px;border-radius: 0px 5px 5px 0px;margin-right: -10px;padding-left: 4px;}
+        .lov input:focus+button{border-color: rgba(82, 168, 236, 0.8);margin-top: -8px;
+                             -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+                             -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+                             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);}
+          .lov input+button{margin-top: -9px;}
+      </style>
+      <style media="print">
+        #agent{display:none;}
+        #dvPrint{display:block;}
+        
+            .treeTable tbody td{border:0px;border-bottom:1px dotted #B9DDFF;}
+            .treeTable tbody td:first-child{border-left:1px solid #B9DDFF;}
+            .treeTable tbody td:last-child{border-right:1px solid #B9DDFF;}
+            table.treeTable td{padding-left:19px;}           
+      </style>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link href="/css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body id="agent">
+      <div id="topBar" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">商贸批发管理【<d></d>】</a>
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+              欢迎您<a href="#" class="navbar-link user">管理员</a>
+            </p>
+            <ul class="nav">
+              <li class="active"><a href="#">首页</a></li>
+              <li><a href="#about">关于</a></li>
+              <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=343181024&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:343181024:44" alt="出现任何问题Q我" title="出现任何问题Q我"></a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+      <style>
+      i{color:black;}
+      i.icon-white{color:White;}
+      </style>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div id="menu-nav" class="well sidebar-nav">
+            <ul class="nav nav-list">               
+            </ul>
+            <!--#include file="/ctl/music.shtml"-->
+            <style>
+            #qqwb_comment__{height:39px;top: 0px;z-index: 1099;overflow: hidden;position: fixed;top: 0px;right: 465px; background-color:White;-webkit-transform: scale(1.2);
+                -moz-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+    -webkit-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out,-webkit-transform 0.1s 0.27s ease-out;
+    -o-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+    transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;}
+#qqwb_comment__:hover{height:550px;z-index: 1100;-webkit-transform: scale(1);
+                -moz-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+    -webkit-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out,-webkit-transform 0.1s ease-out;
+    -o-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+    transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+                }
+            </style>
+            <div id="qqwb_comment__" data-appkey="801271321" data-width="255" data-height="550"></div>
+            <script src="http://mat1.gtimg.com/app/openjs/openjs.js#debug=yes&autoboot=no"></script>
+          </div><!--/.well -->
+        </div><!--/span-->
+
+        <div id="dvPoReturn" class="span10 dvMain">
+            <div accept-charset="UTF-8" class="vehicle_search">
+                <div style="margin: 0; padding: 0; display: inline">
+                    <input name="utf8" type="hidden" value="✓"></div>
+                <div class="well">
+                    <div class="row-fluid">
+                        <div class="span3">
+                            <label for="q_sr_number">
+                                关联单号</label>
+                            <input type="text" id="q_sr_number" value="" placeholder="关联的出库单号或销售单号" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>
+                        <div class="span3 date">
+                            <label for="q_sr_date_start">
+                                日期起</label>
+                            <input type="text" id="q_sr_date_start" value="" placeholder="日期范围开始时间" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>
+                        <div class="span3 date">
+                            <label for="q_sr_date_end">
+                                日期止</label>
+                            <input type="text" id="q_sr_date_end" value="" placeholder="日期范围结束时间" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>
+                        <div class="span3">
+                            <div class="clearfix">
+                                <label for="q_vehicle_status_id_in">
+                                    状态</label>
+                                <select class="input-medium" data-placeholder="选择状态" id="Select1" name="q[date_in_time_frame]">
+                                    <option value=""></option>
+                                    <option value="draft">草稿</option>
+                                    <option value="open">已确认</option>
+                                    <option value="paid">已退款</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                        <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+                </div>
+            </div>
+            <div class="page-header">
+                <!--#include file="/ctl/paging.shtml"-->
+            </div>
+            <div class="report-results">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="#" class="sort_link asc">编号 ▲</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">日期 ▼</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">总金额</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">关联单号</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">状态</a>
+                            </th>
+                            <th><a href="#" class="sort_link">操作</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                    </tbody>
+                </table>
+            </div>
+          
+        </div>        
+        
+
+        <div id="dvStockIn" class="span10 dvMain">
+            <div accept-charset="UTF-8" class="vehicle_search">
+                <div style="margin: 0; padding: 0; display: inline">
+                    <input name="utf8" type="hidden" value="✓"></div>
+                <div class="well">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label for="q_si_so_num">
+                                供货方出库编号</label>
+                            <input type="text" id="q_si_so_num" value="" placeholder="供货方的出库编号" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>
+                        <div class="span4">
+                            <label for="q_si_sp_num">
+                                供货方销售订单编号</label>
+                            <input type="text" id="q_si_sp_num" value="" placeholder="供货方的销售订单编号" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>                        
+                    </div>
+                    <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                        <i class="icon-search icon-white"></i>&nbsp;搜索</button>                    
+                </div>
+            </div>
+            <div class="page-header">
+                <!--#include file="/ctl/stock/stockInPaging.shtml"-->
+            </div>
+            <div class="report-results">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="#" class="sort_link asc">库存单号 ▲</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">订单编号 ▼</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">产品名称</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">产品分类</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">数量</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">出库日期</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">发货通知</a>
+                            </th>
+                            <th></th>
+                            <th>
+                                <input type="checkbox" name="all" />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                    </tbody>
+                </table>
+            </div>
+          
+        </div>
+
+        <div id="dvStockInR" class="span10 dvMain">
+            <div accept-charset="UTF-8" class="vehicle_search">
+                <div style="margin: 0; padding: 0; display: inline">
+                    <input name="utf8" type="hidden" value="✓"></div>
+                <div class="well">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label for="q_si_so_num">
+                                入库编号</label>
+                            <input type="text" id="Text5" value="" placeholder="供货方的出库编号" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>
+                        <div class="span4">
+                            <label for="q_si_sp_num">
+                                销售订单编号</label>
+                            <input type="text" id="Text6" value="" placeholder="供货方的销售订单编号" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>                        
+                    </div>
+                    <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                        <i class="icon-search icon-white"></i>&nbsp;搜索</button>                    
+                </div>
+            </div>
+            <div class="page-header">
+                <!--#include file="/ctl/paging1.shtml"-->
+            </div>
+            <div class="report-results">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="#" class="sort_link asc">采购单号 ▲</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">产品名称 ▼</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">产品分类</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">数量</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">单位</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">入库日期</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link"></a>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                    </tbody>
+                </table>
+            </div>
+          
+        </div>
+
+        <div id="dvStockOutR" class="span10 dvMain">
+            <div accept-charset="UTF-8" class="vehicle_search">
+                <div style="margin: 0; padding: 0; display: inline">
+                    <input name="utf8" type="hidden" value="✓"></div>
+                <div class="well">
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <label for="q_si_so_num">
+                                出库编号</label>
+                            <input type="text" id="Text7" value="" placeholder="供货方的出库编号" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>
+                        <div class="span4">
+                            <label for="q_si_sp_num">
+                                销售订单编号</label>
+                            <input type="text" id="Text8" value="" placeholder="供货方的销售订单编号" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>                        
+                    </div>
+                    <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                        <i class="icon-search icon-white"></i>&nbsp;搜索</button>                    
+                </div>
+            </div>
+            <div class="page-header">
+                <!--#include file="/ctl/paging1.shtml"-->
+            </div>
+            <div class="report-results">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <a href="#" class="sort_link asc">销售单号 ▲</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">产品名称 ▼</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">产品分类</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">数量</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">单位</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link">出库日期</a>
+                            </th>
+                            <th>
+                                <a href="#" class="sort_link"></a>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                    </tbody>
+                </table>
+            </div>
+          
+        </div>
+                        
+
+      </div><!--/row-->
+
+      <hr>
+
+        <!--#include file="/ctl/lovManager.shtml"-->
+
+        <!--<div id="dvPOUpd" class="span9">-->       
+
+        <!--#include file="/ctl/prodLovMutil.shtml"-->       
+
+        <!--#include file="/ctl/partnerLov.shtml"-->
+      <footer>
+        <p>&copy; AAC 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+    <div id="dvPrint">
+        <iframe src="/ptobj/so.htm?a=1.1" name="ptso" id="ptso" style="width:100%; height:100%; border:0"></iframe>
+        <iframe src="/ptobj/exchange.htm?ver=1.18" name="ptsoExchange" id="ptsoExchange" style="width:100%; height:100%; border:0"></iframe>
+        <iframe src="/ptobj/picking.htm?ver=1.12" name="pickingOut" id="pickingOut" style="width:100%; height:100%; border:0"></iframe>
+    </div>
+    <script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+      <script src="js/jquery-ui-1.9.2.custom.js" type="text/javascript"></script>
+      <script src="ui/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+      <link href="ui/bootstrap/css/datetimepicker.css" rel="stylesheet" type="text/css" />
+      <script src="ui/bootstrap/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
+      <script src="ui/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+      <script src="js/base.js?ver=0.11" type="text/javascript"></script>
+      <script src="js/base.lov.js?ver=0.1" type="text/javascript"></script>
+      <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+      <script src="js/agent.base.js?ver=0.12" type="text/javascript"></script>
+      <script src="js/common/makePy.min.js" type="text/javascript"></script>
+      <script src="js/common/capture.js" type="text/javascript"></script>
+     <script src="js/jquery.treeTable.js" type="text/javascript"></script>     
+      <script src="js/ws.js?ver=1.01" type="text/javascript"></script>
+  </body>
+</html>

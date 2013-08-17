@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap>
+	<select id="refund.select.maxmodified" resultClass="java.util.Date"
+		parameterClass="java.lang.Long"> 
+		SELECT MAX(r.modified) AS modified FROM refunds r WHERE r.seller_id = #value#
+	</select>
+	
+	<select id="refund.select.modified" resultClass="java.util.Date"
+		parameterClass="java.lang.Long"> 
+		SELECT r.modified FROM refunds r WHERE r.refund_id = #value#
+	</select>
+	<insert id="refund.insert" parameterClass="com.taobao.top.syncserver.domain.RefundDO"> 
+		INSERT INTO refunds 
+		(
+		address, 
+		alipay_no, 
+		buyer_nick, 
+		company_name, 
+		created, 
+		description, 
+		exist_timeout, 
+		good_return_time, 
+		good_status, 
+		has_good_return, 
+		modified, 
+		num, 
+		num_iid,
+		oid, 
+		order_status, 
+		payment, 
+		price, 
+		reason, 
+		refund_fee, 
+		refund_id, 
+		remind_type, 
+		seller_id, 
+		seller_nick, 
+		shipping_type, 
+		sid, 
+		status, 
+		tid, 
+		timeout, 
+		title, 
+		total_fee
+		) values( 
+		#address#, 
+		#alipayNo#, 
+		#buyerNick#, 
+		#companyName#, 
+		#created#, 
+		#description#, 
+		#existTimeout#, 
+		#goodReturnTime#, 
+		#goodStatus#, 
+		#hasGoodReturn#, 
+		#modified#, 
+		#num#, 
+		#numIid#, 
+		#oid#, 
+		#orderStatus#, 
+		#payment#, 	
+		#price#, 
+		#reason#, 
+		#refundFee#, 
+		#refundId#, 
+		#remindType#, 
+		#sellerId#, 
+		#sellerNick#, 
+		#shippingType#,
+		#sid#, 
+		#status#, 
+		#tid#, 
+		#timeout#, 
+		#title#, 
+		#totalFee#)
+	</insert>
+	
+	<update id="refund.update" parameterClass="com.taobao.top.syncserver.domain.RefundDO"> 
+		UPDATE r SET 
+		<isNotNull property="address">
+		r.address = #address#, 
+		</isNotNull>
+		<isNotNull property="alipayNo">
+		r.alipay_no = #alipayNo#, 
+		</isNotNull>
+		<isNotNull property="buyerNick">
+		r.buyer_nick = #buyerNick#, 
+		</isNotNull>
+		<isNotNull property="companyName">
+		r.company_name = #companyName#,
+		</isNotNull>
+		<isNotNull property="created"> 
+		r.created = #created#, 
+		</isNotNull>
+		<isNotNull property="description">
+		r.description = #description#, 
+		</isNotNull>
+		<isNotNull property="existTimeout">
+		r.exist_timeout = #existTimeout#, 
+		</isNotNull>
+		<isNotNull property="goodReturnTime">
+		r.good_return_time = #goodReturnTime#,
+		</isNotNull>
+		<isNotNull property="goodStatus"> 
+		r.good_status = #goodStatus#,
+		</isNotNull>
+		<isNotNull property="hasGoodReturn"> 
+		r.has_good_return = #hasGoodReturn#,
+		</isNotNull>
+		<isNotNull property="num">
+		r.num = #num#, 
+		</isNotNull>
+		<isNotNull property="numIid">
+		r.num_iid = #numIid#, 
+		</isNotNull>
+		<isNotNull property="oid">
+		r.oid = #oid#, 
+		</isNotNull>
+		<isNotNull property="orderStatus">
+		r.order_status = #orderStatus#, 
+		</isNotNull>
+		<isNotNull property="payment">
+		r.payment = #payment#,
+		</isNotNull>
+		<isNotNull property="price"> 
+		r.price = #price#, 
+		</isNotNull>
+		<isNotNull property="reason">
+		r.reason = #reason#, 
+		</isNotNull>
+		<isNotNull property="refundFee">
+		r.refund_fee = #refundFee#, 
+		</isNotNull>
+		<isNotNull property="remindType">
+		r.remind_type = #remindType#, 
+		</isNotNull>
+		<isNotNull property="sellerId">
+		r.seller_id = #sellerId#, 
+		</isNotNull>
+		<isNotNull property="sellerNick">
+		r.seller_nick = #sellerNick#, 
+		</isNotNull>
+		<isNotNull property="shippingType">
+		r.shipping_type = #shippingType#,
+		</isNotNull>
+		<isNotNull property="sid">
+		r.sid = #sid#, 
+		</isNotNull>
+		<isNotNull property="status">
+		r.status = status, 
+		</isNotNull>
+		<isNotNull property="tid">
+		r.tid = #tid#, 
+		</isNotNull>
+		<isNotNull property="timeout">
+		r.timeout = #timeout#, 
+		</isNotNull>
+		<isNotNull property="title">
+		r.title = #title#, 
+		</isNotNull>
+		<isNotNull property="totalFee">
+		r.total_fee = #totalFee# ,
+		</isNotNull>
+		<isNotNull property="modified"> 
+		r.modified = #modified# 
+		</isNotNull>
+		from refunds r WHERE r.refund_id = #refundId# <!--AND isnull(#modified#,getdate()) >= isnull(r.modified,getdate())-->
+	</update>
+	
+</sqlMap>

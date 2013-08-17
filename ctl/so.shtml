@@ -1,0 +1,742 @@
+<div id="dvSo" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span2">
+                    <label for="q_so_number">
+                        订单编号</label>
+                    <input type="text" id="q_so_number" value="" placeholder="订单编号" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_so_date_start">
+                        订单日期起</label>
+                    <input type="text" id="q_so_date_start" value="" placeholder="订单日期范围开始时间" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_so_date_end">
+                        订单日期止</label>
+                    <input type="text" id="q_so_date_end" value="" placeholder="订单日期范围结束时间" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span2">
+                    <div class="clearfix">
+                        <label for="q_so_user">
+                            业务员</label>
+                        <select class="input-medium" data-placeholder="选择业务员" id="q_so_user">                            
+                        </select>
+                    </div>
+                </div>
+                <div class="span2">
+                    <div class="clearfix">
+                        <label for="q_so_status_id_in">
+                            状态</label>
+                        <select class="input-medium" data-placeholder="选择状态" id="q_so_status_id_in">
+                            <option value=""></option>
+                            <option value="draft">草稿</option>
+                            <option value="confirm">已确认</option>
+                            <option value="cancel">已取消</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">订单编号 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">订单日期 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">客户</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">销售员</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">总金额</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">确认日期</a>
+                    </th>                    
+                    <th>
+                        <a href="#" class="sort_link">状态</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+#tangram-suggestion--TANGRAM__4-main{z-index:1200;}span.ui-helper-hidden-accessible{display:none;}
+</style>
+<div id="dvSoUpd" class="modal hide fade bigModal mutHead">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>添加</c>销售订单<small></small>
+        </h3>
+    </div>
+    <div class="modal-header">
+        <div accept-charset="UTF-8" class="vehicle_search">
+            <div style="margin: 0; padding: 0; display: inline">
+                <input name="utf8" type="hidden"></div>
+            <div class="well1">
+                <div class="row-fluid">
+                    <div class="span4 lov">
+                        <label for="q_so_u_partner" accesskey="H">
+                            客户方（<U>H</U>）</label>
+                        <input type="text" id="q_so_u_partner" value="" placeholder="填写或选择客户方" class="default"
+                            style="max-width: 284px;">
+                        <button class="btn">
+                                ...</button>
+                    </div>
+                    <div class="span2 date">
+                        <label for="q_so_u_date">
+                            订单日期</label>
+                        <input type="text" id="q_so_u_date" value="" placeholder="订单日期" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                    <div class="span3" style="display: none;">
+                        <div class="clearfix">
+                            <label for="q_so_u_anyltic">
+                                活动</label>
+                            <select data-placeholder="选择状态" id="q_so_u_anyltic" name="q[date_in_time_frame]">
+                                <option value=""></option>
+                                <option value="1">已确认</option>
+                                <option value="2">已发货</option>
+                                <option value="3">已入库</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="span2">
+                        <label for="q_so_u_total">
+                            金额合计</label>
+                        <input type="text" id="q_so_u_total" value="" placeholder="金额合计" class="default" disabled="disabled"
+                            style="width: 100%; max-width: 284px;">
+                    </div>
+                    <div class="span1">
+                        <label for="q_so_u_status">
+                            状态</label>
+                        <input type="text" id="q_so_u_status" data-value="draft" value="草稿" class="default"
+                            disabled="disabled" style="width: 100%; max-width: 284px;">
+                    </div>
+                    <div class="span2">
+                            <label for="q_so_u_user" accesskey="Y">
+                                业务员（<U>Y</U>）</label>
+                            <select data-placeholder="选择状态" id="q_so_u_user" style="width:100%;" name="q[date_in_time_frame]">
+                                 
+                            </select>
+                    </div>
+					<div class="span1">
+						<label for="">&nbsp;</label>
+                        <a href="#" title=""><i class="f-icon-chevron-down controller"></i></a>
+                    </div>
+                </div>
+				<div class="row-fluid dvHeaderDetail" style="display:none;">
+                    <div class="span3">
+                        <label for="q_so_u_up" accesskey="K">
+                            客户姓名（<U>K</U>）</label>
+                        <input type="text" id="q_so_u_up" value="" placeholder="填写最终用户姓名" class="default"
+                            style="max-width: 284px;">
+                    </div>
+                    <div class="span2">
+                        <label for="q_so_ud_tel" accesskey="T">
+                            电话（<U>T</U>）</label>
+                        <input type="text" id="q_so_ud_tel" data-value="draft" placeholder="填写最终用户电话" class="default"
+                            style="width: 100%; max-width: 284px;">
+                    </div>
+                    <div class="span4">
+                        <label for="q_so_ud_street" accesskey="Z">
+                            地址（<U>Z</U>）</label>
+                        <input type="text" id="q_so_ud_street" value="" placeholder="填写地址" class="default" 
+                            style="width: 100%; max-width: 284px;">
+						<div id="q_so_ud_srp" style="border: 0px solid #C0C0C0; width: 298px; height: auto;"></div>
+                    </div>
+                    <div class="span2 date">
+                        <label for="q_so_ud_date" accesskey="S">
+                            送货日期（<U>S</U>）</label>
+                        <input type="text" id="q_so_ud_date" value="" placeholder="送货日期" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                </div>            
+			</div>
+        </div>
+        <div class="row-fluid result-header">
+            <div class="span7">
+                <h4>
+                    <c>0</c>
+                    条记录 <small>查询日期
+                        <d></d>
+                    </small>
+                </h4>
+            </div>
+            <div class="span5 span-right">
+                <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                    <i class="icon-search icon-white"></i>&nbsp;选择产品</button>
+                <button class="btn" style="position: relative">
+                    <div class="navbar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">操作<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="#"><i class="icon-print"></i>打印</a></li>
+                            <li class="confirm"><a href="#"><i class="icon-ok-sign"></i>确认</a></li>
+                            <li class="cancel"><a href="#"><i class="icon-remove-circle"></i>取消</a></li>
+                            <li class="divider"></li>
+                            <li class="clear"><a href="#"><i class="icon-trash"></i>清空</a></li>
+                        </ul>
+                    </div>
+                </button>
+                <!--<button class="btn " data-disable-with="努力查找中..." name="clear"></button>-->
+            </div>
+        </div>
+        <!--<div class="page-header">                
+                    
+                </div>-->
+    </div>
+    <div class="modal-body">
+        <div class="report-results">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="#" class="sort_link asc">产品</a>
+                        </th>                        
+                        <th style="display:none;" class="attribute1">
+                            <a href="#" class="sort_link">attribute1</a>
+                        </th>
+                        <th style="display:none;" class="attribute2">
+                            <a href="#" class="sort_link">attribute2</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">数量</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单价</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单位</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">优惠%</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">小计</a>
+                        </th>
+                        <th>
+                            <a href="#">备注</a>
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+				</tbody>
+            </table>
+        </div>
+    </div>
+    <!--<div class="modal-footer">nihao</div>-->
+    <div class="modal-footer">
+        <div style="float: left;">
+            备注:<textarea cols="1" style="height: 18px; width: 530px; border-style: none; border-bottom: 1px solid #B9DDFF;"></textarea></div>
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <button href="#" class="btn btn-save-add">
+            保存并新增</button>
+        <button href="#" class="btn" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>
+
+<div id="dvSoReturn" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span3">
+                    <label for="q_so_rt_number">
+                        编号</label>
+                    <input type="text" id="q_so_rt_number" value="" placeholder="编号" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_so_rt_date_start">
+                        退货日期起</label>
+                    <input type="text" id="q_so_rt_date_start" value="" placeholder="退货日期范围开始时间" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_so_rt_date_end">
+                        退货日期止</label>
+                    <input type="text" id="q_so_rt_date_end" value="" placeholder="退货日期范围结束时间" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+				<div class="span3" style="display:none">
+                    <div class="clearfix">
+                        <label for="q_so_rt_reason">
+                            原因</label>
+                        <select class="input-medium cmbReturnReason" data-placeholder="选择原因" id="q_so_rt_reason">
+                        </select>
+                    </div>
+                </div>
+                <div class="span3">
+                    <div class="clearfix">
+                        <label for="q_so_rt_status_id_in">
+                            状态</label>
+                        <select class="input-medium" data-placeholder="选择状态" id="q_so_rt_status_id_in">
+                            <option value=""></option>
+                            <option value="draft">草稿</option>
+                            <option value="confirm">已确认</option>
+                            <option value="cancel">已取消</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">编号 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">退货日期 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">客户</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">业务员</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">总金额</a>
+                    </th>
+					<th>
+                        <a href="#" class="sort_link">原因</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">确认日期</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="dvSoReturnUpd" class="modal hide fade bigModal mutHead">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>添加</c>退货单<small></small>
+        </h3>
+    </div>
+    <div class="modal-header">
+        <div accept-charset="UTF-8" class="vehicle_search">
+            <div style="margin: 0; padding: 0; display: inline">
+                <input name="utf8" type="hidden"></div>
+            <div class="well1">
+                <div class="row-fluid">
+                    <div class="span4 lov">
+                        <label for="q_so_ru_partner">
+                            客户方</label>
+                        <input type="text" id="q_so_ru_partner" value="" placeholder="填写或选择客户方" class="default"
+                            style="max-width: 284px;">
+                        <button class="btn">
+                                ...</button>
+                    </div>
+                    <div class="span2 date">
+                        <label for="q_so_ru_date">
+                            单据日期</label>
+                        <input type="text" id="q_so_ru_date" value="" placeholder="订单日期" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                    <div class="span3">
+                            <label for="q_so_ru_reason">
+                                原因</label>
+                            <select data-placeholder="原因" id="q_so_ru_reason" class="cmbReturnReason" >
+                            </select>
+                    </div>
+                    <div class="span1">
+                        <label for="q_so_ru_total">
+                            金额合计</label>
+                        <input type="text" id="q_so_ru_total" value="" placeholder="金额合计" class="default" disabled="disabled"
+                            style="width: 100%; max-width: 284px;">
+                    </div>
+                    <div class="span1">
+                        <label for="q_so_ru_status">
+                            状态</label>
+                        <input type="text" id="q_so_ru_status" data-value="draft" value="草稿" class="default"
+                            disabled="disabled" style="width: 100%; max-width: 284px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid result-header">
+            <div class="span7">
+                <h4>
+                    <c>0</c>
+                    条记录 <small>查询日期
+                        <d></d>
+                    </small>
+                </h4>
+            </div>
+            <div class="span5 span-right">
+                <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                    <i class="icon-search icon-white"></i>&nbsp;选择产品</button>
+                <button class="btn" style="position: relative">
+                    <div class="navbar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">操作<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="#"><i class="icon-print"></i>打印</a></li>
+                            <li class="confirm"><a href="#"><i class="icon-ok-sign"></i>确认</a></li>
+                            <li class="cancel"><a href="#"><i class="icon-remove-circle"></i>取消</a></li>
+                            <li class="divider"></li>
+                            <li class="clear"><a href="#"><i class="icon-trash"></i>清空</a></li>
+                        </ul>
+                    </div>
+                </button>
+                <!--<button class="btn " data-disable-with="努力查找中..." name="clear"></button>-->
+            </div>
+        </div>
+        <!--<div class="page-header">                
+                    
+                </div>-->
+    </div>
+    <div class="modal-body">
+        <div class="report-results">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="#" class="sort_link asc">产品 ▲</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">数量 ▼</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单价</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单位</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">小计</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">关联订单</a>
+                        </th>
+                        <th>
+                            <a href="#">备注</a>
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--<div class="modal-footer">nihao</div>-->
+    <div class="modal-footer">
+        <div style="float: left;">
+            备注:<textarea cols="1" style="height: 18px; width: 530px; border-style: none; border-bottom: 1px solid #B9DDFF;"></textarea></div>
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <button href="#" class="btn btn-save-add">
+            保存并新增</button>
+        <button href="#" class="btn" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>
+
+<div id="dvSoExchange" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span3">
+                    <label for="q_so_ec_number">
+                        编号</label>
+                    <input type="text" id="q_so_ec_number" value="" placeholder="编号" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_so_ec_date_start">
+                        换货日期起</label>
+                    <input type="text" id="q_so_ec_date_start" value="" placeholder="换货日期范围开始时间" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_so_ec_date_end">
+                        换货日期止</label>
+                    <input type="text" id="q_so_ec_date_end" value="" placeholder="换货日期范围结束时间" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+				<div class="span3" style="display:none">
+                    <div class="clearfix">
+                        <label for="q_so_ec_reason">
+                            原因</label>
+                        <select class="input-medium cmbReturnReason" data-placeholder="选择原因" id="q_so_ec_reason">
+                        </select>
+                    </div>
+                </div>
+                <div class="span3">
+                    <div class="clearfix">
+                        <label for="q_so_ec_status_id_in">
+                            状态</label>
+                        <select class="input-medium" data-placeholder="选择状态" id="q_so_ec_status_id_in">
+                            <option value=""></option>
+                            <option value="draft">草稿</option>
+                            <option value="confirm">已确认</option>
+                            <option value="cancel">已取消</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">编号 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">换货日期 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">客户</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">业务员</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">总金额</a>
+                    </th>
+					<th>
+                        <a href="#" class="sort_link">原因</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">确认日期</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="dvSoExchangeUpd" class="modal hide fade bigModal mutHead">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>添加</c>换货单<small></small>
+        </h3>
+    </div>
+    <div class="modal-header">
+        <div accept-charset="UTF-8" class="vehicle_search">
+            <div style="margin: 0; padding: 0; display: inline">
+                <input name="utf8" type="hidden"></div>
+            <div class="well1">
+                <div class="row-fluid">
+                    <div class="span4 lov">
+                        <label for="q_so_ec_partner">
+                            客户方</label>
+                        <input type="text" id="q_so_ec_partner" value="" placeholder="填写或选择客户方" class="default"
+                            style="max-width: 284px;">
+                        <button class="btn">
+                                ...</button>
+                    </div>
+                    <div class="span2 date">
+                        <label for="q_so_ec_date">
+                            订单日期</label>
+                        <input type="text" id="q_so_ec_date" value="" placeholder="订单日期" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                    <div class="span3">
+                        <div class="clearfix">
+                            <label for="q_so_ecu_reason">
+                                原因</label>
+                            <select data-placeholder="选择退货原因" class="cmbReturnReason" id="q_so_ec_reason" name="q[date_in_time_frame]">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="span1">
+                        <label for="q_so_ec_total">
+                            金额合计</label>
+                        <input type="text" id="q_so_ec_total" value="" placeholder="金额合计" class="default" disabled="disabled"
+                            style="width: 100%; max-width: 284px;">
+                    </div>
+                    <div class="span1">
+                        <label for="q_so_ec_status">
+                            状态</label>
+                        <input type="text" id="q_so_ec_status" data-value="draft" value="草稿" class="default"
+                            disabled="disabled" style="width: 100%; max-width: 284px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid result-header">
+            <div class="span6">
+                <h4>
+                    <c>0</c>
+                    条记录 <small>查询日期
+                        <d></d>
+                    </small>
+                </h4>
+            </div>
+            <div class="span6 span-right">
+                <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                    <i class="f-icon-arrow-left icon-white"></i>&nbsp;选择入库产品</button>
+				<button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                    <i class="f-icon-arrow-right icon-white"></i>&nbsp;选择出库产品</button>
+                <button class="btn" style="position: relative">
+                    <div class="navbar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">操作<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="#"><i class="icon-print"></i>打印</a></li>
+                            <li class="confirm"><a href="#"><i class="icon-ok-sign"></i>确认</a></li>
+                            <li class="cancel"><a href="#"><i class="icon-remove-circle"></i>取消</a></li>
+                            <li class="divider"></li>
+                            <li class="clear"><a href="#"><i class="icon-trash"></i>清空</a></li>
+                        </ul>
+                    </div>
+                </button>
+                <!--<button class="btn " data-disable-with="努力查找中..." name="clear"></button>-->
+            </div>
+        </div>
+        <!--<div class="page-header">                
+                    
+                </div>-->
+    </div>
+    <div class="modal-body">
+        <div class="report-results">
+            <table class="table table-condensed table-striped">
+                <thead>
+					<tr><div class="row-fluid">
+						<div class="span8">入库产品</div>
+						<div class="span4">小计</div></div></tr>
+                    <tr>
+                        <th>
+                            <a href="#" class="sort_link asc">产品 ▲</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">数量 ▼</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单价</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单位</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">小计</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">关联订单</a>
+                        </th>
+                        <th>
+                            <a href="#">备注</a>
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+			<table class="table table-condensed table-striped">
+                <thead>
+					<tr><div class="row-fluid">
+						<div class="span8">出库产品</div>
+						<div class="span4">小计</div></div></tr>
+                    <tr>
+                        <th>
+                            <a href="#" class="sort_link asc">产品 ▲</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">数量 ▼</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单价</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单位</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">优惠%</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">小计</a>
+                        </th>
+                        <th>
+                            <a href="#">备注</a>
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>			
+		</div>
+    </div>
+    
+	<!--<div class="modal-footer">nihao</div>-->
+    <div class="modal-footer">
+        <div style="float: left;">
+            备注:<textarea cols="1" style="height: 18px; width: 530px; border-style: none; border-bottom: 1px solid #B9DDFF;"></textarea></div>
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <button href="#" class="btn btn-save-add">
+            保存并新增</button>
+        <button href="#" class="btn" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>

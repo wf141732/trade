@@ -1,0 +1,1126 @@
+/* ============================================
+Standard Button
+============================================ */
+input.StdBtn{
+	height:24px;
+}
+/* ============================================
+Top Bar Style 1
+Usage examples:
+<div class="TopBarStyle1"></div>
+============================================ */
+div.TopBarStyle1{
+	background:#EEE url(http://pics.taobao.com/2k5/sys/component/topbar_style1_bk.gif) repeat-x;
+	height:25px;
+}
+/* ============================================
+Tip List Style 1
+Usage examples:
+<ul id="Whatever" class="TipListStyle1">
+	<li>line1</li>
+	<li>line2</li>
+</ul>
+============================================ */
+ul.TipListStyle1 li{
+	list-style-type:circle;
+	margin-bottom:5px;
+	line-height:130%;
+	color:#333;
+}
+/* ============================================
+Flow Bar Level 1
+Usage examples:
+<div id="Whatever">
+  <ul class="FlowBarLevel1">
+	<li>Step 1</li>
+	<li class="CurrentStep">Step 2</li>
+	<li>Step 3</li>
+  </ul>
+  <div class="HackBox"></div>
+</div>
+============================================ */
+ul.FlowBarLevel1{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+ul.FlowBarLevel1 li{
+	float:left;
+	margin-right:3px;
+	padding:3px 10px;
+	border-bottom:14px solid #C6CBCD;
+	color:#666;
+	font-size:14px;
+}
+ul.FlowBarLevel1 li.CurrentStep{
+	border-bottom:14px solid #F90;
+	color:#000;
+	font-weight:bold;
+}
+
+/* ============================================
+Form Advance Level 1
+
+Usage examples:
+N/A
+============================================ */
+ul.Form_Advance{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+ul.Form_Advance li{
+	width:100%;
+	clear:both;
+	margin-bottom:5px !important;
+	margin-bottom:0px;
+}
+ul.Form_Advance li.Title{
+	margin:15px 0;
+	height:26px;
+	color:#333333;
+	font-size:14px;
+	font-weight:bold;
+	text-indent:42px;
+	line-height:26px;
+	background:#FFF url(http://pics.taobao.com/2k5/sys/component/form_advance_title_icon.gif) left top no-repeat;
+}
+ul.Form_Advance li.Seperator{
+	width:100%;
+	height:0;
+	font-size:0;
+	clear:both;
+	border-top:1px solid #EEE;
+}
+ul.Form_Advance li.Seperator hr{
+	display:none;
+}
+ul.Form_Advance li.SubmitBox{
+	text-align:center;
+}
+ul.Form_Advance li.Paragraph p{
+	margin-left:30px;
+	line-height:180%;	
+}
+ul.Form_Advance li.SubmitBox input{
+	padding:3px 15px;
+}
+ul.Form_Advance li div.Hint{
+	float:left;
+	width:140px;
+	text-align:right;
+	padding-top:5px !important;
+	padding-top:10px;
+}
+ul.Form_Advance li div.Input{
+	float:left;
+	margin:5px;
+	width:190px;
+}
+ul.Form_Advance li div.NewLineInfo{
+	margin-left:140px;
+	padding-top:5px !important;
+	padding-top:10px;
+}
+ul.Form_Advance li div.NewLineInfo span{
+	color:#FF3300;
+	margin-left:20px;
+}
+ul.Form_Advance li div.Info{
+	float:left;
+	width:380px;
+}
+
+/* ============================================
+Post Card (Standard Message Box) Style 1
+
+Usage examples:
+<div id="Whatever" class="PostCardStyle1">
+	<h1>Titile</h1>
+	<div class="Icon"><img src="http://pics.taobao.com/2k5/sys/component/active_account_icon_mail.gif" /></div>
+	<div class="Paragraph">
+		<p>Text</p>
+	</div>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+div.PostCardStyle1{
+	text-align:left;
+}
+div.PostCardStyle1 div.Icon{
+	width:25%;
+	float:left;
+	text-align:center;
+}
+div.PostCardStyle1 div.Paragraph{
+	float:right;
+	width:74%;
+}
+div.PostCardStyle1 div.Paragraph h1{
+	font:bold 14px Arial;
+}
+div.PostCardStyle1 div.Paragraph p{
+	line-height:160%;
+}
+/* ============================================
+Post Card Style 2 (for 60x60 pic)
+
+Usage examples:
+<div id="Whatever" class="PostCardStyle2">
+	<div class="Icon"><img src="active_account_icon_mail.gif" /></div>
+	<div class="Paragraph">
+		<p>Text</p>
+	</div>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+div.PostCardStyle2{
+	text-align:left;
+}
+div.PostCardStyle2 div.Icon{
+	width:70px;
+	float:left;
+	text-align:center;
+}
+div.PostCardStyle2 div.Paragraph{
+	float:right;
+	width:100%;
+	margin-left:-72px;
+}
+div.PostCardStyle2 div.Paragraph p,div.PostCardStyle2 div.Paragraph .ParagraphContent{
+	line-height:120%;
+	margin-left:72px
+}
+/* ============================================
+Standard Input Corner Hint Styles 1
+
+Usage examples:
+<input class="Error">Warning!You took my underware!</p>
+============================================ */
+input.Ok{
+	height:18px;
+	padding:2px 8px 0 3px;
+	border:1px solid #A7A6AA;
+	background:#FFF url(http://pics.taobao.com/2k5/sys/component/input_ok_corner.gif) top right no-repeat;	
+}
+input.Warning{
+	height:18px;
+	padding:2px 8px 0 3px;
+	border:1px solid #A7A6AA;
+	background:#FFF url(http://pics.taobao.com/2k5/sys/component/input_warning_corner.gif) bottom right no-repeat;	
+}
+input.Error{
+	height:18px;
+	padding:2px 8px 0 3px;
+	border:1px solid #A7A6AA;
+	background:#FFF url(http://pics.taobao.com/2k5/sys/component/input_error_corner.gif) bottom right no-repeat;	
+}
+input.Normal{
+	height:18px;
+	padding:2px 8px 0 3px;
+	border:1px solid #A7A6AA;
+	background-color:#FFF;	
+	background-image:none;
+}
+/* ============================================
+Standard Message Board Styles 1
+
+Usage examples:
+<div class="ErrorMsg">Warning!You took my underware!</div>
+============================================ */
+.OkMsgBoard,.WarningMsgBoard,.ErrorMsgBoard,.ConfirmMsgBoard{
+	padding:20px 5px 15px 120px;
+	background:transparent url(http://pics.taobao.com/2k5/sys/component/standard_msg_ok_big.gif) 15px 15px no-repeat;
+	line-height:1.8em;
+}
+.WarningMsgBoard{
+	background-image:url(http://pics.taobao.com/2k5/sys/component/standard_msg_warning_big.gif);
+}
+.ErrorMsgBoard{
+	background-image:url(http://pics.taobao.com/2k5/sys/component/standard_msg_error_big.gif);
+}
+.ConfirmMsgBoard{
+	background-image:url(http://pics.taobao.com/2k5/sys/component/standard_msg_confirm_big.gif);
+}
+
+/* ============================================
+Standard Message Styles 1
+
+Usage examples:
+<p class="ErrorMsg">Warning!You took my underware!</p>
+============================================ */
+.OkMsg{
+	padding:5px 5px 5px 25px;
+	border:1px solid #00BE00;
+	background:#E6FFE6 url(http://pics.taobao.com/2k5/sys/component/standard_msg_ok.gif) 5px 5px no-repeat;
+	color:#000;
+}
+.WarningMsg{
+	padding:5px 5px 5px 25px;
+	border:1px solid #00A8FF;
+	background:#E2F5FF url(http://pics.taobao.com/2k5/sys/component/standard_msg_warning.gif) 5px 5px no-repeat;	
+	color:#000;
+}
+.ErrorMsg{
+	padding:5px 5px 5px 25px;
+	border:1px solid #F60;
+	background:#FFF2E9 url(http://pics.taobao.com/2k5/sys/component/standard_msg_error.gif) 5px 5px no-repeat;	
+	color:#000;
+}
+.HintMsg{
+	padding:5px 5px 5px 5px;
+	border:1px solid #FFF;
+	background-color:transparent;
+	background-image:none;
+	color:#999;
+}
+.HintMsg a:link, .HintMsg a:visited{
+	color:#666;
+	text-decoration:none;
+}
+/* ============================================
+Standard Message Styles 2
+
+Usage examples:
+<p class="ErrorMsg">Warning!You took my underware!</p>
+============================================ */
+.OkMsg_lite{
+	padding:5px;
+	border:1px solid #00BE00;
+	background-color:#E6FFE6;	
+}
+.WarningMsg_lite{
+	padding:5px;
+	border:1px solid #00A8FF;
+	background-color:#E2F5FF;	
+}
+.ErrorMsg_lite{
+	padding:5px;
+	border:1px solid #F60;
+	background-color:#FFF2E9;	
+}
+
+/* ============================================
+Title Bar Level 1 2 3
+
+Usage examples:
+<h1>Title1</h1>
+<h2>Title2<span>right text</span></h2>
+<h3>TItle3</h3>
+============================================ */
+h1{
+	clear:both;
+	font-family:arial,sans-serif;
+	font-size:16px;
+	line-height:40px;
+	margin-bottom:20px;
+}
+h2{
+	position:relative;
+	clear:both;
+	height:25px;
+	margin-bottom:20px;
+	padding-left:15px;
+	background:transparent url(http://pics.taobao.com/2k5/sys/component/h2_bk.gif) top left repeat-x;
+	border-top:2px solid #FF7E00;
+	border-bottom:1px solid #EEE;
+	line-height:25px;
+	font-size:12px;
+	font-weight:bold;
+	color:#333;
+}
+h3{
+	position:relative;
+	clear:both;
+	font:bold 13px arial;
+	border-bottom:1px dashed #AAA;	
+	background:transparent url(http://pics.taobao.com/2k5/sys/component/h3_arrow_down.gif) top left no-repeat;
+	height:18px;
+	line-height:18px;
+	padding-left:18px;
+}
+h2 span,h3 span{
+	font-size:12px;
+	position:absolute;
+	top:0px;
+	right:7px;
+	font-weight:normal;
+}
+h1 img,h2 img,h3 img{
+	vertical-align:middle;
+}
+.CurDigital h1,.CurDigital h2{
+	border-top-color:#99A2B1;
+}
+.CurLady h1,.CurLady h2{
+	border-top-color:#E1569A;
+}
+.CurMan h1,.CurMan h2{
+	border-top-color:#3672AE;
+}
+.CurLife h1,.CurLife h2{
+	border-top-color:#EC9307;
+}
+.CurSports h1,.CurSports h2{
+	border-top-color:#AFC326;
+}
+.CurCulture h1,.CurCulture h2{
+	border-top-color:#1E998B;
+}
+.CurPet h1,.CurPet h2{
+	border-top-color:#86D500;
+}
+.CurGame h1,.CurGame h2{
+	border-top-color:#C34B26;
+}
+.CurCollection h1,.CurCollection h2{
+	border-top-color:#88605F;
+}
+.CurHongkong h1,.CurHongkong h2{
+	border-top-color:#965BB9;
+}
+.CurPet h1,.CurPet h2{
+	border-top-color:#86D500;
+}
+.CurBaby h1,.CurBaby h2{
+	border-top-color:#FFCC00;
+}
+/* ============================================
+Path Links Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="PathLinksLevel1">
+		<li><a href="#">All</a></li>
+		<li><a href="#">Computer/Software</a></li>
+		<li>New Notebook</li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+ul.PathLinksLevel1{
+	list-style:none;
+	margin:0;
+	padding:0;
+	height:20px;
+}
+ul.PathLinksLevel1 li{
+	float:left;
+	padding:0;
+	margin-right:5px;
+	font-weight:bold;
+	white-space: nowrap;
+}
+ul.PathLinksLevel1 li.SearchResultReport{
+	font-weight:normal;
+	text-indent:18px;
+	background:transparent url(http://pics.taobao.com/2k5/sys/component/icon_arrow_rb.gif) left top no-repeat;
+}
+ul.PathLinksLevel1 li.ResultAndFav{
+	font-weight:normal;
+}
+ul.PathLinksLevel1 li.ResultAndFav a{
+	display:inline;
+	background:none;
+	padding:0;
+}
+ul.PathLinksLevel1 li a{
+	font-weight:normal;
+	display:block;
+	padding-right:15px;
+	background-image:url(http://pics.taobao.com/bao/album/sys/misc/pathlinks_level1_seperate_a.gif);
+	background-position:top right;
+	background-repeat:no-repeat;
+}
+ul.PathLinksLevel1 li i{
+	font-family:arial,sans-serif;
+	font-size:10px;
+	font-style:normal;
+	color:#333;
+}
+#MallEntry{
+	position:absolute;
+	right:0;
+	top:0;
+}
+#ListPathLinks #MallEntry a{
+	display:block;
+	width:200px;
+	height:20px !important;
+	height:14px;
+	color:#B27100;
+	font-weight:bold;
+	text-align:left;
+	padding-left:25px;
+	background:url(http://image.taobao.com/2k6/chl/v1/brands/malllogo3.gif) 3px no-repeat;
+	border:1px solid #C77E00;
+}
+
+/* ============================================
+TabBar Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="TabBarLevel1">
+		<li><a href="#">Man</a></li>
+		<li class="Selected"><a href="#">Woman</a></li>
+		<li><a href="#">Old</a></li>
+		<li><a href="#">Kid</a></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+ul.TabBarLevel1{
+	list-style:none;
+	margin:0;
+	padding:0;
+	background-image:url(http://pics.taobao.com/2k5/sys/component/tabbar_level1_bk.gif);
+	height:auto;
+	min-height:29px;
+	_height:29px;
+}
+ul.TabBarLevel1 li{
+	float:left;
+	padding:0;
+	height:29px;
+	min-height:29px;
+	_height:29px;
+	margin-right:1px;
+	background:url(http://pics.taobao.com/2k5/sys/component/tabbar_level1_slice_left_bk.gif) left top no-repeat;
+}
+ul.TabBarLevel1 li a{
+	display:block;
+	line-height:29px;
+	padding:0 20px;
+	color:#333;
+	background:url(http://pics.taobao.com/2k5/sys/component/tabbar_level1_slice_right_bk.gif) right top no-repeat;
+	white-space: nowrap;
+}
+ul.TabBarLevel1 li.Selected{
+	background:url(http://pics.taobao.com/2k5/sys/component/tabbar_level1_slice_selected_left_bk.gif) left top no-repeat;
+}
+ul.TabBarLevel1 li.Selected a{
+	background:url(http://pics.taobao.com/2k5/sys/component/tabbar_level1_slice_selected_right_bk.gif) right top no-repeat;
+}
+
+ul.TabBarLevel1 li a:link,ul.TabBarLevel1 li a:visited{
+	color:#333;
+}
+ul.TabBarLevel1 li a:hover,ul.TabBarLevel1 li a:active{
+	color:#F30;
+	text-decoration:none;
+}
+ul.TabBarLevel1 li.Selected a:link,ul.TabBarLevel1 li.Selected a:visited{
+	color:#000;
+}
+ul.TabBarLevel1 li.Selected a:hover,ul.TabBarLevel1 li.Selected a:active{
+	color:#F30;
+	text-decoration:none;
+}
+ul.TabBarLevel1 li#Remark{
+	background:none;
+}
+ul.TabBarLevel1 li#Remark a{
+	background:url(http://pics.taobao.com/bao/album/sys/auction/item060913_03.gif) left top no-repeat;
+	margin:0 0 0 10px;
+	padding-left:25px;
+	font-weight:bold;
+	color:#0044DD;
+}
+ul.TabBarLevel1 li#Forum{
+	background:none;
+}
+ul.TabBarLevel1 li#Forum a{
+	background:url(http://pics.taobao.com/bao/album/sys/auction/item060913_05.gif) left top no-repeat;
+	margin:0 10px 0 15px;
+	padding-left:25px;
+	font-weight:bold;
+}
+ul.TabBarLevel1 li#Forum a:link,ul.TabBarLevel1 li#Remark a:link,ul.TabBarLevel1 li#Forum a:visited,ul.TabBarLevel1 li#Remark a:visited{
+	color:#0044DD;
+}
+ul.TabBarLevel1 li#Forum a:hover,ul.TabBarLevel1 li#Remark a:hover,ul.TabBarLevel1 li#Forum a:active,ul.TabBarLevel1 li#Remark a:active{
+	color:#F30;
+	text-decoration:none;
+}
+/*Overload Tabbar*/
+body div#Content ul.TabBarLevel1 li.Selected a{color:#FFF;}
+body ul.TabBarLevel1{background:#FFF url(http://pics.taobao.com/bao/album/sys/misc/list_tab_bottom.gif) 0px 0px repeat-x;}
+body ul.TabBarLevel1 li.Selected{background:transparent url(http://pics.taobao.com/bao/album/sys/misc/list_tab_left.gif) 0px 0px no-repeat;}
+body ul.TabBarLevel1 li.Selected a{background:transparent url(http://pics.taobao.com/bao/album/sys/misc/list_tab_right.gif) 100% 0px no-repeat;}
+
+body.CurDigital ul.TabBarLevel1{background-position:0% -29px;}
+body.CurDigital ul.TabBarLevel1 li.Selected{background-position:0% -29px;}
+body.CurDigital ul.TabBarLevel1 li.Selected a{background-position:100% -29px;}
+
+body.CurLady ul.TabBarLevel1{background-position:0% -58px;}
+body.CurLady ul.TabBarLevel1 li.Selected{background-position:0% -58px;}
+body.CurLady ul.TabBarLevel1 li.Selected a{background-position:100% -58px;}
+
+body.CurMan ul.TabBarLevel1{background-position:0% -87px;}
+body.CurMan ul.TabBarLevel1 li.Selected{background-position:0% -87px;}
+body.CurMan ul.TabBarLevel1 li.Selected a{background-position:100% -87px;}
+
+body.CurLife ul.TabBarLevel1{background-position:0% -116px;}
+body.CurLife ul.TabBarLevel1 li.Selected{background-position:0% -116px;}
+body.CurLife ul.TabBarLevel1 li.Selected a{background-position:100% -116px;}
+
+body.CurCulture ul.TabBarLevel1{background-position:0% -145px;}
+body.CurCulture ul.TabBarLevel1 li.Selected{background-position:0% -145px;}
+body.CurCulture ul.TabBarLevel1 li.Selected a{background-position:100% -145px;}
+
+body.CurSports ul.TabBarLevel1{background-position:0% -174px;}
+body.CurSports ul.TabBarLevel1 li.Selected{background-position:0% -174px;}
+body.CurSports ul.TabBarLevel1 li.Selected a{background-position:100% -174px;}
+
+body.CurGame ul.TabBarLevel1{background-position:0% -203px;}
+body.CurGame ul.TabBarLevel1 li.Selected{background-position:0% -203px;}
+body.CurGame ul.TabBarLevel1 li.Selected a{background-position:100% -203px;}
+
+body.CurCollection ul.TabBarLevel1{background-position:0% -232px;}
+body.CurCollection ul.TabBarLevel1 li.Selected{background-position:0% -232px;}
+body.CurCollection ul.TabBarLevel1 li.Selected a{background-position:100% -232px;}
+
+body.CurHongkong ul.TabBarLevel1{background-position:0% -261px;}
+body.CurHongkong ul.TabBarLevel1 li.Selected{background-position:0% -261px;}
+body.CurHongkong ul.TabBarLevel1 li.Selected a{background-position:100% -261px;}
+
+body.CurPet ul.TabBarLevel1{background-position:0% -290px;}
+body.CurPet ul.TabBarLevel1 li.Selected{background-position:0% -290px;}
+body.CurPet ul.TabBarLevel1 li.Selected a{background-position:100% -290px;}
+
+body.CurBaby ul.TabBarLevel1{background-position:0% -319px;}
+body.CurBaby ul.TabBarLevel1 li.Selected{background-position:0% -319px;}
+body.CurBaby ul.TabBarLevel1 li.Selected a{background-position:100% -319px;}
+
+
+/* ============================================
+TabBar Level 2
+
+Usage examples:
+<div id="Whatever">
+	<ul class="TabBarLevel2">
+		<li><a href="#">Man</a></li>
+		<li class="Selected"><a href="#">Woman</a></li>
+		<li><a href="#">Old</a></li>
+		<li><a href="#">Kid</a></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+ul.TabBarLevel2{
+	list-style:none;
+	margin:0 0 20px;
+	padding:0;
+	height:25px;
+	background-image:url(http://pics.taobao.com/2k5/sys/component/tabbar_level2_bk.gif)
+}
+ul.TabBarLevel2 li{
+	margin:0 16px 0 16px;
+	padding:0;
+	float:left;
+	line-height:25px;
+	white-space: nowrap;
+}
+ul.TabBarLevel2 li a{
+	display:block;
+	padding-left:16px;
+}
+ul.TabBarLevel2 li a:link,ul.TabBarLevel2 li a:visited{
+	color:#111;
+}
+ul.TabBarLevel2 li a:hover,ul.TabBarLevel2 li a:active{
+	color:#F30;
+	text-decoration:none;
+}
+ul.TabBarLevel2 li.Selected{
+	background:url(http://pics.taobao.com/2k5/sys/component/tabbar_level2_selected_bk.gif) left top no-repeat;
+}
+/* ============================================
+Category List (Main Style) Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="CategoryListMainLevel1">
+		<li><a href="#">Lenovo</a><i>(406)</i></li>
+		<li><a href="#">IBM</a><i>(832)</i></li>
+		<li><a href="#">Dell</a><i>(56)</i></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+ul.CategoryListMainLevel1{
+	list-style:none;
+	margin:0 0 20px;
+	padding:0;
+}
+ul.CategoryListMainLevel1 li{
+	margin:0 0 5px;
+	padding:0 0 0 15px;
+	font-weight:bold;
+	font-size:14px;
+	white-space: nowrap;
+	background:transparent url(http://pics.taobao.com/2k5/sys/component/icon_arrow_r.gif) left top no-repeat;
+}
+ul.CategoryListMainLevel1 li i{
+	font-family:arial,sans-serif;
+	font-size:10px;
+	font-style:normal;
+	color:#333;
+}
+/* ============================================
+Category List (Normal Style) Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="CategoryListNormalLevel1">
+		<li><a href="#">Lenovo</a><i>(406)</i></li>
+		<li><a href="#">IBM</a><i>(832)</i></li>
+		<li><a href="#">Dell</a><i>(56)</i></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+ul.CategoryListNormalLevel1{
+	list-style:none;
+	margin:0 0 20px;
+	padding:0;
+}
+ul.CategoryListNormalLevel1 li{
+	margin:0 0 5px;
+	padding:0;
+	white-space: nowrap;
+}
+ul.CategoryListNormalLevel1 li i{
+	font-family:arial,sans-serif;
+	font-size:10px;
+	font-style:normal;
+	color:#333;
+}
+/* ============================================
+Category List (Inline Style) Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="CategoryListInlineLevel1">
+		<li><a href="#">Lenovo</a><i>(406)</i></li>
+		<li><a href="#">IBM</a><i>(832)</i></li>
+		<li><a href="#">Dell</a><i>(56)</i></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+ul.CategoryListInlineLevel1{
+	list-style:none;
+	margin:0 0 20px;
+	padding:0;
+}
+ul.CategoryListInlineLevel1 li{
+	display:inline;
+	font-size:30px;
+	/*prevent inheriting*/
+	font-weight:normal;
+	font-size:20px;
+	background:none;
+}
+ul.CategoryListInlineLevel1 li/**/{
+/*Overload for None-IE5 browsers*/
+	display:block;
+	float:left;
+	margin:0 5px 5px 0;
+	padding:0 5px 0;
+	white-space:nowrap;
+	word-break:keep-all;
+	font-size:12px
+}
+ul.CategoryListInlineLevel1 li a{
+	font-size:12px;
+}
+ul.CategoryListInlineLevel1 li i{
+	font-family:arial,sans-serif;
+	font-size:10px;
+	font-style:normal;
+	color:#333;
+}
+
+
+/* ============================================
+Category List (Inline Style with Seperators) Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="CategoryListInlineSepLevel1">
+		<li><a href="#">Lenovo</a><i>(406)</i></li>
+		<li><a href="#">IBM</a><i>(832)</i></li>
+		<li><a href="#">Dell</a><i>(56)</i></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+============================================ */
+ul.CategoryListInlineSepLevel1{
+	list-style:none;
+	margin:0 0 20px;
+	padding:0;
+}
+ul.CategoryListInlineSepLevel1 li{
+	display:inline;
+	font-size:30px;
+	/*prevent inheriting*/
+	font-weight:normal;
+	font-size:20px;
+	background:none;
+}
+ul.CategoryListInlineSepLevel1 li/**/{
+/*Overload for None-IE5 browsers*/
+	display:block;
+	float:left;
+	margin:0 0px 5px 0;
+	padding:0 8px 0;
+	border-right:1px solid #CCC;
+	white-space:nowrap;
+	word-break:keep-all;
+	font-size:12px
+}
+ul.CategoryListInlineSepLevel1 li a{
+	font-size:12px;
+}
+ul.CategoryListInlineSepLevel1 li i{
+	font-family:arial,sans-serif;
+	font-size:10px;
+	font-style:normal;
+	color:#333;
+}
+/* ============================================
+Category List (Table Style) Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="CategoryListTableLevel1">
+		<li><a href="#">Lenovo</a><i>(406)</i></li>
+		<li><a href="#">IBM</a><i>(832)</i></li>
+		<li><a href="#">Dell</a><i>(56)</i></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+
+Memoery: Each category name should be shorter than 10 Chinese character.
+============================================ */
+ul.CategoryListTableLevel1{
+	display:block;
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+ul.CategoryListTableLevel1 li{
+	float:left;
+	width:185px;
+	margin:4px 0;
+	white-space: nowrap;
+	line-height:16px;
+}
+ul.CategoryListTableLevel1 li i{
+	font-family:arial,sans-serif;
+	font-size:10px;
+	font-style:normal;
+	color:#333;
+}
+
+/* ============================================
+Form (Base Style)
+
+1. lable for check-box
+============================================ */
+label{
+	cursor:pointer;
+	cursor:hand;
+}
+
+/* ============================================
+Form Lite (Inline) Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="FormLiteInline">
+		<li><input ... /></li>
+		<li><input ... /></li>
+		<li><input ... /></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+
+============================================ */
+ul.FormLiteInline{
+	margin:0;
+	padding:0;
+	list-style:none;	
+}
+ul.FormLiteInline li{
+	float:left;
+	margin-right:8px;
+	height:20px;
+	line-height:20px;
+}
+/* ============================================
+Guide List (Normal) Level 1
+
+Usage examples:
+	<ul class="GuideList">
+		<li><input ... /></li>
+		<li><input ... /></li>
+		<li><input ... /></li>
+	</ul>
+	<div class="HackBox"></div>
+
+============================================ */
+ul.GuideList{
+	margin:10px 0;
+	padding:0;
+	list-style:none;	
+}
+ul.GuideList li{
+	margin:4px 0 4px 4px;
+	padding-left:1.5em;
+	width:155px;
+	overflow:hidden;
+	line-height:120%;
+	text-overflow:ellipsis;
+	background:url(http://image.taobao.com/fortuna/images/icons/post.gif) 0px 0px no-repeat;
+}
+ul.GuideList li a{
+	text-decoration:underline;
+}
+ul.GuideList li a:visited{
+	color:#333399;
+	text-decoration:none;
+}
+.MoreGuide{
+	text-align:right;
+	margin:4px;
+}
+/* ============================================
+Form Lite (Normal) Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="FormLite">
+		<li><input ... /></li>
+		<li><input ... /></li>
+		<li><input ... /></li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+
+============================================ */
+ul.FormLite{
+	margin:0;
+	padding:0;
+	list-style:none;	
+}
+ul.FormLite li{
+	margin:4px 4px 4px 8px;
+}
+ul.FormLite li.Seperator{
+	border-top:1px solid #FFF;
+	height:0;
+	font-size:0;
+	line-height:0;
+}
+ul.FormLite li.Seperator hr{
+	display:none;
+}
+
+/* ============================================
+List Lite Level 1
+
+Usage examples:
+<div id="Whatever">
+	<ul class="ListLite">
+		<li>whatever</li>
+		<li>whatever</li>
+		<li class="Seperator"></li>
+		<li>whatever</li>
+		<li class="RightHint">More...</li>
+	</ul>
+	<div class="HackBox"></div>
+</div>
+	
+============================================ */
+
+ul.ListLite{
+	margin:0;
+	padding:0;
+	list-style:none;	
+}
+ul.ListLite li{
+	margin:8px 4px 8px 8px;
+}
+ul.ListLite li.Seperator{
+	border-top:1px solid #FFF;
+	height:0px;
+	font-size:0px;
+}
+ul.ListLite li.Seperator hr{
+	display:none;
+}
+ul.ListLite li.RightHint{
+	padding-top:4px;
+	text-align:right;
+}
+
+/* ============================================
+Standard Side Panel Style 1
+Width:180px
+
+Usage examples:
+<div id="Whatever" class="StandardSidePanel">
+  <div class="Title"><b>Panel Title</b></div>
+  <div class="Bottom"></div>
+</div>
+	
+============================================ */
+div.StandardSidePanel{
+	width:180px;
+	margin-bottom:10px;
+	background:transparent url(http://pics.taobao.com/2k5/sys/component/standard_side_panel_top.gif) left top no-repeat;
+}
+div.StandardSidePanel div.Title{
+	width:172px;
+	height:20px;
+	margin:4px;
+	line-height:20px;
+	font-weight:bold;
+	color:#FFF;
+	text-indent:4px;
+	background-color:#EC9307;
+	background:#FF9000 url(http://pics.taobao.com/bao/album/sys/misc/standard_side_title172.gif) 0px 0px no-repeat;
+}
+body.CurNormal div.StandardSidePanel div.Title{background-color:#FF9000;background-position:0px 0px;}
+body.CurDigital div.StandardSidePanel div.Title{background-color:#99A2B1;background-position:0px -20px;}
+body.CurLady div.StandardSidePanel div.Title{background-color:#E1569A;background-position:0px -40px;}
+body.CurMan div.StandardSidePanel div.Title{background-color:#3672AE;background-position:0px -60px;}
+body.CurLife div.StandardSidePanel div.Title{background-color:#EC9307;background-position:0px -80px;}
+body.CurCulture div.StandardSidePanel div.Title{background-color:#1E998B;background-position:0px -100px;}
+body.CurSports div.StandardSidePanel div.Title{background-color:#AFC326;background-position:0px -120px;}
+body.CurGame div.StandardSidePanel div.Title{background-color:#C34B26;background-position:0px -140px;}
+body.CurCollection div.StandardSidePanel div.Title{background-color:#88605F;background-position:0px -160px;}
+body.CurHongkong div.StandardSidePanel div.Title{background-color:#965BB9;background-position:0px -180px;}
+body.CurPet div.StandardSidePanel div.Title{background-color:#86D500;background-position:0px -200px;}
+body.CurBaby div.StandardSidePanel div.Title{background-color:#FFCC00;background-position:0px -220px;}
+div.StandardSidePanel div.Bottom{
+	height:4px;
+	font-size:0;
+	background:transparent url(http://pics.taobao.com/2k5/sys/component/standard_side_panel_bottom.gif) left top no-repeat;
+}
+/* ============================================
+Standard Side Panel Style 2
+Width:250px;
+
+Usage examples:
+<div id="Whatever" class="StandardSidePanel2">
+  <div class="Title"><b>Panel Title</b></div>
+  <div class="Bottom"></div>
+</div>
+	
+============================================ */
+div.StandardSidePanel2{
+	width:250px;
+	margin-bottom:10px;
+}
+div.StandardSidePanel2 div.Title{
+	width:242px;
+	height:20px;
+	margin:4px;
+	line-height:20px;
+	font-weight:bold;
+	color:#FFF;
+	text-indent:4px;
+	background:#FF9000 url(http://pics.taobao.com/bao/album/sys/misc/standard_side_title242_.gif) 0px 0px no-repeat;
+}
+body.CurNormal div.StandardSidePanel2 div.Title{background-color:#FF9000;background-position:left 0px;}
+body.CurDigital div.StandardSidePanel2 div.Title{background-color:#99A2B1;background-position:left -20px;}
+body.CurLady div.StandardSidePanel2 div.Title{background-color:#E1569A;background-position:left -40px;}
+body.CurMan div.StandardSidePanel2 div.Title{background-color:#3672AE;background-position:left -60px;}
+body.CurLife div.StandardSidePanel2 div.Title{background-color:#EC9307;background-position:left -80px;}
+body.CurCulture div.StandardSidePanel2 div.Title{background-color:#1E998B;background-position:left -100px;}
+body.CurSports div.StandardSidePanel2 div.Title{background-color:#AFC326;background-position:left -120px;}
+body.CurGame div.StandardSidePanel2 div.Title{background-color:#C34B26;background-position:left -140px;}
+body.CurCollection div.StandardSidePanel2 div.Title{background-color:#88605F;background-position:left -160px;}
+body.CurHongkong div.StandardSidePanel2 div.Title{background-color:#965BB9;background-position:left -180px;}
+body.CurPet div.StandardSidePanel2 div.Title{background-color:#86D500;background-position:left -200px;}
+body.CurBaby div.StandardSidePanel2 div.Title{background-color:#FFCC00;background-position:left -220px;}
+
+div.StandardSidePanel2 div.Title a{
+	color:#FFF;
+}
+div.StandardSidePanel2 div.Bottom{
+	height:4px;
+	font-size:0;
+}
+
+/* ============================================
+Tab Panel Style 1
+
+Usage examples:
+<div class="TabPanelStyle1">
+	<h3>Title</h3>
+	<div class="Content">barabara</div>
+</div>
+	
+============================================ */
+div.TabPanelStyle1 h3{
+	margin:0;
+	padding:0;
+	background:none;
+	border:none;
+	border-bottom:3px solid #FF9000;
+	height:19px !important;
+	height /**/:22px;
+	background:transparent url(http://pics.taobao.com/bao/album/sys/misc/category_tab_title01.gif) left top no-repeat;
+}
+div.TabPanelStyle1 h3 span{
+	display:block;
+	top:0;
+	left:0;
+	width:100px;
+	margin-top:3px;
+	text-align:center;
+	font-weight:bold;
+	font-size:13px;
+	color:#FFF;
+}
+div.Content{
+	border:1px solid #FF9000;
+	border-top:7px solid #FFE1AD;
+}
+
+/* ============================================
+Page Changer Level 1
+
+Usage examples:
+<div id="Whatever" class="StandardSidePanel">
+  <div class="Title"><b>Panel Title</b></div>
+  <div class="Bottom"></div>
+</div>
+	
+============================================ */
+div.PageChanger{
+	height:20px;
+	line-height:20px;
+	text-align:right;
+}
+div.PageChanger img{
+	vertical-align:-3px;
+}
+div.PageChanger input{
+	border:1px solid #AAA;
+	background-color:#FFF;
+	margin:0 2px;
+}
+
+/*IE5 Crack*/
+div.PageChanger input{
+	height:16px;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	height:12px;
+}

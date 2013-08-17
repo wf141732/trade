@@ -1,0 +1,11 @@
+﻿.print
+{
+    background-image:url(/images/common/print.png);
+    width:16px;
+    height:16px;
+    position:fixed;
+    z-index:100;
+    top:24px;
+    left:24px;
+    cursor:pointer;
+}

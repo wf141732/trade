@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="js/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script src="js/base.js" type="text/javascript"></script>
+    <script>
+
+        var a = window.navigator.userAgent.toLowerCase();
+        //alert(a);
+        if (a.indexOf('iphone')>0 || a.indexOf('android')>0) {
+            window.location = '/m/index.aspx';
+        }
+        else {
+            var url = window.location.href;
+            if (ur.user().sysUrl) {
+                url = ur.user().sysUrl;
+            }
+            else {
+                if (ur.user().rank == 1) {//&& 
+                    if (ur.user().erpID) {
+                        url = '/agent.shtml';
+                    }
+                    else {
+                        url = '/agent_base.shtml';
+                    }
+                }
+                else if (ur.user().rank > 1) {
+                    url = '/pos.shtml';
+                }
+                else if (ur.user().rank < 1) {
+                    url = '/factory.shtml'
+                }
+                else {
+                    url = '/shop/my_account.shtml';
+                }
+            }
+            window.location = url; 
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>

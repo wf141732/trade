@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="taskPersist">
+	<resultMap id="TaskDescribeMap" class="com.taobao.top.syncserver.domain.TaskDescribeDO">
+		<result property="id" column="id"/>
+		<result property="appKey" column="app_key"/>
+		<result property="userId" column="user_id"/>
+		<result property="userNick" column="user_nick"/>
+		<result property="type" column="type" />
+		<result property="params" column="params"/>
+		<result property="status" column="status"/>
+		<result property="startPosition" column="start_position"/>
+		<result property="nowPosition" column="now_position"/>
+		<result property="endPosition" column="end_position"/>
+		<result property="priority" column="priority" />
+		<result property="retries" column="retries"/>
+		<result property="errorMessage" column="error_message"/>
+		<result property="executeIp" column="execute_ip"/>
+		<result property="lastExecuteTime" column="last_execute_time"/>
+		<result property="version" column="version"/>
+		<result property="env" column="env"/>
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+	</resultMap>
+	
+	 <insert id="taskPersist.insertTask" parameterClass="com.taobao.top.syncserver.domain.TaskDescribeDO">
+	 	insert into topsyn_task(app_key,user_id,user_nick,type,params,status,start_position,now_position,end_position,priority,retries,error_message,execute_ip,last_execute_time,version,env,gmt_create,gmt_modified) values 
+	 	(#appKey#,#userId#,#userNick#,#type#,#params#,#status#,#startPosition#,#nowPosition#,#endPosition#,#priority#,#retries#,#errorMessage#,#executeIp#,#lastExecuteTime#,#version#,#env#,#gmtCreate#,#gmtModified#)
+	 	<selectKey resultClass="long" keyProperty="id">
+			select last_insert_id() as id
+		</selectKey>
+	 </insert>
+	 
+	 <update id="taskPersist.updateTask" parameterClass="com.taobao.top.syncserver.domain.TaskDescribeDO">
+	 	update topsyn_task set 
+	 	<isNotNull property="params">
+	 		params=#params#,
+	 	</isNotNull>
+	 	<isNotNull property="status">
+	 		status=#status#,
+	 	</isNotNull>
+	 	<isNotNull property="startPosition">
+	 		start_position=#startPosition#,
+	 	</isNotNull>
+	 	<isNotNull property="nowPosition">
+	 		now_position=#nowPosition#,
+	 	</isNotNull>
+	 	<isNotNull property="endPosition">
+	 		end_position=#endPosition#,
+	 	</isNotNull>
+	 	<isNotNull property="priority">
+	 		priority=#priority#,
+	 	</isNotNull>
+	 	<isNotNull property="retries">
+	 		retries=#retries#,
+	 	</isNotNull>
+	 	<isNotNull property="errorMessage">
+	 		error_message=#errorMessage#,
+	 	</isNotNull>
+	 	<isNotNull property="executeIp">
+	 		execute_ip=#executeIp#,
+	 	</isNotNull>
+	 	<isNotNull property="lastExecuteTime">
+	 		last_execute_time=#lastExecuteTime#,
+	 	</isNotNull>
+	 	version=#version#, 
+	 	gmt_modified=#gmtModified# 
+	 	where id=#id# and env=#env#
+	 	<isNotNull property="checkVersion">
+	 		 and version=#checkVersion#
+	 	</isNotNull>
+	 </update>
+	 
+	 <select id="taskPersist.selectTask" resultMap="TaskDescribeMap" parameterClass="java.util.Map">
+	 	select id,app_key,user_id,user_nick,type,params,status,start_position,now_position,end_position,priority,retries,error_message,execute_ip,last_execute_time,version,env,gmt_create,gmt_modified
+	 	from topsyn_task where env=#env#
+	 	<isNotNull property="id">
+	 		and id=#id# 
+	 	</isNotNull>
+	 	<isNotNull property="type">
+	 		and type=#type# 
+	 	</isNotNull>
+	 	<isNotNull property="status">
+	 		and status=#status#
+	 	</isNotNull>
+	 	<isNotNull property="appKey">
+	 		and app_key=#appKey# 
+	 	</isNotNull>
+	 	<isNotNull property="userId">
+	 		and user_id=#userId#
+	 	</isNotNull>
+	 	<isNotNull property="lastExecuteTime">
+	 		and last_execute_time &lt; #lastExecuteTime#
+	 	</isNotNull>
+	 	<isNotEmpty property="condition">
+            and mod(id,#taskItemNum#)
+            <iterate prepend=" IN " property="condition" open="(" close=")" conjunction=",">
+               #condition[]#
+            </iterate>
+            <!-- if condition is not null,each task is only selected by one machine,so can be use startPosition < endPosition -->
+            <!-- end_position > start_position  --> 
+         </isNotEmpty>
+	 	order by gmt_modified ASC 
+	 	<isNotNull property="fetchNum">
+	 	 	limit #fetchNum#
+	 	</isNotNull> 
+	 </select>
+	 <delete id="taskPersist.deleteTask" parameterClass="java.util.Map">
+		delete from topsyn_task where
+		<isNotNull property="id">
+	 		id=#id#
+	 	</isNotNull>
+	 	<isNotNull property="gmtModified">
+		 	<isNotNull property="id">
+		 		and
+		 	</isNotNull>
+	 		gmt_modified &lt; #gmtModified#
+	 	</isNotNull>
+	</delete>
+</sqlMap>

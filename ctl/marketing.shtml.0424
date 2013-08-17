@@ -1,0 +1,287 @@
+﻿<div id="dvMarketing" style="display: block; overflow-y: auto;" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span4">
+                    <label for="q_marketing_num">
+                        活动编号</label>
+                    <input type="text" id="q_marketing_num" value="" placeholder="活动编号" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span4">
+                    <label for="q_marketing_name">
+                        活动名称</label>
+                    <input type="text" id="q_marketing_name" value="" placeholder="活动名称" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="row-fluid">
+            <div class="fr span5">
+                <h4>
+                    <c>0</c>
+                    条记录 <small>查询日期
+                        <d></d>
+                    </small>
+                </h4>
+            </div>
+            <div class="pagination span7 span-right">
+                <ul>
+                    <li><a href="#">前一页</a></li>
+                    <li class="active"><a href="#">1</a> </li>
+                    <!--<li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>-->
+                    <li><a href="#">后一页</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">活动编号 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">活动名称 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">活动描述</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">活动期间</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">活动类型</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">状态</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="dvMarketingUpd" class="modal hide fade bigModal">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>创建</c>
+            营销活动
+        </h3>
+    </div>
+    <div class="modal-header">
+        <div accept-charset="UTF-8" class="vehicle_search">
+            <div style="margin: 0; padding: 0; display: inline">
+                <input name="utf8" type="hidden" value="✓"></div>
+            <div class="well1">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <label for="q_m_u_code">
+                            活动编号</label>
+                        <input type="text" id="q_m_u_code" value="" placeholder="填写活动编号" class="default"
+                            style="width: 100%; max-width: 284px;">
+                    </div>
+                    <div class="span3">
+                        <label for="q_m_u_name">
+                            活动名称</label>
+                        <input type="text" id="q_m_u_name" value="" placeholder="活动名称" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                    <div class="span3">
+                        <div class="clearfix">
+                            <label for="q_m_u_type">
+                                活动类型</label>
+                            <select data-placeholder="选择状态" id="q_m_u_type" name="q[date_in_time_frame]">
+                                <option value=""></option>
+                                <option value="1">礼品派送</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="span2">
+                        <label for="q_m_u_status">
+                            状态</label>
+                        <input type="checkbox" id="q_m_u_status" value="" placeholder="金额合计" class="default"
+                            checked="checked" style="width: 70%; max-width: 284px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#q_m_u_s" data-toggle="tab">门店</a></li>
+            <li><a href="#q_m_u_p" data-toggle="tab">产品</a></li>
+            <li><a href="#q_m_u_d" data-toggle="tab">期间</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="q_m_u_s">
+                <div class="row-fluid result-header">
+                    <div class="span7">
+                        <h4>
+                            <c>0</c>
+                            条记录 <small>查询日期
+                                <d></d>
+                            </small>
+                        </h4>
+                    </div>
+                    <div class="span5 span-right">
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;选择门店</button>
+                        <button class="btn " data-disable-with="努力查找中..." name="clear">
+                            <i class="icon-trash"></i>清空</button>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">店号</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">店名</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">负责人</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">联系电话</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">开始时间</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">结束时间</a>
+                                </th>
+                                <th>
+                                    <a href="#">有效</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="q_m_u_p">
+                <div class="row-fluid result-header">
+                    <div class="span7">
+                        <h4>
+                            <c>0</c>
+                            条记录 <small>查询日期
+                                <d></d>
+                            </small>
+                        </h4>
+                    </div>
+                    <div class="span5 span-right">
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;选择产品</button>
+                        <button class="btn " data-disable-with="努力查找中..." name="clear">
+                            <i class="icon-trash"></i>清空</button>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">编码</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">名称</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单价</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单位</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">开始时间</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">结束时间</a>
+                                </th>
+                                <th>
+                                    <a href="#">有效</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="q_m_u_d">
+                <div class="row-fluid result-header">
+                    <div class="span7">
+                        <h4>
+                            <c>0</c>
+                            条记录 <small>查询日期
+                                <d></d>
+                            </small>
+                        </h4>
+                    </div>
+                    <div class="span5 span-right">
+                        <button class="btn btn-primary" data-disable-with="努力查找中..." name="add">
+                            <i class="icon-plus"></i>增加</button>
+                        <button class="btn " data-disable-with="努力查找中..." name="clear">
+                            <i class="icon-trash"></i>清空</button>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">开始时间</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">结束时间</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">有效</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">备注</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div style="float: left;">
+            备注:<textarea cols="1" style="height: 18px; width: 530px; border-style: none; border-bottom: 1px solid #B9DDFF;"></textarea></div>
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <!--<button href="#" class="btn btn-save-add">保存并新增</button>  -->
+        <button href="#" class="btn close" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>

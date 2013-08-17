@@ -1,0 +1,24 @@
+/*	登陆页面css－－－－------------------------------------------------------－－－－－－---*/
+body{background: #fff url(../img/bg_login.jpg) fixed;}
+header{margin-bottom: 18px}
+.content-inner{margin: 0 auto;position: relative;width: 1000px;}
+.login{background:#FFFFFF;box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);margin-bottom: 10px;width:380px;height:520px;margin-top: 20px;padding: 30px 40px}
+.login_form{padding: 30px 0px;border-top: 1px dotted #dfdfdf;border-bottom: 1px dotted #dfdfdf}
+.item{margin-bottom: 20px}
+.login_form label{font-size:16px;line-height: 30px;margin-right: 10px;width: 60px;display: inline-block}
+input.name,input.pass{border-style: solid;border-width: 1px;box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2) inset, 0 1px rgba(255, 255, 255, 0.3);border-radius: 5px 5px 5px 5px;border-color: #929293 #AEAEAE #BDBDBD;width:284px;height:20px;font: 16px "helvetica neue",helvetica,arial,sans-serif;padding: 6px 8px}
+.login_form .primary-button{width:300px;height:36px;padding:6px 8px;font-size:18px}
+.info_login li{width:52px;height:48px;float:Left;margin:12px 50px 20px 0px;background: url(../img/icon_48.png) no-repeat center top}
+.info_login li:last-child,li.last_margin{margin-right: 0px}
+.info_login li h4{padding-top: 48px;text-align: center}
+li.fun2{background-position:center -48px;}
+li.fun3{background-position:center -96px;}
+li.fun4{background-position:center -144px;}
+li.fun5{background-position:center -192px;}
+li.fun6{background-position:center -240px;}
+li.fun7{background-position:center -288px;}
+li.fun8{background-position:center -432px;}
+.foot_login{color: #fff;width:1000px;color:#ededed}
+.link{width:100%;text-align: center;margin-top: 12px;padding-top: 10px;border-top: 1px solid #dfdfdf}
+.link a{margin-right: 6px;padding-right: 6px;border-right: 1px dotted #dfdfdf}
+.link a:last-child{margin-right: 0px;border: 0px}

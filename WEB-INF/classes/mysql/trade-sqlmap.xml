@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap>
+	<select id="order.select.maxmodified" resultClass="java.util.Date"
+		parameterClass="java.lang.Long"> 
+		SELECT MAX(o.modified) AS modified FROM orders o WHERE o.seller_id = #value#
+	</select>
+	
+	<select id="order.select.modified"  resultClass="java.util.Date"
+		parameterClass="java.lang.Long">
+		SELECT o.modified FROM orders o WHERE o.oid = #value#
+	</select>
+	
+	<select id="order.select.count"  resultClass="java.lang.Long"
+		parameterClass="java.util.Map">
+		SELECT count(o.tid) FROM orders o WHERE o.seller_id = #userId# and o.created &gt;= #beginTime# and o.created &lt;= #endTime# and o.is_main=1 
+	</select>
+
+	<insert id="order.insert" parameterClass="com.taobao.top.syncserver.domain.OrderDO"> 
+		insert into orders 
+		(
+		adjust_fee, 
+		alipay_id, 
+		alipay_no, 
+		attributes, 
+		available_confirm_fee, 
+		buyer_alipay_no, 
+		buyer_cod_fee, 
+		buyer_email, 
+		buyer_message, 
+		buyer_nick, 
+		buyer_obtain_point_fee, 
+		buyer_rate, 
+		cid, 
+		cod_fee, 
+		cod_status, 
+		commission_fee, 
+		consign_time, 
+		created, 
+		discount_fee, 
+		end_time,
+		express_agency_fee, 
+		has_post_fee, 
+		is_detail, 
+		is_main, 
+		item_meal_id, 
+		item_title, 
+		modified, 
+		num, 
+		num_iid, 
+		oid, 
+		pay_time, 
+		payment, 
+		pic_path, 
+		point_fee, 
+		post_fee, 
+		price, 
+		promotion_detail, 
+		real_point_fee, 
+		received_payment, 
+		receiver_address, 
+		receiver_mobile, 
+		receiver_name, 
+		receiver_phone, 
+		seller_cod_fee, 
+		seller_flag, 
+		seller_id, 
+		seller_memo, 
+		seller_nick, 
+		seller_rate, 
+		shipping_type, 
+		shop_title, 
+		sku_id, 
+		status, 
+		tid, 
+		timeout_action_time, 
+		total_fee, 
+		type,
+		is_force_wlb,
+		is_brand_sale,
+		is_lgtype
+		) VALUES (
+		#adjustFee#, 
+		#alipayId#, 
+		#alipayNo#, 
+		#attributes#, 
+		#availableConfirmFee#, 
+		#buyerAlipayNo#, 
+		#buyerCodFee#, 
+		#buyerEmail#, 
+		#buyerMessage#, 
+		#buyerNick#, 
+		#buyerObtainPointFee#, 
+		#buyerRate#, 
+		#cid#, 
+		#codFee#, 
+		#codStatus#, 
+		#commissionFee#, 
+		#consignTime#, 
+		#created#, 
+		#discountFee#, 
+		#endTime#,
+		#expressAgencyFee#, 
+		#hasPostFee#, 
+		#isDetail#, 
+		#isMain#, 
+		#itemMealId#, 
+		#itemTitle#, 
+		#modified#, 
+		#num#, 
+		#numIid#, 
+		#oid#, 
+		#payTime#, 
+		#payment#, 
+		#picPath#, 
+		#pointFee#, 
+		#postFee#, 
+		#price#, 
+		#promotionDetail#, 
+		#realPointFee#, 
+		#receivedPayment#, 
+		#receiverAddress#, 
+		#receiverMobile#, 
+		#receiverName#, 
+		#receiverPhone#, 
+		#sellerCodFee#, 
+		#sellerFlag#, 
+		#sellerId#, 
+		#sellerMemo#, 
+		#sellerNick#, 
+		#sellerRate#, 
+		#shippingType#, 
+		#shopTitle#, 
+		#skuId#, 
+		#status#, 
+		#tid#, 
+		#timeoutActionTime#, 
+		#totalFee#, 
+		#type#,
+		#isLgType#,
+		#isBrandSale#,
+		#isForceWlb#
+		)
+	</insert>
+	
+	<delete id="ApiTypeDAO.deleteApiType" parameterClass="java.lang.Long"> 
+		delete from  TOP_API_TYPE where id = #value#
+	</delete>
+	
+	<update id="order.update" parameterClass="com.taobao.top.syncserver.domain.OrderDO"> 
+		UPDATE orders o SET 
+		<isNotNull property="adjustFee">
+		o.adjust_fee = #adjustFee#, 
+		</isNotNull>
+		<isNotNull property="alipayId">
+		o.alipay_id = #alipayId#, 
+		</isNotNull>
+		<isNotNull property="alipayNo">
+		o.alipay_no = #alipayNo#, 
+		</isNotNull>
+		<isNotNull property="attributes">
+		o.attributes = #attributes#, 
+		</isNotNull>
+		<isNotNull property="availableConfirmFee">
+		o.available_confirm_fee = #availableConfirmFee#,
+		</isNotNull>
+		<isNotNull property="buyerAlipayNo"> 
+		o.buyer_alipay_no = #buyerAlipayNo#, 
+		</isNotNull>
+		<isNotNull property="buyerCodFee">
+		o.buyer_cod_fee = #buyerCodFee#, 
+		</isNotNull>
+		<isNotNull property="buyerEmail">
+		o.buyer_email = #buyerEmail#, 
+		</isNotNull>
+		<isNotNull property="buyerMessage">
+		o.buyer_message = #buyerMessage#, 
+		</isNotNull>
+		<isNotNull property="buyerNick">
+		o.buyer_nick = #buyerNick#, 
+		</isNotNull>
+		<isNotNull property="buyerObtainPointFee">
+		o.buyer_obtain_point_fee = #buyerObtainPointFee#, 
+		</isNotNull>
+		<isNotNull property="buyerRate">
+		o.buyer_rate = #buyerRate#, 
+		</isNotNull>
+		<isNotNull property="cid">
+		o.cid = #cid#, 
+		</isNotNull>
+		<isNotNull property="codFee">
+		o.cod_fee = #codFee#, 
+		</isNotNull>
+		<isNotNull property="codStatus">
+		o.cod_status = #codStatus#, 
+		</isNotNull>
+		<isNotNull property="commissionFee">
+		o.commission_fee = #commissionFee#, 
+		</isNotNull>
+		<isNotNull property="consignTime">
+		o.consign_time = #consignTime#, 
+		</isNotNull>
+		<isNotNull property="created">
+		o.created = #created#, 
+		</isNotNull>
+		<isNotNull property="discountFee">
+		o.discount_fee = #discountFee#, 
+		</isNotNull>
+		<isNotNull property="endTime">
+		o.end_time = #endTime#, 
+		</isNotNull>
+		<isNotNull property="expressAgencyFee">
+		o.express_agency_fee = #expressAgencyFee#, 
+		</isNotNull>
+		<isNotNull property="hasPostFee">
+		o.has_post_fee = #hasPostFee#, 
+		</isNotNull>
+		<isNotNull property="isDetail">
+		o.is_detail = #isDetail#, 
+		</isNotNull>
+		<isNotNull property="isMain">
+		o.is_main = #isMain#, 
+		</isNotNull>
+		<isNotNull property="itemMealId">
+		o.item_meal_id = #itemMealId#, 
+		</isNotNull>
+		<isNotNull property="itemTitle">
+		o.item_title = #itemTitle#, 
+		</isNotNull>
+		<isNotNull property="num">
+		o.num = #num#, 
+		</isNotNull>
+		<isNotNull property="numIid">
+		o.num_iid = #numIid#, 
+		</isNotNull>
+		<isNotNull property="payTime">
+		o.pay_time = #payTime#, 
+		</isNotNull>
+		<isNotNull property="payment">
+		o.payment = #payment#, 
+		</isNotNull>
+		<isNotNull property="picPath">
+		o.pic_path = #picPath#, 
+		</isNotNull>
+		<isNotNull property="pointFee">
+		o.point_fee = #pointFee#, 
+		</isNotNull>
+		<isNotNull property="postFee">
+		o.post_fee = #postFee#, 
+		</isNotNull>
+		<isNotNull property="price">
+		o.price = #price#, 
+		</isNotNull>
+		<isNotNull property="promotionDetail">
+		o.promotion_detail = #promotionDetail#, 
+		</isNotNull>
+		<isNotNull property="realPointFee">
+		o.real_point_fee = #realPointFee#, 
+		</isNotNull>
+		<isNotNull property="receivedPayment">
+		o.received_payment = #receivedPayment#, 
+		</isNotNull>
+		<isNotNull property="receiverAddress">
+		o.receiver_address = #receiverAddress#, 
+		</isNotNull>
+		<isNotNull property="receiverMobile">
+		o.receiver_mobile = #receiverMobile#, 
+		</isNotNull>
+		<isNotNull property="receiverName">
+		o.receiver_name = #receiverName#, 
+		</isNotNull>
+		<isNotNull property="receiverPhone">
+		o.receiver_phone = #receiverPhone#, 
+		</isNotNull>
+		<isNotNull property="sellerCodFee">
+		o.seller_cod_fee = #sellerCodFee#, 
+		</isNotNull>
+		<isNotNull property="sellerFlag">
+		o.seller_flag = #sellerFlag#, 
+		</isNotNull>
+		<isNotNull property="sellerId">
+		o.seller_id = #sellerId#, 
+		</isNotNull>
+		<isNotNull property="sellerMemo">
+		o.seller_memo = #sellerMemo#, 
+		</isNotNull>
+		<isNotNull property="sellerNick">
+		o.seller_nick = #sellerNick#, 
+		</isNotNull>
+		<isNotNull property="sellerRate">
+		o.seller_rate = #sellerRate#, 
+		</isNotNull>
+		<isNotNull property="shippingType">
+		o.shipping_type = #shippingType#, 
+		</isNotNull>
+		<isNotNull property="shopTitle">
+		o.shop_title = #shopTitle#, 
+		</isNotNull>
+		<isNotNull property="skuId">
+		o.sku_id = #skuId#, 
+		</isNotNull>
+		<isNotNull property="status">
+		o.status = #status#, 
+		</isNotNull>
+		<isNotNull property="tid">
+		o.tid = #tid#, 
+		</isNotNull>
+		<isNotNull property="timeoutActionTime">
+		o.timeout_action_time = #timeoutActionTime#, 
+		</isNotNull>
+		<isNotNull property="totalFee">
+		o.total_fee = #totalFee#, 
+		</isNotNull>
+		<isNotNull property="type">
+		o.type = #type# ,
+		</isNotNull>
+		<isNotNull property="isLgType">
+		o.is_lgtype = #isLgType#,
+		</isNotNull>
+		<isNotNull property="isBrandSale">
+		o.is_brand_sale = #isBrandSale#,
+		</isNotNull>
+		<isNotNull property="isForceWlb">
+		o.is_force_wlb = #isForceWlb#,
+		</isNotNull>
+		<isNotNull property="modified">
+		o.modified = #modified# 
+		</isNotNull>
+		WHERE o.oid = #oid# AND #modified# > o.modified
+	</update>
+	
+</sqlMap>

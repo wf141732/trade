@@ -1,0 +1,141 @@
+﻿<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <!--#include file="ctl/head.shtml"-->
+    <body>
+        <div class="container">
+                <!-- Start Header-->
+                <!--#include file="ctl/header.shtml"-->
+                <!-- End Header-->
+                <!-- Start Navigation -->
+                <!--#include file="ctl/nav.shtml"-->
+                <!-- Start Sidebar -->
+                <div class="row">
+                <!-- Start Sidebar -->
+                <!--#include file="ctl/sidebar.shtml"-->
+                <!-- End Sidebar -->
+                <div class="span9">
+                    <div id="myCarousel" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="" src="media/1.jpg" />
+                                <div class="carousel-caption">
+                                    <h4>正品 包邮 欧美姿 洋甘菊套装 去红血丝特效四件套 抗过敏护肤品</h4>
+                                    <p>功效: 抗敏感化妆品规格: 正常规格品牌: OMEIZI/欧美姿面部护理套装单品: 洋甘菊四件套 </p>
+                                </div>
+
+                            </div>
+                            <div class="item">
+                                <img alt="" src="media/1.jpg" />
+                                <div class="carousel-caption">
+                                    <h4>正品 包邮 欧美姿 洋甘菊套装 去红血丝特效四件套 抗过敏护肤品</h4>
+                                    <p>功效: 抗敏感化妆品规格: 正常规格品牌: OMEIZI/欧美姿面部护理套装单品: 洋甘菊四件套 </p>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <img alt="" src="media/1.jpg" />
+                                <div class="carousel-caption">
+                                    <h4>正品 包邮 欧美姿 洋甘菊套装 去红血丝特效四件套 抗过敏护肤品</h4>
+                                    <p>功效: 抗敏感化妆品规格: 正常规格品牌: OMEIZI/欧美姿面部护理套装单品: 洋甘菊四件套 </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                        <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+                    </div>
+                </div>
+
+                <div class="span7 popular_products">
+                    <h4>热销产品</h4><br>
+                    <ul class="thumbnails">
+
+                        <li class="span2">
+                            <div class="thumbnail">
+                                <a href="product.html"><img alt="" src="media/2.jpg" /></a>
+                                <div class="caption">
+                                    <a href="product.html"> <h5>洋甘菊舒缓修护精华30ml</h5></a>  价格: ￥50.00<br><br>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="span2">
+                            <div class="thumbnail">
+                                <a href="product.html"><img alt="" src="media/3.jpg" /></a>
+                                <div class="caption">
+                                    <a href="product.html"> <h5>洋甘菊舒缓修护水120ml</h5></a>  价格: ￥50.00<br><br>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="span2">
+                            <div class="thumbnail">
+                                <a href="product.html"><img alt="" src="media/4.jpg" /></a>
+                                <div class="caption">
+                                    <a href="product.html"> <h5>洋甘菊系列舒缓修护霜30g</h5></a>  价格: ￥50.00<br><br>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="span2">
+                            <div class="thumbnail">
+                                <a href="product.html"><img alt="" src="media/5.jpg" /></a>
+                                <div class="caption">
+                                    <a href="product.html"> <h5>水肌源3+海洋沁肤水120ml</h5></a>  价格: ￥50.00<br><br>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="span2">
+                            <div class="thumbnail">
+                                <a href="product.html"><img alt="" src="media/6.jpg" /></a>
+                                <div class="caption">
+                                    <a href="product.html"> <h5>海洋水凝乳100ml乳液</h5></a>  价格: ￥50.00<br><br>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="span2">
+                            <div class="thumbnail">
+                                <a href="product.html"><img alt="" src="media/7.jpg" /></a>
+                                <div class="caption">
+                                    <a href="product.html"> <h5>海洋特润霜50g</h5></a>  价格: ￥50.00<br><br>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="span2">
+
+                    <div class="roe">
+                        <h4>订阅促销活动</h4><br>
+                        <p>将您的邮件地址留给我们，我们每周将给您发送最新的产品信息，发送最新的促销活动.</p>
+
+                        <form class="form-search">
+                            <input class="span2" placeholder="输入你的电子邮件地址" type="text"><br><br>
+                            <button type="submit" class="btn pull-right">订阅</button>
+                        </form>
+                    </div><br><br>
+                    <a href="#"><img alt="" title="" src="media/alipay.gif"></a>
+                    <a href="#"><img alt="" src="media/alip.jpg"></a>
+
+                </div>
+
+            </div>
+
+            <!--#include file="ctl/footer.shtml"-->
+        </div>
+        <script src="js/jquery.js"></script>
+        <script src="js/jquery.pjax.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="/ui/bootstrap/js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="/js/base.js"></script>
+        <script src="js/shop.base.js" type="text/javascript"></script>
+        <script src="js/index.js" type="text/javascript"></script>
+    </body>
+</html>

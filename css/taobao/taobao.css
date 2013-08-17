@@ -1,0 +1,42 @@
+﻿/* 淘宝窗口开始*/
+.tb-box{
+position:relative;
+    background:#fff;  border:1px solid #f5d9bb; 
+    margin-bottom:10px;
+    zoom:1;
+}
+.tb-box-hd{padding:5px 5px 0}
+.tb-box-hd h3{
+font-size:14px; line-height:16px; color:#c46039;
+background:url('../../images/sprite.png') repeat-x scroll 0 -123px;
+padding-bottom:5px; margin:3px 5px;
+zoom:1;
+}
+
+.tb-box-bd{padding:0 5px 5px; overflow:hidden}
+.tb-box .corner{
+    position:absolute;
+    background:#fff url('../../images/sprite.png') no-repeat;
+    display:block; width:4px; height:4px; overflow:hidden;
+    margin:0; padding:0;
+    font-size:0; line-height:0; zoom:1;
+}
+.tb-box .corner-tl{top:-1px; left:-1px; background-position:0px -190px}
+.tb-box .corner-tr{top:-1px; right:-1px; background-position:-4px -190px}
+.tb-box .corner-bl{bottom:-1px; left:-1px; background-position:0px -194px}
+.tb-box .corner-br{bottom:-1px; right:-1px; background-position:-4px -194px}
+
+.tb-box-ft{clear:both; position:relative; height:4px}
+/*结束*/
+
+
+/* 星级样式 */
+.show-value-popup{cursor:pointer;}
+.c-value-no{width:60px;height:16px;overflow:hidden;display:-moz-inline-box;display:inline-block;background:url(../../images/comment.gif) no-repeat;}
+.c-value-no 
+em{visibility:hidden;}
+.c-value-5{background-position:0 0;}
+.c-value-4d9,.c-value-4d8,.c-value-4d7,.c-value-4d6,.c-value-4d5,.c-value-4d4,.c-value-4d3,.c-value-4d2,.c-value-4d1{background-position:0 -16px;}.c-value-4{background-position:0 -32px;}.c-value-3d9,.c-value-3d8,.c-value-3d7,.c-value-3d6,.c-value-3d5,.c-value-3d4,.c-value-3d3,.c-value-3d2,.c-value-3d1{background-position:0 -48px;}
+.c-value-3{background-position:0 -66px;}.c-value-2d9,.c-value-2d8,.c-value-2d7,.c-value-2d6,.c-value-2d5,.c-value-2d4,.c-value-2d3,.c-value-2d2,.c-value-2d1{background-position:0 -82px;}
+.c-value-2{background-position:0 -98px;}.c-value-1d9,.c-value-1d8,.c-value-1d7,.c-value-1d6,.c-value-1d5,.c-value-1d4,.c-value-1d3,.c-value-1d2,.c-value-1d1{background-position:0 -116px;}.c-value-1{background-position:0 -130px;}.c-value-0d9,.c-value-0d8,.c-value-0d7,.c-value-0d6,.c-value-0d5,.c-value-0d4,.c-value-0d3,.c-value-0d2,.c-value-0d1{background-position:0 -146px;}
+.c-value-0{background-position:0 -162px;}

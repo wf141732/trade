@@ -1,0 +1,131 @@
+<div id="dvPartnerLov" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            选择<c>客户方</c>
+        </h3>
+    </div>
+    <div class="modal-body report-results">
+        <table class="table table-condensed table-striped" style="">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">编号</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">名称</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">联系人</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">联系方式</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        1953 AC 2 Litre
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        <small>miles</small>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn close" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+<div id="dvMemberLov" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            选择<c>会员</c>
+        </h3>
+    </div>
+    <div class="modal-body report-results">
+        <table class="table table-condensed table-striped" style="">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">编号</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">名称</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">联系人</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">联系方式</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        1953 AC 2 Litre
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        <small>miles</small>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn close" data-dismiss="modal">关闭</a>
+    </div>
+</div>
+<style>
+.treeTable tbody td{border:0px;border-bottom:1px dotted #B9DDFF;}
+.treeTable tbody td:first-child{border-left:1px solid #B9DDFF;}
+.treeTable tbody td:last-child{border-right:1px solid #B9DDFF;}
+table.treeTable td{padding-left:19px;}
+.tblSelector tr l{cursor: pointer;}
+#dvPartnerLovTree .tblSelector tr:hover l {background-color: #006DCC;color: white;}
+table.tblSelector tbody td{border:0px;}         
+</style>
+<div id="dvPartnerLovTree" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            选择<c>门店</c>
+        </h3>
+    </div>
+    <div class="modal-body report-results">
+        <table class="table table-condensed table-striped tblSelector" style="">
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn close" data-dismiss="modal">关闭</a>
+    </div>
+</div>

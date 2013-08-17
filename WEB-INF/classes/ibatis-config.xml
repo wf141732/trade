@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings enhancementEnabled="true"	lazyLoadingEnabled="true" maxRequests="512"
+		maxSessions="128" maxTransactions="32" useStatementNamespaces="false" />
+	<sqlMap	resource="sql/synapp-sql.xml"/>
+	<sqlMap resource="sql/synuser-sql.xml"/>
+	<sqlMap resource="sql/toptask-sqlmap.xml"/>
+	<sqlMap	resource="sql/synrdsinfo-sql.xml"/>
+	
+</sqlMapConfig>

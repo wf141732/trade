@@ -1,0 +1,29 @@
+<div class="row-fluid">
+    <div class="fr span5">
+        <h4>
+            <c>0</c>
+            条记录 <small>查询日期
+                <d></d>
+            </small>
+        </h4>
+    </div>    
+    <div class="pagination span7 span-right">
+        <ul>
+            <li>
+                <select>
+                    <option value="30">显示30条</option>
+                    <option value="50">显示50条</option>
+                    <option value="100">显示100条</option>
+                    <option value="200">显示200条</option>
+                    <option value="500">显示500条</option>
+                </select></li>
+            <!--
+                            <li><a href="#">前一页</a></li>   
+                            <li class="active"><a href="#">1</a> </li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">后一页</a></li>-->
+        </ul>
+    </div>
+</div>

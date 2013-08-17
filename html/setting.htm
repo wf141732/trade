@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="keywords" content="IC ERP" />   
+<meta name="description" content="Login" /> 
+	
+<link href="css/base.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="#" />
+
+
+<title>IC全能王</title>
+</head>
+
+<body>
+
+<!--SITE CONTAINER--> 
+<div id="container">
+	<!--HEADER-->
+	<header class="head">
+		<div class="menu_top fixwidth">
+		<div class="logo_top"><a href="index.htm"><img src="img/logo.png" alt="IC全能王"></a></div>
+		<div class="action_top"><ul><li><span>胡文明</span>你好！</li><li><a href="#"><i class="icon_manage"></i>管理我的公司</a></li><li><a href="#">
+		<i class="icon_favi"></i>加入收藏夹</a></a></li><li><a href="#"><i class="icon_quit"></i>退 出</a></li></ul></div>
+		</div>
+		<nav class="menu_main">
+		<div  class="fixwidth">
+			<ul>
+				<li _i="0"><a title="查看订单及其相关方法" target="_self" href="javascript://">订 单</a></li>
+				<li _i="1"><a title="询价相关方法" target="_self" href="javascript://">询 价</a></li>
+				<li _i="2"><a title="查看订单及其相关方法" target="_self" href="javascript://">CRM</a></li>
+				<li _i="3"><a title="查看订单及其相关方法" target="_self" href="javascript://">财 务</a></li>
+				<li _i="4"><a title="导入导出库存" target="_self" href="javascript://">库 存</a></li>
+				<li _i="5"><a title="BBS、BBS管理" target="_self" href="javascript://">其 他</a></li>
+				<li _i="6"  class="menu_active"><a title="系统设置" target="_self" href="javascript://">设 置</a></li>
+				<li _i="7"><a title="查货、测试" target="_self" href="javascript://">加工厂</a></li>
+				<li _i="8"><a title="超级管理员专用菜单" target="_self" href="javascript://">管理员</a></li>
+			</ul>
+			<ul class="fright action_menu"><li class="pos_relative"><a title="快速导航" rel="aliguide" href="#" class="pos_relative">快速导航<i class="icon_navi"></i></a><ul class="menu_drop" id="aliguide" style="display:none;">
+			<li><a href="http://www.icprice.cn/home.aspx">首 页</a></li>
+			<li><a href="http://www.icprice.cn/po/order.aspx">订 单</a></li>
+			<li><a href="http://www.icprice.cn/help/index.htm">帮 助</a></li>
+			<li><a href="http://www.icprice.cn/rfq/rfq.aspx">业务询价</a></li>
+			<li><a href="http://www.icprice.cn/pic/search.aspx">图 片</a></li>
+			<li><a href="http://www.icprice.cn/po/ship.aspx">发 货</a></li>
+			<li><a href="http://www.icprice.cn/f/dailybill.aspx">日记账</a></li>
+			<li><a href="http://www.icprice.cn/f/sale.aspx">收 款</a></li>
+			<li><a href="http://www.icprice.cn/crm/company.aspx">公司池</a></li>
+			<li><a href="http://www.icprice.cn/q/q.aspx">快 查</a></li>
+			<li><a href="http://www.icprice.cn/stock/instock.aspx">现 货</a></li>
+			<li><a href="http://www.icprice.cn/mail/mail.aspx">邮 件</a></li>
+			<li><a href="http://www.icprice.cn/users/center.aspx?id=32260">账 号</a></li>
+			<li><a href="http://www.icprice.cn/bbs/forums.aspx">论 坛</a></li>
+			</ul></li>
+			    <li><a class="preventlink header-bg" title="商务洽谈" rel="aliservice" href="#">商务洽谈<i class="icon_chat"></i></a></li
+			</ul>
+			</div>
+		</nav>
+		<nav class="menu_sub">
+		    <div class="fixwidth">
+		    <div class="menu_sub1">
+			<ul>
+				<li><a target="_self" page="users/set.aspx" _index="0" href="javascript://">用 户 </a></li>
+				<li><a target="_self" page="users/set.aspx" _index="1" href="javascript://">审 计 </a></li>
+				<li><a target="_self" page="users/set.aspx" _index="2" href="javascript://">邮箱列表 </a></li>
+				<li class="submenu_active"><a target="_self" page="users/company.aspx" _index="-1" href="javascript://">公司设置</a></li>
+			</ul></div>
+			</div>
+		</nav>
+	</header>
+	
+<div class="fixwidth margin_top box1">
+<side class="side_setting">
+<nav class="submenu_setting">
+<ul><li class="active_submenu_setting" _id="CompanyBaseInfo">基本设置</li>
+<li _id="groupauthorization">权限设置</li>
+<li _id="pts">平台设置</li>
+<li _id="output">导出数据</li>
+<li _id="bbs">内部论坛</li>
+<li _id="funcmodule">功能模块</li>
+<li _id="dailyAccount">银行(财务)账户</li>
+<li _id="mailServer">邮件服务器</li>
+<li _id="topConfig">同步淘宝信息配置</li>
+</ul>
+</nav>
+</side>
+<div class="content_setting">
+<h1><a target="_blank" href="http://www.access-ic.com">香港捷佳电子</a></h1>
+<table>
+                <tbody><tr>
+                    <th style="width:9%;">公司编号</th><td style="width:25%;"><input type="text" disabled="disabled"></td>
+                    <th style="width:9%;">货币</th><td style="width:24%;">
+                    <select>
+                        <option selected="selected" value="0">多货币模式</option>
+                        <option value="1">美元</option>
+                        <option value="2">日元</option>
+                        <option value="3">人民币</option>
+                        <option value="4">欧元</option>
+                    </select></td>
+                    <th style="width:9%;">级别</th><td style="width:24%;"><select disabled="disabled">
+                        <option value="0">非会员</option>
+                        <option value="1">普通会员</option>
+                        <option value="2">高级会员</option>
+                    </select></td>
+                </tr>
+                <tr>
+                    <th>公司名</th><td><input type="text"></td>
+                    <th>简称</th><td><input type="text"></td>
+                    <th>拼音码</th><td><input type="text"></td>
+                </tr>
+
+                <tr>
+                    <th>现货分享</th><td><select>
+                        <option value="0">不共享</option>
+                        <option value="1">会员间共享</option>
+                    </select></td>
+                    <th>货位管理</th><td><select>
+                        <option value="0">不执行货位管理</option>
+                        <option value="1">执行货位管理</option>
+                    </select></td>
+                    <th>默认货位</th><td><input type="text" class="txtStockLocal ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"></td>
+                </tr>
+                <tr>
+                    <th>对外平台</th><td><select class="cmbPts"><option selected="" value="12">AAC</option><option value="13">AACJP</option><option value="14">ICRL</option><option value="15">KAICEE</option><option value="16">EPTS</option><option value="17">AACICS</option><option value="18">AACHKI</option><option value="19">NCL</option><option value="20">SE</option><option value="21">Tokyo</option><option value="32">国内平台</option><option value="18339">SE1</option><option value="19510">test1</option><option value="21465">SG</option><option value="24262">苏州</option><option value="24379">武汉</option><option value="24456">上海</option><option value="37097">X1</option><option value="38152">X2</option></select></td>
+                    <th>网址</th><td><input type="text"></td>
+                    <th>主营</th><td rowspan="2"><textarea></textarea></td>
+                </tr>
+                <tr>
+                    <th>运营模式</th><td><select disabled="disabled">
+                        <option value="0"> 只做国内（或者主要国内）</option>
+                        <option value="1"> 只做国外（或者主要做外单）</option>
+                        <option value="2"> 国内国外都做</option>
+                        <option value="3"> 生产工厂</option>
+                        <option value="4"> 芯片翻新工厂</option>
+                    </select></td>
+                    <th>柜台</th><td><input type="text"></td>
+                    <th></th>
+                </tr>
+            </tbody></table>
+<label style="display:block;margin:10px 0;" class="iplock"><input type="checkbox"> 只有注册IP才能登录本系统(公司管理员账户不受此条件限制)</label>
+<div class="ptlock">
+           <div>选择限制类型严格限制平台类型(用户只能操作授权平台)</div>
+                    <label><input type="checkbox" value="0"> 不限制平台</label>
+                    <label><input type="checkbox" value="1"> 销售报价</label>
+                    <label><input type="checkbox" value="2"> 采购询价</label>
+                    <label><input type="checkbox" value="4"> 销售单</label>
+                    <label><input type="checkbox" value="8"> 采购单</label>
+               
+            </div>
+            <fieldset class="margin_top align_c"><input class="third-button" value="保存修改" type="submit"></fieldset>
+            <div class="info_add">
+            <a target="_blank" href="http://www.icprice.cn/refurbish/company.aspx?id=17708"><i class="icon_add1"></i>添加翻新工序<small class="warning">(不是翻新工厂的请不要添加)</small></a>
+            <a href="#"><i class="icon_add1"></i>添加发票信息</a>
+            </div>
+            <div class="info_table">
+            <nav class="tabmenu2"><ul><li class="active_tabmenu2"><a class="on" index="0" href="javascript://">地 址</a></li>
+<li><a index="1" href="javascript://">快递账号</a></li>
+<li><a index="2" href="javascript://">公司分部</a></li>
+<li><a index="3" href="javascript://">分 组</a></li></ul></nav>
+<div class="info_action"><a class="btnCopyGroup" title="从管理公司复制分组相应权限也一起复制过来" style="display:none;" href="javascript://">复制默认分组</a>
+<a class="btnNewLine" href="javascript://"><i class="icon_add1"></i>添加一行</a>
+<a class="btnRefresh" href="javascript://"><i class="icon_refresh"></i>刷 新</a></div><div class="clearfix"></div>
+<table class="table1"><thead><tr>
+                    <th>编号</th>
+                    <th>地址</th>
+                    <th>简称</th>
+                    <th>类型</th>
+                    <th>备注</th>
+                    <th></th>
+                </tr></thead><tbody><tr _id="18666"><td>18666</td><td>DE-陈飞</td><td>DE</td><td _id="1">收/发货地址</td><td>陈飞-德国</td><td class="command"><a class="save" href="javascript://"><i class="icon_edit"></i>编辑</a> <a class="del" href="javascript://"><i class="icon_delete"></i>删除</a></td></tr><tr _id="18667"><td>18667</td><td>JP</td><td>JP</td><td _id="1">收/发货地址</td><td>孟-日本</td><td class="command"><a class="save" href="javascript://">编辑</a><a class="del" href="javascript://">删除</a></td></tr><tr _id="18668"><td>18668</td><td>SINGAPORE</td><td>SINGAPORE</td><td _id="0">公司地址</td><td>收发货地导入</td><td class="command"><a class="save" href="javascript://">编辑</a><a class="del" href="javascript://">删除</a></td></tr><tr _id="18669"><td>18669</td><td>USA</td><td>USA</td><td _id="0">公司地址</td><td>收发货地导入</td><td class="command"><a class="save" href="javascript://">编辑</a><a class="del" href="javascript://">删除</a></td></tr><tr _id="18670"><td>18670</td><td>陈店广祥路20-24号</td><td>陈店</td><td _id="1">收/发货地址</td><td>陈店</td><td class="command"><a class="save" href="javascript://">编辑</a><a class="del" href="javascript://">删除</a></td></tr><tr _id="18671"><td>18671</td><td>加拿大</td><td>加拿大</td><td _id="0">公司地址</td><td>收发货地导入</td><td class="command"><a class="save" href="javascript://">编辑</a><a class="del" href="javascript://">删除</a></td></tr><tr _id="18672"><td>18672</td><td>客户</td><td>客户</td><td _id="0">公司地址</td><td>收发货地导入</td><td class="command"><a class="save" href="javascript://">编辑</a><a class="del" href="javascript://">删除</a></td></tr><tr _id="18673"><td>18673</td><td>鼎诚国际北座822室</td><td>深圳</td><td _id="1">收/发货地址</td><td>深圳-鼎诚822</td><td class="command"><a class="save" href="javascript://">编辑</a><a class="del" href="javascript://">删除</a></td></tr><tr _id="18717"><td>18717</td><td>武汉市武昌区街道口兆富大厦12B11室</td><td>兆富12B11</td><td _id="1">收/发货地址</td><td>武汉-兆富</td><td class="command"><a class="save" href="javascript://">编辑</a><a class="del" href="javascript://">删除</a></td></tr></tbody></table>
+            </div>
+</div>
+<div class="clearfix"></div>
+</div>
+	<!--FOOTER-->
+	<footer class="copyright margin_top">
+		<label>Copyright &copy; 2011. IC全能王</label>
+	</footer>
+</body>
+</html>

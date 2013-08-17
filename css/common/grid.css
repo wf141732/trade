@@ -1,0 +1,36 @@
+﻿.gridBta
+{
+    text-align: right;
+}
+.gridPga
+{
+    text-align: left;
+}
+.gridTba
+{
+    border-radius: 10px;
+    }
+    .gridTba td div
+    {
+        height:100%;
+        width:100%;
+        }
+.header th a
+{
+    color: white;
+}
+.main5 tbody .dirty td:first-child
+{
+    background: url(../../images/dirty.gif) no-repeat left top;
+}
+.main5 { border-collapse:collapse;
+         }
+
+.row1
+{
+    background-color:#f3faff;
+    }
+.row2
+{
+    background-color:#fffff7;
+    }

@@ -1,0 +1,277 @@
+/* Shop Introduction */
+#ShopIntro{
+	width:100%;
+	overflow:hidden;
+}
+
+/*Rate Summary*/
+.Good{
+	font-weight:bold;
+	color:#F30;
+}
+.NotBad{
+	font-weight:bold;
+	color:#070;
+}
+.Bad{
+	font-weight:bold;
+	color:#000;
+}
+
+#RateSummary{
+	float:left;
+	width:21%;
+	margin:1em 0 1em 0;
+	border:1px solid #CCC;
+	background:#FFF url(http://pics.taobao.com/2k5/sys/item_detail/seller_info_bk.gif) left top repeat-x;
+	text-align:left;
+	overflow:hidden;
+}
+#RateSummary h2{
+ 	border:none;
+	border-bottom:1px #CCC solid;
+	background:#EBEBEB url(http://pics.taobao.com/bao/album/sys/icon/ratesummary_16x16.gif) 5px center no-repeat;
+	padding-left:25px;
+	margin-top:0px;
+}
+#RateSummary ul{
+	margin:5px 10px 0;
+	padding:5px 0 0 15px;
+	border-bottom:1px dashed #DDD;
+}
+#RateSummary li{
+	clear:both;
+	list-style-type:none;
+	line-height:20px;
+}
+#RateSummary span{
+	display:block;
+	float:left;
+	width:75px;
+	text-align:right;
+	color:#333;
+}
+#RateSummary img{
+	vertical-align:middle;
+}
+#RateSummary p{
+	margin:5px 12px 0 5px;
+	padding:0 5px 5px 20px;
+	background-color:transparent;
+	background-position:2px 0;
+	border:none;
+	border-bottom:1px dashed #DDD;
+	line-height:1.5em;
+}
+#RateSummary p span{
+	display:inline;
+	float:none;
+	width:auto;
+	text-align:left;
+	color:#F50;
+}
+#RateSummary p strong{
+	color:#060;
+}
+#RateData{
+	border-top:0 !important;
+	border-top:1px dashed #DDD;	
+}
+#RateData span{
+	ling-height:14px;
+	vertical-align:middle;
+	padding-top:0 !important;
+	padding-top:1px;
+}
+#RateSummary ul#RateData strong{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:14px;
+	line-height:14px;
+	font-weight:bold;
+	color:#F50;
+}
+#RateSummary ul#RateData em{
+	font-weight:bold;
+	font-style:normal;
+}
+#RateSummary ul#MoreRateInfo{
+	border:none;
+}
+#RateSummary ul#UserInfo{
+	padding-bottom:1em;
+	padding-left:15px;
+	position:relative;
+	margin-top:-15px;
+}
+/*Rate Statistics*/
+#RateStatistics{
+	float:right;
+	width:72%;
+	padding:0 1%;
+}
+#RateStatistics .Wrapper{
+	width:100%;
+}
+#RateStatistics table{
+	display:block;
+	width:100%;
+	margin:3em 0 5em 0 !important;
+	margin:12px 0 2em 0;
+	font-weight:normal;
+	position:relative;
+	
+}
+#RateStatistics table caption{
+	display:block;
+	float:left;
+	text-align:left;
+	height:20px;
+	line-height:20px;
+	font-size:14px;
+	font-weight:bold;
+}
+
+#RateStatistics table caption span{
+	display:block;
+	position:absolute;	
+	top:-25px !important;
+	top:auto;
+	left:-20px;
+	padding-left:20px;
+}
+#RateStatistics table caption em{
+	font-size:10px;
+	font-style:normal;
+	font-weight:normal;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	color:#F50;
+}
+#RateStatistics table caption.CaptionBottom{
+	display:block;
+	font-size:12px;
+	font-weight:normal;
+	color:#666;	
+	padding-top:1px;
+}
+#RateStatistics table caption.CaptionBottom em{
+	color:#F00;
+}
+#RateStatistics table.AsSeller caption span{
+	background:transparent url(http://pics.taobao.com/bao/album/sys/icon/asseller_16x16.gif) left top no-repeat;
+}
+#RateStatistics table.AsBuyer caption span{
+	background:transparent url(http://pics.taobao.com/bao/album/sys/icon/asbuyer_16x16.gif) left top no-repeat;
+}
+#RateStatistics table th{
+	width:250px !important;
+	/* min-width:200px; */
+	background-color:#F9F9F9;
+	height:26px;
+	line-height:24px;
+	font-style:normal;
+	text-align:center;
+}
+#RateStatistics table th.LastWeek{
+	background-color:#F6F6F6;
+}
+#RateStatistics table th.LastMonths{
+	background-color:#EFEFEF;
+}
+.AsSeller td{background-color:#ffffff;}
+#RateStatistics table th.Last6Months{
+	background-color:#E4E4E4;
+}
+#RateStatistics table th.Totalled{
+	background-color:#DCDCDC;
+}
+#RateStatistics table img{
+	vertical-align:middle;
+	margin-right:4px;
+}
+#RateStatistics table td{
+	/*border-top:1px dashed #DDD;*/
+	text-align:center;
+	height:30px;
+	line-height:20px;
+	text-indent:4px;
+	font-size:14px;
+}
+/*User Rate*/
+#RateType{
+	clear:both;
+	margin-top:1em;
+}
+#RateRole{
+	margin-bottom:10px;
+}
+#RateRole ul{
+	margin-bottom:0;
+}
+#RateDetails{
+	border-bottom:1px solid #DDD;
+	margin-bottom:20px;
+}
+#RateDetails th{
+	text-align:center;
+	font-size:13px;
+	color:#666;
+	border-bottom:3px solid #EEE;
+}
+#RateDetails td{
+	border-top:1px solid #DDD;
+	vertical-align:top;
+	padding:10px;
+	/* line-height:160%; */
+}
+#RateDetails tr.even td{
+	background-color:#FAFAFA;
+	background-color:#FEFFE3;
+}
+#RateDetails td em{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:9px;
+	font-style:normal;
+	color:#555;
+	margin-left:12px;
+}
+#RateDetails div.ItemName{
+	width:100%;
+	height:14px;
+	overflow:hidden;
+	text-overflow:ellipsis;/*Only For IE6*/
+}
+#RateDetails div.NoPoint{
+	color:#FF6600;
+	margin-bottom:4px;
+}
+#RateDetails div.Reply{
+	margin-top:4px;
+	color:#5D0000;
+}
+#RateDetails div.Price{
+	color:#F50;
+}
+#RateDetails div.RatterName{
+	margin-top:8px;
+}
+
+/* Deal Detail*/
+.DealDetail{
+	position:relative;
+}
+.DealDetail span{
+	display:none;
+	position:absolute;
+	top:14px;
+	left:20px;
+	padding:15px;
+	background-color:#FFF;
+	border:1px solid #F50;
+	color:#333;
+}
+.DealDetail a:hover span{
+	display:block;
+}
+.InfoWW span.WWOnline0,.InfoWW span.WWOnline1{
+	margin-top:-20px;
+}

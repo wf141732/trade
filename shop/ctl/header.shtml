@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="span4 logo">
+        <a href="index.shtml">
+            <h1 id="systemName">
+                </h1>
+        </a>
+        <script>
+            var url = window.location.href.toString(),
+                title = "欧美姿会员系统", coid = 1;
+            if (url.indexOf('jy') >= 0) {
+                title="欧美姿会员系统";
+            }
+            else if (url.indexOf('b-base') >= 0) {
+                title = "商贸批发基本版";
+                coid = 1147;            
+            }
+            else if (url.indexOf('b-pro') >= 0) {
+                title = "商贸批发专业版";
+                coid = 1147;
+            }
+            document.getElementById('systemName').innerHTML = title;
+            document.title = title;
+        </script>
+    </div>
+    <div class="span8">
+        <div class="row">
+            <div class="span1">
+                &nbsp;</div>
+            <div class="span2">
+                <!--<h4>Currency</h4>
+                            <a href="#">USD</a> |
+                            <a href="#"><strong>GBP</strong></a>
+                            <a href="#">EUR</a>-->
+            </div>
+            <div class="span2">
+                <a href="cart.shtml">
+                    <h4>
+                        购物车 (0)</h4>
+                </a><a href="cart.shtml">0 个产品 - ￥0.00 </a>
+            </div>
+            <div class="span3 customer_service">
+                <h4>
+                    免费送货促销</h4>
+                <h4>
+                    <small>客户服务QQ : 343181024</small></h4>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="link pull-right">
+                <a href="index.shtml">主页</a> | <a href="my_account.shtml">我的账户</a> | <a href="cart.shtml">
+                    购物车</a> | <a href="about.shtml">关于</a> | <a href="contact.shtml">联系我们</a>
+            </div>
+        </div>
+    </div>
+</div>

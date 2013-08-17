@@ -1,0 +1,269 @@
+<div id="dvUser" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span3">
+                    <label for="q_b_user_code">
+                        登录号码</label>
+                    <input type="text" id="q_b_user_code" value="" placeholder="输入登录号码" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <label for="q_b_user_name">
+                        姓名</label>
+                    <input type="text" id="q_b_user_name" value="" placeholder="输入姓名" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <label for="q_c_user_tel">
+                        电话</label>
+                    <input type="text" id="Text1" value="" placeholder="输入电话" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <label for="q_c_user_status">
+                        状态</label>
+                    <input type="checkbox" id="q_c_user_status" value="" placeholder="输入电话" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link">号码 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">名称 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">电话</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">单位</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">状态</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="dvUserUpd" class="modal hide fade bigModal mutHead">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>添加</c>用户<small></small>
+        </h3>
+    </div>
+    <div class="modal-header">
+        <div accept-charset="UTF-8" class="vehicle_search">
+            <div style="margin: 0; padding: 0; display: inline">
+                <input name="utf8" type="hidden"></div>
+            <div class="well1">
+                <div class="row-fluid">
+                    <div class="span3">
+                        <label for="q_u_u_code">
+                            登录号码</label>
+                        <input type="text" id="q_u_u_code" value="" placeholder="填写登录号码" class="default">
+                    </div>
+                    <div class="span2">
+                        <label for="q_u_u_name">
+                            姓名</label>
+                        <input type="text" id="q_u_u_name" value="" placeholder="姓名" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                    <div class="span2 date">
+                        <label for="q_u_u_date">
+                            生日</label>
+                        <input type="text" id="q_u_u_date" value="" placeholder="生日" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                    <div class="span2">
+                        <label for="q_u_u_mobile">
+                            电话</label>
+                        <input type="text" id="q_u_u_mobile" value="" placeholder="电话" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                    <div class="span2">
+                        <label for="q_u_u_status">
+                            状态</label>
+                        <input type="checkbox" id="q_u_u_status" checked="checked" class="default" style="width: 100%;
+                            max-width: 284px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#q_m_u_r" data-toggle="tab">角色</a></li>
+            <li><a href="#q_m_u_top" data-toggle="tab">淘宝账号</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="q_m_u_r">
+                <div class="row-fluid result-header">
+                    <div class="span7">
+                        <h4>
+                            <c>0</c>
+                            条记录 <small>查询日期
+                                <d></d>
+                            </small>
+                        </h4>
+                    </div>
+                    <div class="span5 span-right">
+                        <button class="btn btn-primary role" data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;选择角色</button>
+                        <button class="btn" style="position: relative">
+                            <i class="icon-trash icon-white"></i>&nbsp;清空
+                        </button>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">编码</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">名称</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">描述</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="q_m_u_top">
+                <div class="row-fluid result-header">
+                    <div class="span7">
+                        <h4>
+                            <c>0</c>
+                            条记录 <small>查询日期
+                                <d></d>
+                            </small>
+                        </h4>
+                    </div>
+                    <div class="span5 span-right">
+                        <button class="btn btn-primary top" data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;添加</button>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">淘宝账号</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">状态</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div style="float: left;">
+            备注:<textarea cols="1" style="height: 18px; width: 530px; border-style: none; border-bottom: 1px solid #B9DDFF;"></textarea></div>
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <button href="#" class="btn btn-save-add">
+            保存并新增</button>
+        <button href="#" class="btn" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>
+<div id="dvUserUpd1" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>添加</c>
+            用户<small></small>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <table class="modal-form" style="margin-left: 10%">
+            <tr>
+                <th>
+                    登录号码
+                </th>
+                <td style="color: Green; font-weight: bold;">
+                    <c style="width: 20px;"></c>
+                    <input type="text" placeholder="输入登录号码" title="输入登录号码" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    姓名
+                </th>
+                <td>
+                    <input type="text" placeholder="输入姓名" title="输入姓名" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    电话
+                </th>
+                <td>
+                    <input type="text" placeholder="输入电话" title="输入电话" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="q_bu_status">
+                        状态</label>
+                </th>
+                <td>
+                    <input type="checkbox" id="q_bu_status" checked="checked" placeholder="输入默认优惠百分比"
+                        title="选择状态" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                </th>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <button href="#" class="btn btn-save-add">
+            保存并新增</button>
+        <button href="#" class="btn" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>

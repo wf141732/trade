@@ -1,0 +1,30 @@
+/* Shop Introduction */
+#ShopIntro{
+	width:100%;
+	overflow:hidden;
+	text-align:left;
+}
+/* Personal Profile */
+#Content{
+	text-align:center;
+}
+#NameCard{
+	margin:20px auto;
+	width:572px;
+	height:487px;
+	background:transparent url(http://pics.taobao.com/2k5/sys/profile/per_profile_bk.gif) 50% 0% no-repeat;
+	text-align:left;
+}
+#NameCard h1{
+	margin-top:60px;
+	text-align:center;
+}
+#NameCard p{
+	margin-left:90px;
+	margin-bottom:0;
+	font-weight:bold;
+}
+#NameCard ul{
+	margin-left:110px;
+	margin-top:0;
+}

@@ -1,0 +1,41 @@
+<style>
+#bd_fm_if{height: 86px;top: 2px;width: 390px;-webkit-transform: scale(0.8);
+                -moz-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+    -webkit-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out,-webkit-transform 0.3s ease-out;
+    -o-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+    transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;}
+#bd_fm_if:hover{height:130px;top: 10px;width:400px;-webkit-transform:scale(1);
+                -moz-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+    -webkit-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out,-webkit-transform 0.3s ease-out;
+    -o-transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+    transition: height 0.3s ease-in,top 0.2s ease-out,width 0.3s ease-out;
+                }
+</style>
+<iframe id="bd_fm_if" scrolling="no" frameborder="no" style="border: 0 none; margin: -32px 0 0 -1px; position:fixed; right:200px;z-index: 1100;"
+    src="http://fm.baidu.com/widget-newindex.html"></iframe>
+<!--<div class="close" style="border: 0 none; margin: -32px 0 0 -1px; position:fixed;
+    right: 300px; top: 181px;z-index: 1000;">+</div>-->
+<script>
+    window.onload = function () {      
+		$('bd_fm_if').hover(function(){
+			$(this).addClass('ihover'); 
+		},function(){
+			$(this).removeClass('ihover'); 
+		});
+        $('#bd_fm_if').next().click(function () {
+            if ($('#bd_fm_if').css('display') == 'block') {
+                $('#bd_fm_if').hide();
+                $(this).text('+');
+                localStorage.musicDisplay = 'hide';
+            }
+            else {
+                $('#bd_fm_if').show();
+                $(this).text('x');
+                localStorage.musicDisplay = 'show';
+            }
+        });
+        //if (!localStorage.musicDisplay ||localStorage.musicDisplay == 'show') {
+        //    $('#bd_fm_if').next().click();
+        //}
+    };
+</script>

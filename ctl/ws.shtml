@@ -1,0 +1,61 @@
+<style>
+    #dvWS{position: fixed;right: 5px;top: 40px;height: 20%;min-height:160px;width: 80px;}
+    #dvWS .friends{overflow: auto;height: 20%;min-height:160px;text-align: center;}
+    #dvWS .friend{overflow: hidden;cursor: pointer;}
+    #dvWS .friend .name{color: gray;font-size: 12px;}
+    #dvWS .friend.o .name{color:Blue;}
+    #dvWS .friend:hover{background-color: whiteSmoke;}
+    #dvWS ::-webkit-scrollbar-thumb, *::-moz-scrollbar-thumb{
+        -webkit-border-radius: 10px;border-radius: 10px;
+        background: rgba(231, 231, 231, 0.8);-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);}
+    #dvWS ::-webkit-scrollbar-track, *::-moz-scrollbar-track{
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);-webkit-border-radius: 10px;border-radius: 10px;}
+    #dvChat .msg{width:100%;height:250px;overflow:auto;}
+    #dvChat .content{height:100px;background-color: white;border: 1px solid #CCC;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);-webkit-transition: border linear .2s,box-shadow linear .2s;}
+    #dvChat .content textarea{width:100%;height:100%;}
+    #dvChat .msg .con{margin-left: 10px;}
+    @-webkit-keyframes mycolor {
+             0% {background-color: red;color:White;}
+             30% {background-color: darkblue;}
+             80% {background-color: yellow;}
+             100% {background-color: red;color:White;}
+         }
+        #dvWS .friend.unread {
+             -webkit-animation-name: mycolor;
+             -webkit-animation-duration: 2.5s;
+             -webkit-animation-timing-function: linear;
+			 -webkit-animation-iteration-count: infinite;
+         }
+</style>
+<div id="dvWS">
+    <div class="friends">
+    </div>
+    <!--<div class="friend">
+        <div class="number">543001</div>
+        <div class="name">自动添加</div>
+    </div>-->
+</div>
+
+<div id="dvChat" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            与<c></c>
+            <small></small>对话
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="msg"></div>
+        <div class="content" contenteditable="true"></div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success">
+            发送</button>
+        <button href="#" class="btn" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>
+
+

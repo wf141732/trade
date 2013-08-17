@@ -1,0 +1,123 @@
+<div id="dvReturnReason" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span4">
+                    <label for="q_b_brand_code">
+                        编号</label>
+                    <input type="text" id="q_c_brand_code" value="" placeholder="输入分类编号" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span4">
+                    <label for="q_b_brand_name">
+                        名称</label>
+                    <input type="text" id="q_c_brand_name" value="" placeholder="输入分类名称" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span4">
+                    <label for="q_c_brand_status">
+                        状态</label>
+                    <select class="cmbStatus">						
+						<option></option>
+						<option value=1>有效</option>
+						<option value=0>无效</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link">编码 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">名称 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">状态</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">描述</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="dvReturnReasonUpd" class="modal hide fade">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>添加</c>原因<small></small>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <table class="modal-form" style="margin-left: 10%">
+            <tr>
+                <th>
+                    编码
+                </th>
+                <td style="color: Green; font-weight: bold;">
+                    <c style="width: 20px;"></c>
+                    <input type="text" placeholder="输入原因编码" title="输入原因编码" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    名称
+                </th>
+                <td>
+                    <input type="text" placeholder="输入原因名称" title="输入原因名称" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="q_bu_status">
+                        状态</label>
+                </th>
+                <td>
+                    <input type="checkbox" id="q_bu_status" checked="checked" placeholder="输入默认优惠百分比"
+                        title="输入默认优惠百分比" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                </th>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    描述
+                </th>
+                <td>
+                    <textarea></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <button href="#" class="btn btn-save-add">
+            保存并新增</button>
+        <button href="#" class="btn" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>

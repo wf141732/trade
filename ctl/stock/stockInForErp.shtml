@@ -1,0 +1,63 @@
+<div id="dvStockInForErp" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span4">
+                    <label for="q_sie_so_num">
+                        供货方出库编号</label>
+                    <input type="text" id="q_sie_so_num" value="" placeholder="供货方的出库编号" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span4">
+                    <label for="q_sie_sp_num">
+                        供货方销售订单编号</label>
+                    <input type="text" id="q_sie_sp_num" value="" placeholder="供货方的销售订单编号" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/stock/stockInPaging.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">库存单号 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">订单编号 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">产品名称</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">产品分类</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">数量</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">出库日期</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">发货通知</a>
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                        <input type="checkbox" name="all" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>

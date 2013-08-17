@@ -1,0 +1,72 @@
+<div id="dvGiftDelSta" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span3">
+                    <label for="q_mem_memno">
+                        姓名</label>
+                    <input type="text" id="Text1" value="" placeholder="根据姓名进行查询" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <label for="q_mem_idcard">
+                        身份证号</label>
+                    <input type="text" id="Text2" value="" placeholder="根据身份证号进行查询" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <label for="q_mem_tel">
+                        手机号码</label>
+                    <input type="text" id="Text3" value="" placeholder="根据手机号码进行查询" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <label for="q_mem_type">
+                        活动类型</label>
+                    <select>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link">姓名</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">身份证号</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">手机号</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">地区</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">赠送礼品</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">时间</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">门店</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>

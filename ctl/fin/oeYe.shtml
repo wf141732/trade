@@ -1,0 +1,54 @@
+<div id="dvOeYe" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">                
+                <div class="span6">
+                    <div class="clearfix">
+                        <label for="q_oy_a">
+                            活动</label>
+                        <select class="input-medium" data-placeholder="选择状态" id="q_oy_a" name="q[date_in_time_frame]">                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link">活动</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">金额</a>
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>    
+                        合计                    
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

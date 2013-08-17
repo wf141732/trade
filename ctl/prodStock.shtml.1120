@@ -1,0 +1,207 @@
+<div id="dvProdStock" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span4">
+                    <label for="q_ps_prod_code">
+                        编号</label>
+                    <input type="text" id="q_ps_prod_code" value="" placeholder="输入产品编号" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span4">
+                    <label for="q_ps_prod_name">
+                        名称</label>
+                    <input type="text" id="q_ps_prod_name" value="" placeholder="输入产品名称" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span4">
+                    <label for="q_si_sp_num">
+                        产品系列</label>
+                    <select class="cmbCategory">
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">名称 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">编码 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">类别</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">进货价</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">零售价</a>
+                    </th>
+                    <th class="attribute1" style="display:none;">
+                        <a href="#" class="sort_link">进货价</a>
+                    </th>
+                    <th class="attribute2" style="display:none;">
+                        <a href="#" class="sort_link">零售价</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">库存数</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">单位</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">描述</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="dvProdUpd" class="modal hide fade formModal">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>创建</c>产品
+        </h3>
+    </div>
+    <div class="modal-body">
+        <table class="modal-form">
+            <tr>
+                <th style="width: 20%;">
+                    分类
+                </th>
+                <td style="width: 30%; color: Green; font-weight: bold;" class="parent">
+                    <input type="hidden" value="-1" /><select class="cmbCategory" style="width: 100%"></select>
+                </td>
+                <td colspan="2" rowspan="5" style="text-align: center;">
+                    <canvas id="c" width="200" height="150">
+                    </canvas>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    名称
+                </th>
+                <td>
+                    <input type="text" placeholder="输入产品名称" title="输入产品名称" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    编码
+                </th>
+                <td>
+                    <input type="text" placeholder="修改产品编码" title="修改产品编码" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    条形码
+                </th>
+                <td>
+                    <input type="text" placeholder="扫描进来条形码" title="扫描进来条形码" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    数量
+                </th>
+                <td>
+                    <input type="number" placeholder="现在的库存数量" title="现在的库存数量" maxlength="30" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    单位
+                </th>
+                <td>
+                    <select class="unit" style="width: 100%;">
+                        <option value="0">个</option>
+                        <option value="1">只</option>
+                        <option value="2">盒</option>
+                        <option value="3">套</option>
+                        <option value="4">袋</option>
+                        <option value="5">瓶</option>
+                        <option value="6">支</option>
+                    </select>
+                </td>
+                <th>
+                    图像
+                </th>
+                <td>
+                    <button class="btnCam btn">
+                        <i class="icon-camera"></i>
+                        <c>打开摄像头</c>
+                    </button>
+                    <button class="btnFile btn">
+                        <i class="icon-file"></i>选择文件</button><input type="file" style="display: none;" placeholder="选择此商品的靓照"
+                            title="选择此商品的靓照" accept="image/*" />
+                </td>
+            </tr>
+            <tr>               
+                <th>
+                    零售价
+                </th>
+                <td>
+                    <input type="number" placeholder="售卖价格" title="售卖价格" />
+                </td> 
+                <th>
+                    进货价
+                </th>
+                <td>
+                    <input type="number" placeholder="购入的产品价格" title="购入的产品价格" />
+                </td>
+            </tr>
+            <tr>
+                <th class="attribute1" style="display:none;">
+                    进货价
+                </th>
+                <td class="attribute1" style="display:none;">
+                    <input type="text" placeholder="购入的产品价格" title="购入的产品价格" />
+                    <div style="position:relative;top: -10px;"></div>
+                </td>
+                <th class="attribute2" style="display:none;">
+                    零售价
+                </th>
+                <td class="attribute2" style="display:none;">
+                    <input type="text" placeholder="售卖价格" title="售卖价格" />
+                    <div style="position:relative;top: -10px;"></div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    描述
+                </th>
+                <td colspan="2">
+                    <textarea type="text" style="width: 100%;" placeholder="输入对此商品的描述" title="输入对此商品的描述"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <button href="#" class="btn btn-save-add">
+            保存并新增</button>
+        <button href="#" class="btn close" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>

@@ -1,0 +1,1635 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>厂家营销管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="fan.w">
+    <!-- Le styles -->
+    <link href="ui/bootstrap/css/other.css" rel="stylesheet" type="text/css" />
+    <link href="ui/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="ui/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />    
+      <link href="ui/bootstrap/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        body
+        {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+        .sidebar-nav
+        {
+            padding: 9px 0;
+        }
+        label, input[type=text], input[type=number], button, select, textarea
+        {
+            font-size: 12px;
+            font-weight: normal;
+            line-height: 18px;
+        }
+        .nav-list li
+        {
+            height: 27px;
+        }
+        .nav-list li:not([for]) a
+        {
+            color: Gray;
+        }
+        .nav-list a
+        {
+            font-size: 12px;
+        }
+        .nav-header
+        {
+            font-size: 16px;
+        }
+        .btn
+        {
+            font-size: 12px;
+            margin-right: 20px;
+        }
+        .progress
+        {
+            margin-bottom: 0px;
+            height: 15px;
+        }
+        td.number, label.number
+        {
+            text-align: right;
+        }
+        h3
+        {
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            margin-top: 0px;
+        }
+        .bigModal
+        {
+            width: 940px;
+            margin-left: -470px;
+        }
+        .formModal
+        {
+            width: 840px;
+            margin-left: -420px;
+        }
+        .modal-body
+        {
+            padding-top: 10px;
+        }
+        [class^="icon-erp"], [class*=" icon-erp"]
+        {
+            background-image: url(/ui/bootstrap/img/caigou_h.jpg) !important;
+            background-size: 1500%;
+        }
+        .icon-erp-po
+        {
+            background-position: -38px -15px;
+        }
+        .icon-erp-stock
+        {
+            background-position: -97px -15px;
+        }
+        .icon-erp-change
+        {
+            background-position: -97px -53px;
+        }
+        [class^="icon-ck"], [class*=" icon-ck"]
+        {
+            background-image: url(/ui/bootstrap/img/cangcun_h.jpg) !important;
+            background-size: 1000%;
+        }
+        .icon-ck-in
+        {
+            background-position: -44px -7px;
+        }
+        .icon-ck-out
+        {
+            background-position: -83px -7px;
+        }
+        .icon-ck-kc
+        {
+            background-position: -83px -33px;
+        }
+        .pagination
+        {
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+        .span-right
+        {
+            text-align: right;
+        }
+        .pagination a
+        {
+            height: 30px;
+            line-height: 30px;
+        }
+        .lov input
+        {
+            width: 84%;
+            border-right: none;
+        }
+        .lov button
+        {
+            width: 15%;
+            margin-top: -9px;
+            border-left: none;
+            padding-right: 0px;
+            margin-left: -2px;
+            border-radius: 0px 5px 5px 0px;
+            margin-right: -10px;
+            padding-left: 4px;
+        }
+        .modal-body .sidemenu li
+        {
+            border-right: 1px solid #CCC;
+        }
+        .block.withsidebar .block_content .sidebar ul.sidemenu li:hover, .sidebar ul.sidemenu li.active, .block.withsidebar .block_content .sidebar ul.sidemenu li:hover a
+        {
+            border-right: none;
+        }
+        td[contenteditable]
+        {
+            border-bottom: 2px solid #B9DDFF;
+        }
+        td[contenteditable]:focus
+        {
+            border-color: rgba(82, 168, 236, 0.8);
+            outline: 0;
+            outline: thin dotted 9;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+            -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+        }
+        .nav .nav-header
+        {
+            font-size: 16px;
+            letter-spacing: 3px;
+        }
+        .nav-list a
+        {
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+        .mutHead .modal-body
+        {
+            max-height: 300px;
+        }
+        .modal .modal-form th
+        {
+            text-align: right;
+            font-weight: normal;
+            padding-right: 10px;
+            vertical-align: top;
+            font-size: 12px;
+        }
+        .row-fluid [class*='dvMain']
+        {
+            display: none;
+        }
+        .dropdown-menu
+        {
+            min-width: 100px;
+        }
+        #dvPartnerLov tbody tr
+        {
+            cursor: pointer;
+        }
+        .modal .table td .del
+        {
+            cursor: pointer;
+        }
+        .error_msg
+        {
+            display: none;
+            color: Red;
+        }
+        input.error
+        {
+            background-color: Red;
+            color: white;
+        }
+        #dvPrint
+        {
+            display: none;
+        }
+        .lov input{width: 84%;border-right: none;}
+        .lov button{width: 15%;margin-top: -9px;border-left: none;padding-right: 0px;margin-left: -6px;border-radius: 0px 5px 5px 0px;margin-right: -10px;padding-left: 4px;}
+        .lov input:focus+button{border-color: rgba(82, 168, 236, 0.8);margin-top: -8.5px;
+                             -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+                             -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+                             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);}
+          .lov input+button{margin-top: -8.5px;}
+    </style>
+    <style media="print">
+        #agent
+        {
+            display: none;
+        }
+        #dvPrint
+        {
+            display: block;
+        }
+    </style>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+</head>
+<body id="agent">
+    <div id="topBar" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
+                    class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </a><a class="brand" href="#">
+                    <d></d>营销管理系统</a>
+                <div class="nav-collapse collapse">
+                    <p class="navbar-text pull-right">
+                        欢迎您 <a href="#" class="navbar-link user">管理员</a>
+                    </p>
+                    <ul class="nav">
+                        <li class="active"><a href="#">首页</a></li>
+                        <li><a href="#about">关于</a></li>
+                        <li><a href="/index.aspx">返回老版</a></li>
+                        <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=343181024&site=qq&menu=yes">
+                            <img border="0" src="http://wpa.qq.com/pa?p=2:343181024:44" alt="出现任何问题Q我" title="出现任何问题Q我"></a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+    <style>
+      i{color:black;}
+      </style>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span2">
+                <div id="menu-nav" class="well sidebar-nav">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">会员管理</li>
+                        <li for="dvMembers"><a href="#"><i class="f-icon-sitemap"></i>会员管理</a></li>
+                        <li for="dvMemberSta"><a href="#"><i class="icon-list-alt"></i>会员统计</a></li>
+                        <li for="dvMemberStaGroup"><a href="#"><i class="icon-list-alt"></i>会员分组统计</a></li>
+                        <li class="nav-header">营销活动</li>
+                        <li for="dvAgent"><a href="#"><i class="f-icon-check-empty"></i>门店管理</a></li>
+                        <li for="dvGiftDelSta"><a href="#"><i class="f-icon-heart-empty"></i>礼品派送查询</a></li>
+                        <li class="active" for="dvMarketing"><a href="#"><i class="f-icon-flag"></i>营销活动管理</a></li>
+                        <li class="nav-header">采购管理</li>
+                        <li for1="dvPurchasOrder"><a href="#"><i class="icon-shopping-cart"></i>采购订单查询</a></li>
+                        <!--<li><a href="#"><i class="icon-erp-change"></i>进货退货</a></li>
+              <li><a href="#"><i class="icon-erp-change"></i>进货换货</a></li>
+              <li><a href="#"><i class="icon-erp-change"></i>供货方</a></li>-->
+                        <li class="nav-header">销售管理</li>
+                        <li for1="dvSo"><a href="#"><i class="f-icon-fire"></i>销售订单查询</a></li>
+                        <li class="nav-header">库存管理</li>
+                        <li for="dvBrand"><a href="#"><i class="f-icon-glass"></i>品牌管理</a></li>
+                        <li for1="dvStockInR"><a href="#"><i class="f-icon-truck"></i>入库记录查询</a></li>
+                        <li for1="dvStockOutR"><a href="#"><i class="f-icon-truck"></i>出库记录查询</a></li>
+                        <li for1="dvProdStock"><a href="#"><i class="f-icon-hdd"></i>产品库存查询</a></li>
+                        <li class="nav-header">基础设置</li>
+                        <li><a href="#"><i class="icon-user"></i>用户管理</a></li>
+                        <li for="dvConfig"><a href="#"><i class="icon-cog"></i>密码设置</a></li>
+                        <li for="logout"><a href="#"><i class="icon-off"></i>退出系统</a></li>
+                    </ul>
+                </div>
+                <!--/.well -->
+            </div>
+            <!--/span-->
+            <div id="dvAgent" class="span10 dvMain">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well">
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <label for="q_a_code">
+                                    编号</label>
+                                <input type="text" id="q_a_code" value="" placeholder="编号" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span3">
+                                <div class="clearfix">
+                                    <label for="q_a_area">
+                                        区域</label>
+                                    <select class="input-medium" data-placeholder="选择区域" style="width:100%"  id="q_a_area" name="q[date_in_time_frame]">
+                                        <option value="">全部</option><option value="11" selected="">北京市</option><option value="12">天津市</option><option value="13">河北省</option><option value="14">山西省</option><option value="15">内蒙古自治区</option><option value="21">辽宁省</option><option value="22">吉林省</option><option value="23">黑龙江省</option><option value="31">上海市</option><option value="32">江苏省</option><option value="33">浙江省</option><option value="34">安徽省</option><option value="35">福建省</option><option value="36">江西省</option><option value="37">山东省</option><option value="41">河南省</option><option value="42">湖北省</option><option value="43">湖南省</option><option value="44">广东省</option><option value="45">广西壮族自治区</option><option value="46">海南省</option><option value="50">重庆市</option><option value="51">四川省</option><option value="52">贵州省</option><option value="53">云南省</option><option value="54">西藏自治区</option><option value="61">陕西省</option><option value="62">甘肃省</option><option value="63">青海省</option><option value="64">宁夏回族自治区</option><option value="65">新疆维吾尔自治区</option><option value="71">台湾省</option><option value="81">香港特别行政区</option><option value="82">澳门特别行政区</option>
+                                    </select>
+                                </div>
+                            </div>                            
+                            <div class="span3">
+                                <div class="clearfix">
+                                    <label for="q_a_type">
+                                        类型</label>
+                                    <select class="input-medium cmbRank" data-placeholder="选择状态" style="width:100%" id="q_a_type" name="q[date_in_time_frame]">
+                                        <option value="">全部</option>
+                                        <option value="1">代理商</option>
+                                        <option value="2">终端店</option>
+                                        <option value="3">连锁店</option>
+                                    </select>
+                                </div>
+                            </div>                            
+                            <div class="span3 date">
+                                <label for="q_q_status">
+                                     活动状态</label>
+                                <input type="checkbox" id="q_q_status" value="0" placeholder="" class="default" autocomplete="off" style="width: 100%; max-width: 284px;">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+                        <button class="btn " data-disable-with="努力查找中..." name="add">
+                            <i class="icon-plus"></i>增加</button>
+                    </div>
+                </div>
+                <div class="page-header">
+                    <div class="row-fluid">                         
+                        <div class="fr span7">                            
+                            <h4><f class="btn"><i class="icon-search icon-white"></i>&nbsp;开通</f>
+                                <e>共计<g>0</g>条记录</e>，
+                                当前查询<c>0</c>条记录 <small>查询日期
+                                    <d></d>
+                                </small>
+                            </h4>
+                        </div>
+                        <div class="pagination span5 span-right">
+                           <ul>
+                            <li><a href="#" class="prev">前一页</a></li>
+                            <li><a class="cur">0</a></li>
+                            <li><a href="#" class="next">后一页</a></li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type=checkbox name="all">
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link asc">门店号 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">类型 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">名称</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">联系人</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">联系电话</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">上级</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">日期</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">是否活动</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">开通活动</a>
+                                </th>
+                                <th>                                    
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="dvAgentUpd" class="modal hide fade">
+                <div class="modal-header">
+                    <a class="close" data-dismiss="modal">×</a>
+                    <h3>
+                        <c>添加</c><sma>的下级</sma>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <table class="modal-form" style="margin-left: 10%">
+                        <tr>
+                            <th>
+                                编码
+                            </th>
+                            <td style="color: Green; font-weight: bold;">
+                                <c style="width: 20px;"></c>
+                                <input type="text" placeholder="输入三位数编号" title="输入三位数编号" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                名称
+                            </th>
+                            <td>
+                                <input type="text" placeholder="输入客户名称" title="输入客户名称" />
+                            </td>
+                        </tr>
+                        <!--<tr>
+                            <th>
+                                默认优惠%
+                            </th>
+                            <td>
+                                <input type="text" placeholder="输入默认优惠百分比" title="输入默认优惠百分比" />
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <th>
+                                联系人
+                            </th>
+                            <td>
+                                <input type="text" placeholder="输入客户联系人" title="输入客户联系人" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                联系电话
+                            </th>
+                            <td>
+                                <input type="text" placeholder="输入客户联系电话" title="输入客户联系电话" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                地址
+                            </th>
+                            <td class="address">
+                                <select style="width: 140px;">
+                                </select><select style="width: 95px;"></select><select style="width: 85px;"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                街道
+                            </th>
+                            <td>
+                                <input type="text" placeholder="输入客户街道" title="输入客户街道" style="width: 100%" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success">
+                        保存并关闭</button>
+                    <button href="#" class="btn btn-save-add">
+                        保存并新增</button>
+                    <button href="#" class="btn" data-dismiss="modal">
+                        关闭</button>
+                </div>
+            </div>
+
+            <div id="dvMarketing" style="display: block; overflow-y: auto;" class="span10 dvMain">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well">
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <label for="q_si_so_num">
+                                    活动编号</label>
+                                <input type="text" id="q_si_so_num" value="" placeholder="活动编号" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span4">
+                                <label for="q_si_sp_num">
+                                    活动名称</label>
+                                <input type="text" id="q_si_sp_num" value="" placeholder="活动名称" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+                        <button class="btn " data-disable-with="努力查找中..." name="add">
+                            <i class="icon-plus"></i>增加</button>
+                    </div>
+                </div>
+                <div class="page-header">
+                    <div class="row-fluid">
+                        <div class="fr span5">
+                            <h4>
+                                <c>0</c>
+                                条记录 <small>查询日期
+                                    <d></d>
+                                </small>
+                            </h4>
+                        </div>
+                        <div class="pagination span7 span-right">
+                            <ul>
+                                <li><a href="#">前一页</a></li>
+                                <li class="active"><a href="#">1</a> </li>
+                                <!--<li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>-->
+                                <li><a href="#">后一页</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">活动编号 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">活动名称 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">活动描述</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">活动期间</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">活动类型</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">状态</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="dvStockOut" class="span10 dvMain">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well">
+                        <div class="row-fluid">
+                            <!--<div class="span4">
+                            <label for="q_si_so_num">
+                                出库编号</label>
+                            <input type="text" id="Text3" value="" placeholder="供货方的出库编号" class="default"
+                                autocomplete="off" style="width:100%;max-width: 284px;">
+                        </div>-->
+                            <div class="span4">
+                                <label for="q_si_sp_num">
+                                    销售订单编号</label>
+                                <input type="text" id="Text4" value="" placeholder="供货方的销售订单编号" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+                    </div>
+                </div>
+                <div class="page-header">
+                    <div class="row-fluid">
+                        <div class="fr span5">
+                            <h4>
+                                <c>0</c>
+                                条记录 <small>查询日期
+                                    <d></d>
+                                </small>
+                            </h4>
+                        </div>
+                        <div class="pagination span7 span-right">
+                            <ul>
+                                <li><a href="#">前一页</a></li>
+                                <li class="active"><a href="#">1</a> </li>
+                                <li><a href="#">后一页</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">销售单号 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">产品名称 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">产品分类</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">产品数量</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单位</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">出库日期</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">操作</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="dvStockInR" class="span10 dvMain">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well">
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <label for="q_si_so_num">
+                                    入库编号</label>
+                                <input type="text" id="Text5" value="" placeholder="供货方的出库编号" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span4">
+                                <label for="q_si_sp_num">
+                                    销售订单编号</label>
+                                <input type="text" id="Text6" value="" placeholder="供货方的销售订单编号" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+                    </div>
+                </div>
+                <div class="page-header">
+                    <div class="row-fluid">
+                        <div class="fr span5">
+                            <h4>
+                                <c>0</c>
+                                条记录 <small>查询日期
+                                    <d></d>
+                                </small>
+                            </h4>
+                        </div>
+                        <div class="pagination span7 span-right">
+                            <ul>
+                                <li><a href="#">前一页</a></li>
+                                <li class="active"><a href="#">1</a> </li>
+                                <li><a href="#">后一页</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">采购单号 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">产品名称 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">产品分类</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">数量</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单位</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">入库日期</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link"></a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="dvStockOutR" class="span10 dvMain">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well">
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <label for="q_si_so_num">
+                                    出库编号</label>
+                                <input type="text" id="Text7" value="" placeholder="供货方的出库编号" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span4">
+                                <label for="q_si_sp_num">
+                                    销售订单编号</label>
+                                <input type="text" id="Text8" value="" placeholder="供货方的销售订单编号" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+                    </div>
+                </div>
+                <div class="page-header">
+                    <div class="row-fluid">
+                        <div class="fr span5">
+                            <h4>
+                                <c>0</c>
+                                条记录 <small>查询日期
+                                    <d></d>
+                                </small>
+                            </h4>
+                        </div>
+                        <div class="pagination span7 span-right">
+                            <ul>
+                                <li><a href="#">前一页</a></li>
+                                <li class="active"><a href="#">1</a> </li>
+                                <li><a href="#">后一页</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">销售单号 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">产品名称 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">产品分类</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">数量</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单位</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">出库日期</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link"></a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="dvProdStock" class="span10 dvMain">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well">
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <label for="q_ps_prod_code">
+                                    名称</label>
+                                <input type="text" id="q_ps_prod_code" value="" placeholder="输入产品编号" class="default"
+                                    autocomplete="off" style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span4">
+                                <label for="q_ps_prod_name">
+                                    名称</label>
+                                <input type="text" id="q_ps_prod_name" value="" placeholder="输入产品名称" class="default"
+                                    autocomplete="off" style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span4">
+                                <label for="q_si_sp_num">
+                                    产品系列</label>
+                                <select class="cmbCategory">
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+                        <button class="btn " data-disable-with="努力查找中..." name="add">
+                            <i class="icon-plus"></i>增加</button>
+                    </div>
+                </div>
+                <div class="page-header">
+                    <div class="row-fluid">
+                        <div class="fr span5">
+                            <h4>
+                                <c>0</c>
+                                条记录 <small>查询日期
+                                    <d></d>
+                                </small>
+                            </h4>
+                        </div>
+                        <div class="pagination span7 span-right">
+                            <ul>
+                                <li><a href="#">前一页</a></li>
+                                <li class="active"><a href="#">1</a> </li>
+                                <!--<li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>-->
+                                <li><a href="#">后一页</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">名称 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">编码 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">类别</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">进货价</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">零售价</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">库存数</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单位</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">描述</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--#include file="/ctl/brand.shtml"-->
+            <!--#include file="/ctl/partner.shtml"-->
+            <!--#include file="/ctl/userInfo.shtml"-->
+            <!--#include file="/ctl/memberSta.shtml"-->
+            <!--#include file="/ctl/memberStaGroup.shtml"-->            
+            <!--#include file="/ctl/giftDeliverySta.shtml"-->  
+            <div id="dvSo" class="span10 dvMain">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well">
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <label for="q_so_num">
+                                    订单编号</label>
+                                <input type="text" id="q_so_number" value="" placeholder="订单编号" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span3 date">
+                                <label for="q_so_start">
+                                    订单日期起</label>
+                                <input type="text" id="Text1" value="" placeholder="订单日期范围开始时间" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span3 date">
+                                <label for="q_so_end">
+                                    订单日期止</label>
+                                <input type="text" id="Text2" value="" placeholder="订单日期范围结束时间" class="default" autocomplete="off"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span3">
+                                <div class="clearfix">
+                                    <label for="q_vehicle_status_id_in">
+                                        状态</label>
+                                    <select class="input-medium" data-placeholder="选择状态" id="Select1" name="q[date_in_time_frame]">
+                                        <option value=""></option>
+                                        <option value="draft">草稿</option>
+                                        <option value="confirm">已确认</option>
+                                        <option value="cancel">已取消</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+                        <button class="btn " data-disable-with="努力查找中..." name="add">
+                            <i class="icon-plus"></i>增加</button>
+                    </div>
+                </div>
+                <div class="page-header">
+                    <div class="row-fluid">
+                        <div class="fr span5">
+                            <h4>
+                                <c>0</c>
+                                条记录 <small>查询日期
+                                    <d></d>
+                                </small>
+                            </h4>
+                        </div>
+                        <div class="pagination span7 span-right">
+                            <ul>
+                                <li><a href="#">前一页</a></li>
+                                <li class="active"><a href="#">1</a> </li>
+                                <!--<li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>-->
+                                <li><a href="#">后一页</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">订单编号 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">订单日期 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">客户</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">销售员</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">总金额</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">确认日期</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <style>
+                #dvPOS > div
+                {
+                    position: fixed;
+                    right: 20px;
+                    left: 18%;
+                }
+                #dvPOS > .dvhead
+                {
+                    top: 59px;
+                }
+                #dvPOS > .page-header
+                {
+                    top: 152px;
+                }
+                #dvPOS > .report-results
+                {
+                    top: 232px;
+                }
+                #dvPOS > .dvfoot
+                {
+                    bottom: 15px;
+                }
+                .lov input:focus + button
+                {
+                    border-color: rgba(82, 168, 236, 0.8);
+                    margin-top: -8.5px;
+                    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+                    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+                }
+                .lov input + button
+                {
+                    margin-top: -8.5px;
+                }
+            </style>
+        </div>
+        <!--/row-->
+        <hr>
+        <div id="dvPoUpd" class="modal hide fade bigModal mutHead">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>
+                    <c>添加</c>
+                    采购订单<small></small>
+                </h3>
+            </div>
+            <div class="modal-header">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well1">
+                        <div class="row-fluid">
+                            <div class="span4 lov">
+                                <label for="q_po_vendor">
+                                    供货方</label>
+                                <input type="text" id="q_po_vendor" value="" placeholder="填写或选择供货方" class="default"
+                                    style="max-width: 284px;">
+                                <button class="btn">
+                                        ...</button>
+                            </div>
+                            <div class="span3 date">
+                                <label for="q_po_date">
+                                    订单日期</label>
+                                <input type="text" id="q_po_date" value="" placeholder="订单日期" class="default" disabled="disabled"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span3">
+                                <div class="clearfix">
+                                    <label for="q_po_anyltic">
+                                        活动</label>
+                                    <select data-placeholder="选择状态" id="q_po_anyltic" name="q[date_in_time_frame]">
+                                        <option value=""></option>
+                                        <option value="1">已确认</option>
+                                        <option value="2">已发货</option>
+                                        <option value="3">已入库</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <label for="q_po_total">
+                                    金额合计</label>
+                                <input type="text" id="q_po_total" value="" placeholder="金额合计" class="default" disabled="disabled"
+                                    style="width: 70%; max-width: 284px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid result-header">
+                    <div class="span7">
+                        <h4>
+                            <c>0</c>
+                            条记录 <small>查询日期
+                                <d></d>
+                            </small>
+                        </h4>
+                    </div>
+                    <div class="span5 span-right">
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;选择产品</button>
+                        <button class="btn " data-disable-with="努力查找中..." name="clear">
+                            <i class="icon-trash"></i>清空</button>
+                    </div>
+                </div>
+                <!--<div class="page-header">                
+                    
+                </div>-->
+            </div>
+            <div class="modal-body">
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">产品 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">数量 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单价</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单位</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">优惠%</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">小计</a>
+                                </th>
+                                <th>
+                                    <a href="#">备注</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--<tr>
+                                <td>
+                                    <a href="/59417a689d/vehicles/7917">1953 AC 2 Litre</a>
+                                </td>
+                                <td>
+                                    1953 AC 2 Litre
+                                </td>
+                                <td>
+                                    1 <small>miles</small>
+                                </td>
+                                <td>
+                                    Car
+                                </td>
+                                <td>
+                                    Active
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--<div class="modal-footer">nihao</div>-->
+            <div class="modal-footer">
+                <div style="float: left;">
+                    备注:<textarea cols="1" style="height: 18px;"></textarea></div>
+                <button class="btn btn-success">
+                    保存并关闭</button>
+                <button href="#" class="btn btn-save-add">
+                    保存并新增</button>
+                <button href="#" class="btn" data-dismiss="modal">
+                    关闭</button>
+            </div>
+        </div>
+        <!--#include file="/ctl/prodLovMutil.shtml"-->
+        <!--#include file="/ctl/partnerLov.shtml"-->
+        <div id="dvMarketingUpd" class="modal hide fade bigModal">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>
+                    <c>创建</c>
+                    营销活动
+                </h3>
+            </div>
+            <div class="modal-header">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden" value="✓"></div>
+                    <div class="well1">
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <label for="q_m_u_code">
+                                    活动编号</label>
+                                <input type="text" id="q_m_u_code" value="" placeholder="填写活动编号" class="default"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span3">
+                                <label for="q_m_u_name">
+                                    活动名称</label>
+                                <input type="text" id="q_m_u_name" value="" placeholder="活动名称" class="default" style="width: 100%;
+                                    max-width: 284px;">
+                            </div>
+                            <div class="span3">
+                                <div class="clearfix">
+                                    <label for="q_m_u_type">
+                                        活动类型</label>
+                                    <select data-placeholder="选择状态" id="q_m_u_type" name="q[date_in_time_frame]">
+                                        <option value=""></option>
+                                        <option value="1">礼品派送</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <label for="q_m_u_status">
+                                    状态</label>
+                                <input type="checkbox" id="q_m_u_status" value="" placeholder="金额合计" class="default"
+                                    checked="checked" style="width: 70%; max-width: 284px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#q_m_u_s" data-toggle="tab">门店</a></li>
+                    <li><a href="#q_m_u_p" data-toggle="tab">产品</a></li>
+                    <li><a href="#q_m_u_d" data-toggle="tab">期间</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="q_m_u_s">
+                        <div class="row-fluid result-header">
+                            <div class="span7">
+                                <h4>
+                                    <c>0</c>
+                                    条记录 <small>查询日期
+                                        <d></d>
+                                    </small>
+                                </h4>
+                            </div>
+                            <div class="span5 span-right">
+                                <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                                    <i class="icon-search icon-white"></i>&nbsp;选择门店</button>
+                                <button class="btn " data-disable-with="努力查找中..." name="clear">
+                                    <i class="icon-trash"></i>清空</button>
+                            </div>
+                        </div>
+                        <div class="report-results">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <a href="#" class="sort_link asc">店号</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">店名</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">负责人</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">联系电话</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">开始时间</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">结束时间</a>
+                                        </th>
+                                        <th>
+                                            <a href="#">有效</a>
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="q_m_u_p">
+                        <div class="row-fluid result-header">
+                            <div class="span7">
+                                <h4>
+                                    <c>0</c>
+                                    条记录 <small>查询日期
+                                        <d></d>
+                                    </small>
+                                </h4>
+                            </div>
+                            <div class="span5 span-right">
+                                <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                                    <i class="icon-search icon-white"></i>&nbsp;选择产品</button>
+                                <button class="btn " data-disable-with="努力查找中..." name="clear">
+                                    <i class="icon-trash"></i>清空</button>
+                            </div>
+                        </div>
+                        <div class="report-results">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <a href="#" class="sort_link asc">编码</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">名称</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">单价</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">单位</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">开始时间</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">结束时间</a>
+                                        </th>
+                                        <th>
+                                            <a href="#">有效</a>
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="q_m_u_d">
+                        <div class="row-fluid result-header">
+                            <div class="span7">
+                                <h4>
+                                    <c>0</c>
+                                    条记录 <small>查询日期
+                                        <d></d>
+                                    </small>
+                                </h4>
+                            </div>
+                            <div class="span5 span-right">
+                                <button class="btn btn-primary" data-disable-with="努力查找中..." name="add">
+                                    <i class="icon-plus"></i>增加</button>
+                                <button class="btn " data-disable-with="努力查找中..." name="clear">
+                                    <i class="icon-trash"></i>清空</button>
+                            </div>
+                        </div>
+                        <div class="report-results">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <a href="#" class="sort_link asc">开始时间</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">结束时间</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">有效</a>
+                                        </th>
+                                        <th>
+                                            <a href="#" class="sort_link">备注</a>
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div style="float: left;">
+                    备注:<textarea cols="1" style="height: 18px; width: 530px; border-style: none; border-bottom: 1px solid #B9DDFF;"></textarea></div>
+                <button class="btn btn-success">
+                    保存并关闭</button>
+                <!--<button href="#" class="btn btn-save-add">保存并新增</button>  -->
+                <button href="#" class="btn close" data-dismiss="modal">
+                    关闭</button>
+            </div>
+        </div>
+        <div id="dvSoUpd" class="modal hide fade bigModal mutHead">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>
+                    <c>添加</c>
+                    销售订单<small></small>
+                </h3>
+            </div>
+            <div class="modal-header">
+                <div accept-charset="UTF-8" class="vehicle_search">
+                    <div style="margin: 0; padding: 0; display: inline">
+                        <input name="utf8" type="hidden"></div>
+                    <div class="well1">
+                        <div class="row-fluid">
+                            <div class="span4 lov">
+                                <label for="q_so_partner">
+                                    客户方</label>
+                                <input type="text" id="q_so_partner" value="" placeholder="填写或选择客户方" class="default"
+                                    style="max-width: 284px;">
+                                <button class="btn">
+                                        ...</button>
+                            </div>
+                            <div class="span3 date">
+                                <label for="q_so_date">
+                                    订单日期</label>
+                                <input type="text" id="q_so_date" value="" placeholder="订单日期" class="default" style="width: 100%;
+                                    max-width: 284px;">
+                            </div>
+                            <div class="span3" style="display: none;">
+                                <div class="clearfix">
+                                    <label for="q_so_anyltic">
+                                        活动</label>
+                                    <select data-placeholder="选择状态" id="q_so_anyltic" name="q[date_in_time_frame]">
+                                        <option value=""></option>
+                                        <option value="1">已确认</option>
+                                        <option value="2">已发货</option>
+                                        <option value="3">已入库</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <label for="q_so_total">
+                                    金额合计</label>
+                                <input type="text" id="q_so_total" value="" placeholder="金额合计" class="default" disabled="disabled"
+                                    style="width: 100%; max-width: 284px;">
+                            </div>
+                            <div class="span2">
+                                <label for="q_so_total">
+                                    状态</label>
+                                <input type="text" id="q_so_status" data-value="draft" value="草稿" class="default"
+                                    disabled="disabled" style="width: 100%; max-width: 284px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid result-header">
+                    <div class="span7">
+                        <h4>
+                            <c>0</c>
+                            条记录 <small>查询日期
+                                <d></d>
+                            </small>
+                        </h4>
+                    </div>
+                    <div class="span5 span-right">
+                        <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                            <i class="icon-search icon-white"></i>&nbsp;选择产品</button>
+                        <button class="btn" style="position: relative">
+                            <div class="navbar">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">操作<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class=""><a href="#"><i class="icon-print"></i>打印</a></li>
+                                    <li class="confirm"><a href="#"><i class="icon-ok-sign"></i>确认</a></li>
+                                    <li class="cancel"><a href="#"><i class="icon-remove-circle"></i>取消</a></li>
+                                    <li class="divider"></li>
+                                    <li class=""><a href="#"><i class="icon-trash"></i>清空</a></li>
+                                </ul>
+                            </div>
+                        </button>
+                        <!--<button class="btn " data-disable-with="努力查找中..." name="clear"></button>-->
+                    </div>
+                </div>
+                <!--<div class="page-header">                
+                    
+                </div>-->
+            </div>
+            <div class="modal-body">
+                <div class="report-results">
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="#" class="sort_link asc">产品 ▲</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">数量 ▼</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单价</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">单位</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">优惠%</a>
+                                </th>
+                                <th>
+                                    <a href="#" class="sort_link">小计</a>
+                                </th>
+                                <th>
+                                    <a href="#">备注</a>
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--<div class="modal-footer">nihao</div>-->
+            <div class="modal-footer">
+                <div style="float: left;">
+                    备注:<textarea cols="1" style="height: 18px; width: 530px; border-style: none; border-bottom: 1px solid #B9DDFF;"></textarea></div>
+                <button class="btn btn-success">
+                    保存并关闭</button>
+                <button href="#" class="btn btn-save-add">
+                    保存并新增</button>
+                <button href="#" class="btn" data-dismiss="modal">
+                    关闭</button>
+            </div>
+        </div>
+        <div id="dvDiscount" class="modal hide fade">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>
+                    输入<c>折扣</c>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="q_discount_d">
+                        折扣比例%</label>
+                    <div class="controls">
+                        <input type="text" id="q_discount_d" value="" placeholder="填写折扣比例%" class="default"
+                            style="max-width: 284px;">
+                    </div>
+                    <p class="help-block">
+                        如果折扣是9折则填写90<br />
+                        如果没有折扣则可以不输入或者输入100<br />
+                        如果是赠送则输入0</p>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success">
+                    确定</button>
+                <a href="#" class="btn close" data-dismiss="modal">关闭</a>
+            </div>
+        </div>
+        <div id="dvPay" class="modal hide fade">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">×</a>
+                <h3>
+                    <c>付款</c>
+                    结账
+                </h3>
+            </div>
+            <div class="modal-body" style="margin-left: 10%; margin-top: 2%;">
+                <table class="modal-form">
+                    <tr>
+                        <th>
+                            应付金额
+                        </th>
+                        <td style="color: Green; font-weight: bold;" class="parent">
+                            <input type="number" placeholder="应付金额合计" disabled="disabled" title="应付金额合计" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            会员余额支付(F1)
+                        </th>
+                        <td>
+                            <input type="number" placeholder="会员余额支付" title="会员余额支付" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            刷卡支付(F2)
+                        </th>
+                        <td>
+                            <input type="number" placeholder="刷卡支付" title="刷卡支付" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            其它支付(F3)
+                        </th>
+                        <td>
+                            <input type="number" placeholder="其它支付" title="其它支付" maxlength="30" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            现金支付(F4)
+                        </th>
+                        <td>
+                            <input type="number" placeholder="现金支付" title="现金支付" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            找零
+                        </th>
+                        <td>
+                            <input type="number" disabled="disabled" placeholder="找零" title="找零" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success">
+                    确定(F5)</button>
+                <button href="#" class="btn close" data-dismiss="modal">
+                    关闭(F8)</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>
+                &copy; AAC 2012</p>
+        </footer>
+    </div>
+    <!--/.fluid-container-->
+    <div id="dvPrint">
+        <iframe src="/ptobj/so.htm?a=1" name="ptso" id="ptso" style="width: 100%; height: 100%;
+            border: 0"></iframe>
+    </div>
+    <!--#include file="/ctl/ws.shtml"-->
+    <script src="/js/jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script src="/ui/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <link href="ui/bootstrap/js/datepicker.css" rel="stylesheet" type="text/css" />
+    <script src="ui/bootstrap/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <script src="js/base.js?ver=1.411" type="text/javascript"></script>
+    <script src="js/agent.base.js?ver=1.41" type="text/javascript"></script>
+    <script src="js/factory.js?ver=1.411" type="text/javascript"></script>
+    <script src="js/common/makePy.min.js" type="text/javascript"></script>
+    <script src="js/common/capture.js" type="text/javascript"></script>
+    <script src="js/ws.js" type="text/javascript"></script>
+    <script src="js/jquery.treeTable.js" type="text/javascript"></script>
+    <link href="css/jquery.treeTable.css" rel="stylesheet" type="text/css" />
+</body>
+</html>

@@ -1,0 +1,38 @@
+<footer>
+    <hr>
+    <div class="row well no_margin_left">
+        <div class="span3">
+            <h4>
+                其它信息</h4>
+            <ul>
+                <li><a href="about.shtml">关于我们</a></li>
+                <li><a href="about.shtml">货运信息</a></li>
+                <li><a href="about.shtml">隐私策略</a></li>
+                <li><a href="about.shtml">条款及条件</a></li>
+            </ul>
+        </div>
+        <div class="span3">
+            <h4>
+                客户服务</h4>
+            <ul>
+                <li><a href="contact.shtml">联系我们</a></li>
+                <li><a href="about.shtml">Returns</a></li>
+                <li><a href="about.shtml">网站地图</a></li>
+            </ul>
+        </div>
+        <div class="span3">
+            <h4>
+                我的账户</h4>
+            <ul>
+                <li><a href="my_account.shtml">我的账户</a></li>
+                <li><a href="about.shtml">订单历史</a></li>
+                <li><a href="about.shtml">新闻通知</a></li>
+            </ul>
+        </div>
+    </div>
+    <p class="pull-right">
+        Developed by : <a href="#" rel="dofollow" />AAC</a> &amp;
+        fan.w<br />
+        Powered with <a href="#" target="_blank">AAC</a>
+    </p>
+</footer>

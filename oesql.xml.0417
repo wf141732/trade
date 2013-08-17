@@ -1,0 +1,2601 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<aac-oe>
+	<sql name="a-pzPeriod" comment="凭证会计期间">
+		<![CDATA[
+			select ap.id,ap.name,to_char(ap.date_start,'YYYY-MM-DD') as date_start,to_char(ap.date_stop,'YYYY-MM-DD') as date_stop
+			from account_period ap 
+			where ap.special='f' and ap.name like '%{0}%' and ap.date_stop<=now()
+			order by ap.date_start desc
+		]]>
+	</sql>
+	<sql name="a-account.move.period" comment="创建凭证时的会计期间">
+		<![CDATA[
+			select ap.id,ap.name,to_char(ap.date_start,'YYYY-MM-DD') as date_start,to_char(ap.date_stop,'YYYY-MM-DD') as date_stop,
+  replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+                        lpad(cast(i.number_next as varchar(10)),i.padding,'0'),i.id,to_char(now(),'YYYY/MM/DD')
+			from account_period ap,
+			     account_journal aj,
+			     account_sequence_period asp,
+			     ir_sequence i
+			where ap.special='f' and ap.name like '%%'
+			  and ap.state='draft'
+			  and aj.code='hand'
+			  AND asp.sequence_main_id_p=aj.sequence_id
+			  AND i.id = asp.sequence_id
+			  AND ap.id=asp.period_id
+			order by ap.date_start desc
+		]]>
+	</sql>
+	<sql name="a-account.analytic" comment="辅助核算">
+		<![CDATA[
+			select id,name,code from account_analytic_account
+		]]>
+	</sql>
+	<sql name="pzCode" comment="新建凭证时获取凭证号">
+		<![CDATA[
+select replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+                        lpad(cast(i.number_next as varchar(10)),i.padding,'0'),to_char(now(),'YYYY/MM/DD'),ap.id,ap.name,aj.id,i.id 
+                        from account_journal aj,ir_sequence i,account_period ap where ap.date_start<=date_trunc('day',now()) and ap.date_stop>=date_trunc('day',now()) and ap.state='draft' and i.id=aj.sequence_id and upper(aj.code)= 'HAND';
+		]]>
+	</sql>
+	<sql name="account.move.rjz.new" comment="新建日记账时获取凭证号">
+		<![CDATA[
+select replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+                        lpad(cast(i.number_next as varchar(10)),i.padding,'0'),to_char(now(),'YYYY/MM/DD'),/*0,1*/
+       ap.id as p_id,ap.name,
+       aj.id as j_id,i.id as i_id,
+       aa.id,aa.name,aa.code/*6，7，8*/
+ from account_journal aj,
+      ir_sequence i,
+      account_period ap,
+      account_sequence_period asp,
+      (select * from account_account where type='liquidity' order by code limit 1) aa
+where ap.date_start<=date_trunc('day',now()) 
+  and ap.date_stop>=date_trunc('day',now()) 
+  and ap.state='draft' 
+  AND asp.sequence_main_id_p=aj.sequence_id
+  AND i.id = asp.sequence_id
+  AND ap.id=asp.period_id
+  and aj.code= 'hand';
+		]]>
+	</sql>
+	<sql name="account.move.name" comment="新建凭证时获取凭证号">
+		<![CDATA[
+select replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+                        lpad(cast(i.number_next as varchar(10)),i.padding,'0'),to_char(now(),'YYYY/MM/DD'),
+       ap.id,ap.name,aj.id,i.id 
+ from account_journal aj,
+      ir_sequence i,
+      account_period ap,
+      account_sequence_period asp
+where ap.date_start<=date_trunc('day',now()) 
+  and ap.date_stop>=date_trunc('day',now()) 
+  and ap.state='draft' 
+  AND asp.sequence_main_id_p=aj.sequence_id
+  AND i.id = asp.sequence_id
+  AND ap.id=asp.period_id
+  and upper(aj.code)= 'HAND';
+		]]>
+	</sql>
+	<sql name="zcfzb" comment="资产负债表查询">
+		<![CDATA[
+SELECT  zt.id
+       ,zt.name
+       ,zt.line_number
+       ,zr.je AS bq
+       ,zrs.je AS qc
+       ,zt.level
+       ,zt.num_code
+       ,zt.is_sum
+       ,ztp.num_code
+FROM    account_zcfzb_type zt
+        LEFT JOIN ( SELECT  SUM(COALESCE(z.je, 0)) AS je
+                           ,z.type_id
+                    FROM    ( SELECT    CASE r.compute_type
+                                          WHEN 'add' THEN 1
+                                          ELSE -1
+                                        END
+                                        * CASE r.from_type
+                                            WHEN 'balance'
+                                            THEN CASE aat.name
+                                                   WHEN 'Assets'
+                                                   THEN aml.debit -aml.credit
+                                                   ELSE aml.credit - aml.debit
+                                                 END
+                                            WHEN 'credit' THEN aml.credit
+                                            ELSE aml.debit
+                                          END AS je
+                                       ,r.type_id
+                              FROM      account_zcfzb_type_rel AS r
+                                       ,( SELECT    a.id AS pid
+                                                   ,a.id AS cid
+                                                   ,a.user_type
+                                          FROM      account_account AS a
+                                          UNION ALL
+                                          SELECT    ac.parent_id AS pid
+                                                   ,ac.id AS cid
+                                                   ,ap.user_type
+                                          FROM      account_account AS ac
+                                                   ,account_account AS ap
+                                          WHERE     ap.id = ac.parent_id
+                                        ) AS aa
+                                       ,account_move_line AS aml
+                                       ,account_period ap
+                                       ,account_fiscalyear af
+                                       ,account_move am
+                                       ,( SELECT    frt.account_type_id
+                                                   ,fr.name
+                                          FROM      account_financial_report fr
+                                                   ,account_account_type aat
+                                                   ,account_account_financial_report_type frt
+                                          WHERE     fr.id = frt.report_id
+                                                    AND frt.account_type_id = aat.id
+                                                    AND fr.level > 0
+                                                    AND fr.parent_id != 1
+                                        ) AS aat
+                              WHERE     aa.pid = r.account_id
+                                        AND aa.cid = aml.account_id
+                                        AND ap.id = am.period_id
+                                        AND am.id = aml.move_id
+                                        AND am.to_check = 't'                                        
+                                       /* AND ap.special = 'f' */
+										AND af.id = ap.fiscalyear_id
+                                        AND aa.user_type = aat.account_type_id
+                                        AND ap.date_stop <= '{0}'
+                                        AND af.date_stop >= '{0}'
+                                        AND af.date_start <= '{0}'
+                            ) AS z
+                    GROUP BY z.type_id
+                  ) AS zr /*本期发生*/ ON zt.id = zr.type_id
+        LEFT JOIN ( SELECT  SUM(COALESCE(z.je, 0)) AS je
+                           ,z.type_id
+                    FROM    ( SELECT    CASE r.compute_type
+                                          WHEN 'add' THEN 1
+                                          ELSE -1
+                                        END
+                                        * CASE r.from_type
+                                            WHEN 'balance'
+                                            THEN CASE aat.name
+                                                   WHEN 'Assets'
+                                                   THEN aml.debit -aml.credit
+                                                   ELSE aml.credit - aml.debit
+                                                 END
+                                            WHEN 'credit' THEN aml.credit
+                                            ELSE aml.debit
+                                          END AS je
+                                       ,r.type_id
+                              FROM      account_zcfzb_type_rel AS r
+                                       ,( SELECT    a.id AS pid
+                                                   ,a.id AS cid
+                                                   ,a.user_type
+                                          FROM      account_account AS a
+                                          UNION ALL
+                                          SELECT    ac.parent_id AS pid
+                                                   ,ac.id AS cid
+                                                   ,ap.user_type
+                                          FROM      account_account AS ac
+                                                   ,account_account AS ap
+                                          WHERE     ap.id = ac.parent_id
+                                        ) AS aa
+                                       ,account_move_line AS aml
+                                       ,account_period ap
+                                       ,account_fiscalyear af
+                                       ,account_move am
+                                       ,( SELECT    frt.account_type_id
+                                                   ,fr.name
+                                          FROM      account_financial_report fr
+                                                   ,account_account_type aat
+                                                   ,account_account_financial_report_type frt
+                                          WHERE     fr.id = frt.report_id
+                                                    AND frt.account_type_id = aat.id
+                                                    AND fr.level > 0
+                                                    AND fr.parent_id != 1
+                                        ) AS aat
+                              WHERE     aa.pid = r.account_id
+                                        AND aa.cid = aml.account_id
+                                        AND ap.id = am.period_id
+                                        AND am.id = aml.move_id
+                                        AND am.to_check = 't'
+                                        /*AND ap.special = 't'
+                                        AND af.id = ap.fiscalyear_id*/
+                                        AND ap.date_stop < af.date_start
+                                        AND aa.user_type = aat.account_type_id
+                                        AND af.date_stop >= '{0}'
+                                        AND af.date_start <= '{0}'
+                            ) AS z
+                    GROUP BY z.type_id
+                  ) AS zrs /*期初*/ ON zt.id = zrs.type_id
+        LEFT JOIN account_zcfzb_type ztp ON ztp.id = zt.parent_id
+ORDER BY zt.num_code ;		
+		]]>
+	</sql>
+	<sql name="zcfzb2" comment="资产负债表查询">
+		<![CDATA[
+		   select zt.id,zt.name,zt.line_number,COALESCE(zr.je,0)+COALESCE(zrs.je,0) as qm,zrs.je as qc,zt.level,zt.num_code,zt.is_sum,ztp.num_code
+			from account_zcfzb_type zt
+				left join
+					(select sum(COALESCE(z.je,0)) as je,z.type_id from
+					(select case r.compute_type when 'add' then 1 else -1 end*
+					case r.from_type when 'balance' 
+							then case aat.name when 'Assets' then aml.debit-aml.credit else aml.credit-aml.debit end 
+							when 'credit' 
+							then aml.credit 
+							else aml.debit end as je,r.type_id
+					from account_zcfzb_type_rel as r,
+						(select a.id as pid,a.id as cid,a.user_type from account_account as a 
+						 union all 
+						 select ac.parent_id as pid,ac.id as cid,ap.user_type from account_account as ac,account_account as ap where ap.id=ac.parent_id) as aa,
+						 account_move_line as aml,account_period ap,account_fiscalyear af,account_move am,
+						 (select frt.account_type_id,fr.name
+						from account_financial_report fr,
+							 account_account_type aat,
+							 account_account_financial_report_type frt
+						where fr.id=frt.report_id
+						and frt.account_type_id=aat.id
+						and fr.level>0
+						and fr.parent_id!=1) as aat
+					where aa.pid=r.account_id 
+					  and aa.cid=aml.account_id 
+					  and ap.id=am.period_id
+					  and am.id=aml.move_id 
+					  and am.to_check='t'
+					  and ap.special='f'
+					  and af.id=ap.fiscalyear_id
+					  and aa.user_type=aat.account_type_id
+					  and ap.date_stop<='{0}'
+					  and af.date_stop>='{0}'
+					  and af.date_start<='{0}') as z group by z.type_id) as zr/*本期发生*/
+				on zt.id=zr.type_id
+				left join
+					(select sum(COALESCE(z.je,0)) as je,z.type_id from
+					(select case r.compute_type when 'add' then 1 else -1 end*
+					case r.from_type when 'balance' 
+							then case aat.name when 'Assets' then aml.debit-aml.credit else aml.credit-aml.debit end 
+							when 'credit' 
+							then aml.credit 
+							else aml.debit end as je,r.type_id
+					from account_zcfzb_type_rel as r,
+						(select a.id as pid,a.id as cid,a.user_type from account_account as a 
+						 union all 
+						 select ac.parent_id as pid,ac.id as cid,ap.user_type from account_account as ac,account_account as ap where ap.id=ac.parent_id) as aa,
+						  account_move_line as aml,account_period ap,account_fiscalyear af,account_move am,
+						 (select frt.account_type_id,fr.name
+						from account_financial_report fr,
+							 account_account_type aat,
+							 account_account_financial_report_type frt
+						where fr.id=frt.report_id
+						and frt.account_type_id=aat.id
+						and fr.level>0
+						and fr.parent_id!=1) as aat
+					where aa.pid=r.account_id 
+					  and aa.cid=aml.account_id 
+					  and ap.id=am.period_id 
+					  and am.id=aml.move_id 
+					  and am.to_check='t'
+					  and ap.special='t'
+					  and af.id=ap.fiscalyear_id
+					  and ap.date_stop=af.date_start
+					  and aa.user_type=aat.account_type_id
+					  and af.date_stop>='{0}'
+					  and af.date_start<='{0}') as z group by z.type_id) as zrs/*期初*/
+				on zt.id=zrs.type_id
+				left join 
+					account_zcfzb_type ztp on ztp.id=zt.parent_id 
+				order by zt.num_code;		
+		]]>
+	</sql>
+	<sql name="zcfzb1" comment="资产负债表查询">
+		<![CDATA[
+		select zt.id,zt.name,zt.line_number,zr.je+COALESCE(zrs.je,0) as qm,zrs.je as qc,zt.level,zt.num_code,zt.is_sum,ztp.num_code
+	from account_zcfzb_type zt
+		left join
+			(select sum(COALESCE(z.je,0)) as je,z.type_id from
+			(select case r.compute_type when 'add' then 1 else -1 end*
+			case r.from_type when 'balance' then aml.debit-aml.credit when 'credit' then aml.credit else aml.debit end as je,r.type_id
+			from account_zcfzb_type_rel as r,
+				(select a.id as pid,a.id as cid from account_account as a union all select ac.parent_id as pid,ac.id as cid from account_account as ac) as aa,
+				account_move_line as aml,account_period ap,account_fiscalyear af,account_move am
+			where aa.pid=r.account_id 
+			  and aa.cid=aml.account_id 
+			  and ap.id=am.period_id
+			  and am.id=aml.move_id 
+			  and am.to_check='t'
+			  and ap.special='f'
+			  and af.id=ap.fiscalyear_id
+			  and ap.date_stop<='{0}'
+			  and af.date_stop>='{0}'
+			  and af.date_start<='{0}' ) as z group by z.type_id) as zr
+		on zt.id=zr.type_id
+		left join
+			(select sum(COALESCE(z.je,0)) as je,z.type_id from
+			(select case r.compute_type when 'add' then 1 else -1 end*
+			case r.from_type when 'banlance' then aml.debit-aml.credit when 'credit' then aml.credit else aml.debit end as je,r.type_id
+			from account_zcfzb_type_rel as r,
+				(select a.id as pid,a.id as cid from account_account as a union all select ac.parent_id as pid,ac.id as cid from account_account as ac) as aa,
+				account_move_line as aml,account_period ap,account_fiscalyear af,account_move am
+			where aa.pid=r.account_id 
+			  and aa.cid=aml.account_id 
+			  and ap.id=am.period_id 
+			  and am.id=aml.move_id 
+			  and am.to_check='t'
+			  and ap.special='t'
+			  and af.id=ap.fiscalyear_id
+			  and ap.date_stop=af.date_start
+			  and af.date_stop>='{0}'
+			  and af.date_start<='{0}') as z group by z.type_id) as zrs
+		on zt.id=zrs.type_id
+		left join 
+			account_zcfzb_type ztp on ztp.id=zt.parent_id 
+		order by zt.num_code;		
+		]]>
+	</sql>
+	<sql name="syb" comment="损益表查询">
+		<![CDATA[
+		select ast.id,ast.name,ast.line_number,tr.je,ast.compute_type,bn.je as je1,tr.je as je2,ast.parent_id
+		from account_syb_type ast 
+		left join (select r.type_id,
+					case aat.name when 'Income' then sum(COALESCE(aml.credit,0)-COALESCE(aml.debit,0))
+					else sum(COALESCE(aml.debit,0)-COALESCE(aml.credit,0)) end as je
+				from account_syb_type_rel r,
+					 account_account za,
+					(select frt.account_type_id,fr.name
+					from account_financial_report fr,
+						 account_account_type aat,
+						 account_account_financial_report_type frt
+					where fr.id=frt.report_id
+					and frt.account_type_id=aat.id
+					and fr.level>0
+					and fr.parent_id=1) as aat,
+					(select a.id as pid,a.id as cid from account_account as a union all select ac.parent_id as pid,ac.id as cid from account_account as ac) as aa,
+					account_move_line aml,account_move am,account_journal aj
+				where r.account_id=aa.pid 
+				and aml.account_id=aa.cid 
+				and am.id=aml.move_id
+				and am.to_check='t'				
+				and am.journal_id=aj.id
+				and aj.type!='situation'
+				and am.period_id={0}
+				and aat.account_type_id=za.user_type
+				and za.id=aa.pid
+				group by r.type_id,aat.name) tr on tr.type_id=ast.id
+	  left join	(select r.type_id,
+			case aat.name when 'Income' then sum(COALESCE(aml.credit,0)-COALESCE(aml.debit,0))
+			else sum(COALESCE(aml.debit,0)-COALESCE(aml.credit,0)) end as je
+		from account_syb_type_rel r,
+		     account_account za,
+		    (select frt.account_type_id,fr.name
+				from account_financial_report fr,
+					 account_account_type aat,
+					 account_account_financial_report_type frt
+				where fr.id=frt.report_id
+				and frt.account_type_id=aat.id
+				and fr.level>0
+				and fr.parent_id=1) as aat,
+		    (select a.id as pid,a.id as cid from account_account as a union all select ac.parent_id as pid,ac.id as cid from account_account as ac) as aa,
+			account_move_line aml,account_move am,account_period ap,account_fiscalyear af,account_journal aj
+		where r.account_id=aa.pid 
+		and aml.account_id=aa.cid 
+		and am.id=aml.move_id
+		and am.to_check='t'
+		and am.period_id=ap.id		
+		and am.journal_id=aj.id
+		and aj.type!='situation'
+		and af.date_start<='{1}'
+		and af.date_stop>='{1}'
+		and ap.date_start>=af.date_start
+		and ap.date_stop<='{2}'
+		and aat.account_type_id=za.user_type
+		and za.id=aa.pid
+		group by r.type_id,aat.name) bn on bn.type_id=ast.id
+		order by num_code
+		]]>
+	</sql>
+	<sql name="account.china.type" comment="科目类型查询">
+		<![CDATA[
+			select id,num_code,name from account_china_type where visibility='t' order by num_code
+		]]>
+	</sql>
+	<sql name="account.ini.close" comment="关闭期初">
+		<![CDATA[
+			update account_move set to_check='t',write_uid={1},write_date=now() where id={0}
+		]]>
+	</sql>
+	<sql name="account.ini.qc" comment="期初点击查询后查询">
+		<![CDATA[
+			select c.*
+			 from (
+				select null as id,a.name,a.code,a.myid,a.parent_id,COALESCE(je.je,oml.debit),
+						credit,COALESCE(je.qty,oml.quantity),'','',je.ref,null as partner_id,utype.fx
+				  from account_china_type act,account_account ap,
+					(select aap.id,aap.code,aap.name,aap.id as myid,0 as parent_id from account_account aap where aap.active='t' and aap.level=1
+							 union all 
+					 select aa.parent_id,aa.code,aa.name,aa.id as myid,aa.parent_id from account_account aa where aa.active='t'
+					 ) as a
+					left join (select sum(credit) as credit,sum(debit) as debit,sum(quantity) as quantity,account_id,count(1) as ct 
+									from account_move_line 
+								   where move_id={2}
+								   group by account_id
+								  ) oml on oml.account_id=a.myid
+					left join (select sm.name,aml.account_id,sum(aml.debit) as je,sum(aml.quantity) as qty,max(aml.move_id) as ref
+									from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+								   where sm.state='done' and aml.name=sm.name 
+									 and sm.product_id=aml.product_id 
+									 and sm.id=simr.move_id and simr.inventory_id={1}
+									 and aml.debit>0 and aml.move_id <>{2}
+								 group by aml.account_id,sm.name) je on je.account_id=a.myid,
+					(select aa.id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+							from account_financial_report fr,
+								 account_account_type aat,
+								 account_account_financial_report_type frt,
+								 account_account aa
+							where fr.id=frt.report_id
+							and frt.account_type_id=aat.id
+							and fr.level>0
+							and aa.user_type=frt.account_type_id) as utype
+					where act.id=ap.china_type and ap.active='t' and ap.id=a.id and act.id={0} and utype.id=a.myid
+				union all
+				select aml.id as id,d.name,d.code,d.myid*-1,d.account_id,aml.debit,aml.credit,aml.quantity,'','',null,d.partner_id,utype.fx
+				  from (select rp.name,ap.code,rp.id as myid,ap.id as account_id,rp.id as partner_id
+						  from account_account ap,ir_property ip,res_partner rp
+						 where ip.name='property_account_payable'
+						   and ap.type='payable'
+						   and ap.active='t'
+						   and rp.supplier='t'
+						   and 'account.account,' || cast(ap.id as varchar(10))=ip.value_reference
+						   and 'res.partner,' || cast(rp.id as varchar(10))=ip.res_id
+						union all 
+						select rp.name,ap.code,rp.id,ap.id,rp.id
+						  from account_account ap,ir_property ip,res_partner rp
+						 where ip.name='property_account_receivable'
+						   and ap.type='receivable'
+						   and ap.active='t'
+						   and rp.customer='t'
+						   and 'account.account,' || cast(ap.id as varchar(10))=ip.value_reference
+						   and 'res.partner,' || cast(rp.id as varchar(10))=ip.res_id) as d
+						 left join account_move_line aml on d.partner_id=aml.partner_id and d.account_id=aml.account_id and aml.move_id={2},						 
+						 account_account ap,
+					 (select aa.id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+							from account_financial_report fr,
+								 account_account_type aat,
+								 account_account_financial_report_type frt,
+								 account_account aa
+							where fr.id=frt.report_id
+							and frt.account_type_id=aat.id
+							and fr.level>0
+							and aa.user_type=frt.account_type_id) as utype
+				where utype.id=d.account_id				
+				 and  ap.id=d.account_id
+				 and ap.china_type=2
+			) as c
+					order by code,myid desc
+		]]>
+	</sql>
+	<sql name="account.ini.qc1" comment="期初点击查询后查询">
+		<![CDATA[
+		select '' as id,a.name,a.code,a.myid,a.parent_id,COALESCE(je.je,oml.debit),credit,COALESCE(je.qty,oml.quantity),'','',je.ref
+		  from account_china_type act,account_account ap,
+			(select aap.id,aap.code,aap.name,aap.id as myid,0 as parent_id from account_account aap
+			 union all 
+			 select aa.parent_id,aa.code,aa.name,aa.id as myid,aa.parent_id from account_account aa
+			 ) as a
+			   left join (select sum(credit) as credit,sum(debit) as debit,sum(quantity) as quantity,account_id,count(1) as ct 
+					from account_move_line 
+				   where move_id={2} 
+				   group by account_id
+				  ) oml on oml.account_id=a.myid
+			   left join (select sm.name,aml.account_id,sum(aml.debit) as je,sum(aml.quantity) as qty,max(aml.move_id) as ref
+					from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+				   where sm.state='done' and aml.name=sm.name 
+					 and sm.product_id=aml.product_id 
+					 and sm.id=simr.move_id and simr.inventory_id={1}
+					 and aml.debit>0 and aml.move_id <>{2}
+				 group by aml.account_id,sm.name) je on je.account_id=a.myid
+		  where act.id=ap.china_type and ap.id=a.id and act.id={0} order by a.code
+  /*
+		select '' as id,a.name,a.code,a.myid,a.parent_id,COALESCE(je.je,oml.debit),credit,COALESCE(je.qty,oml.quantity),'','',je.ref
+		from account_china_type act,account_account ap,
+		(select aap.id,aap.code,aap.name,aap.id as myid,0 as parent_id from account_account aap
+		union all select aa.parent_id,aa.code,aa.name,aa.id as myid,aa.parent_id from account_account aa) as a
+		left join (select sum(credit) as credit,sum(debit) as debit,sum(quantity) as quantity,account_id,count(1) as ct from account_move_line where move_id={2} group by account_id) oml on oml.account_id=a.myid
+		left join (select sm.name,aml.account_id,sum(aml.debit) as je,sum(aml.quantity) as qty,max(aml.move_id) as ref
+		from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id and simr.inventory_id={1} and aml.debit>0
+		and aml.move_id <>{2}
+		group by aml.account_id,sm.name) je on je.account_id=a.myid
+		where act.id=ap.china_type and ap.id=a.id and act.id={0} order by a.code */
+		]]>
+	</sql>
+	<sql name="account.ini.pd.change" comment="更改盘点单" c=" and simr.inventory_id={5}">
+		<![CDATA[
+		delete from account_move_line aml
+		where move_id={6} and exists(select 1 from stock_move sm,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id)
+		and exists (select 1
+		from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id and simr.inventory_id={5} and aml.ref is null);
+		update account_move_line set ref=move_id, move_id={6} where id in (select aml.id
+		from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id and simr.inventory_id={5});
+		delete from account_move_line where id in (select aml.id
+		from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id and simr.inventory_id={5} and aml.credit>0);
+		delete from account_move where id in (select cast(aml.ref as integer)
+		from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id and simr.inventory_id={5} and aml.debit>0 and aml.ref is null);
+		select {6};
+		]]>
+	</sql>
+	<sql name="account.period.now" comment="当前时间所在的会计期">
+		<![CDATA[
+		select p.id,p.name,to_char(p.date_start,'YYYY-MM-DD') as date_start,to_char(p.date_stop,'YYYY-MM-DD') as date_stop
+		from account_period p where p.date_start < now() and p.date_stop +1 > now() and p.special='f'
+		]]>
+	</sql>
+	<sql name="account.ini.period" comment="期初会计期">
+		<![CDATA[
+		select p.id from account_period p,account_fiscalyear f where f.date_start < now() and f.date_stop > now() and p.date_start=p.date_stop
+		]]>
+	</sql>
+	<sql name="account.ini.journal" comment="期初账簿">
+		<![CDATA[
+		select id from account_journal where type='situation'
+		]]>
+	</sql>
+	<sql name="a.stock.invertory" comment="盘点单查询">
+		<![CDATA[
+		select id,name from stock_inventory where state='done'
+		]]>
+	</sql>
+	<sql name="a-account" comment="智能提示科目">
+		<![CDATA[
+		select aa.id, aa.code,aa.name as aname,aap.name as pname,aap.level 
+		 from account_account as aa,account_account as aap 
+		 where aa.parent_id=aap.id
+		   and aa.type!='view'
+		   and aa.active='t'
+		   and (aa.code like '{0}%' or aa.name like '%{0}%' or aap.name like '%{0}%') 
+		 order by aa.code limit 30;
+		]]>
+	</sql>
+	<sql name="a-account.query" comment="智能提示科目">
+		<![CDATA[
+		select aa.id, aa.code,aa.name as aname,aap.name as pname,aap.level 
+		 from account_account as aa,account_account as aap 
+		 where aa.parent_id=aap.id
+		   and aa.active='t'
+		   and (aa.code like '{0}%' or aa.name like '%{0}%' or aap.name like '%{0}%') 
+		 order by aa.code limit 30;
+		]]>
+	</sql>
+	<sql name="a-account.rjz" comment="智能提示科目">
+		<![CDATA[
+		select aa.id, aa.code,aa.name as aname,aap.name as pname,aap.level,aj.id
+		 from account_account as aa,account_account as aap,account_journal aj
+		 where aa.parent_id=aap.id
+		   and aa.type='liquidity'
+		   and aa.active='t'
+		   and aj.default_debit_account_id=aa.id
+		   and (aa.code like '{0}%' or aa.name like '%{0}%' or aap.name like '%{0}%') 
+		 order by aa.code;
+		]]>
+	</sql>
+	<sql name="account.ini.move" comment="查询期初盘点">
+		<![CDATA[
+		select *
+		from stock_inventory si,stock_inventory_move_rel imr,stock_move sm
+		where imr.inventory_id=si.id and sm.id=imr.move_id
+		]]>
+	</sql>
+	<sql name="account.ini.pz.query" comment="查询期初凭证">
+		<![CDATA[
+		select am.id,am.name,ai.name,ai.id,am.to_check
+		  from account_move am,stock_inventory ai
+		 where cast(ai.id as varchar(10))=am.ref and am.journal_id in (select id from account_journal where type='situation')
+		   and period_id in (select p.id 
+							   from account_period p,account_fiscalyear f 
+							  where f.date_start < now() and f.date_stop > now() and p.date_start=p.date_stop)
+		]]>
+	</sql>
+	<sql name="account.ini.pz.line.query" comment="查询期初凭证行">
+		<![CDATA[
+			select a.* from(
+					select max(l.id),a.name,a.code,a.id,a.parent_id,sum(l.debit) as debit,sum(l.credit) as credit,
+							sum(quantity) as quantity,a.china_type,l.move_id,max(l.ref),null as partner_id,utype.fx
+					  from account_move_line l,
+						(select aap.id,aap.code,aap.name,aap.id as myid,0 as parent_id,aap.china_type 
+						   from account_account aap 
+						  where aap.level=1
+							and aap.active='t'
+						 union all
+						select aa.id,aa.code,aa.name,aa.id as myid,aa.parent_id,ap.china_type 
+						  from account_account aa,account_account ap 
+						 where aa.level=2 
+						   and aa.parent_id=ap.id	   
+						   and aa.active='t'
+						 union all
+						select aa.parent_id,ap.code,ap.name,aa.id as myid,0 as parent_id,ap.china_type 
+						  from account_account aa,account_account ap 
+						 where aa.level=2 
+						   and aa.parent_id=ap.id	   
+						   and aa.active='t'
+						) as a,
+						(select aa.id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+							from account_financial_report fr,
+								 account_account_type aat,
+								 account_account_financial_report_type frt,
+								 account_account aa
+							where fr.id=frt.report_id
+							and frt.account_type_id=aat.id
+							and fr.level>0
+							and aa.user_type=frt.account_type_id) as utype
+					where utype.id=a.id
+					 and a.myid=l.account_id
+					   and l.move_id={1} 
+					   and a.china_type={0}
+					 group by a.name,a.code,a.id,a.parent_id,a.china_type,l.move_id,utype.fx
+					 union all
+					 select max(l.id),rp.name,a.code,a.id*-1,l.account_id as parent_id,sum(l.debit) as debit,sum(l.credit) as credit,
+							sum(quantity) as quantity,a.china_type,l.move_id,max(l.ref),l.partner_id,utype.fx
+					  from account_move_line l,
+						(select aap.id,aap.code,aap.name,aap.id as myid,0 as parent_id,aap.china_type 
+						   from account_account aap 
+						  where aap.level=1
+							and aap.active='t'
+						 union all
+						select aa.id,aa.code,aa.name,aa.id as myid,aa.parent_id,ap.china_type 
+						  from account_account aa,account_account ap 
+						 where aa.level=2 
+						   and aa.parent_id=ap.id	   
+						   and aa.active='t'
+						 union all
+						select aa.parent_id,ap.code,ap.name,aa.id as myid,0 as parent_id,ap.china_type 
+						  from account_account aa,account_account ap 
+						 where aa.level=2 
+						   and aa.parent_id=ap.id	   
+						   and aa.active='t'
+						) as a,
+						res_partner rp,
+						(select aa.id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+							from account_financial_report fr,
+								 account_account_type aat,
+								 account_account_financial_report_type frt,
+								 account_account aa
+							where fr.id=frt.report_id
+							and frt.account_type_id=aat.id
+							and fr.level>0
+							and aa.user_type=frt.account_type_id) as utype
+					where utype.id=a.id
+					   and a.myid=l.account_id
+					   and l.move_id={1} 
+					   and a.china_type={0}
+					   and rp.id=l.partner_id
+					 group by rp.name,a.code,a.id,l.account_id,a.china_type,l.move_id,l.partner_id,utype.fx
+				 ) as a
+					 order by a.code,parent_id
+		]]>
+	</sql>
+	<sql name="account.ini.pz.line.query1" comment="查询期初凭证行">
+		<![CDATA[
+		select max(l.id),a.name,a.code,a.id,a.parent_id,sum(l.debit) as debit,sum(l.credit) as credit,sum(quantity) as quantity,a.china_type,l.move_id,max(l.ref)
+		from account_move_line l,
+		(select aap.id,aap.code,aap.name,aap.id as myid,0 as parent_id,aap.china_type from account_account aap where aap.level=1
+		union all
+		select aa.id,aa.code,aa.name,aa.id as myid,aa.parent_id,ap.china_type from account_account aa,account_account ap where aa.level=2 and aa.parent_id=ap.id
+		union all
+		select aa.parent_id,ap.code,ap.name,aa.id as myid,0 as parent_id,ap.china_type from account_account aa,account_account ap where aa.level=2 and aa.parent_id=ap.id
+		) as a
+		where a.myid=l.account_id and l.move_id={1} and a.china_type={0}
+		group by a.name,a.code,a.id,a.parent_id,a.china_type,l.move_id
+		order by a.code
+		]]>
+	</sql>
+	<sql name="account.ini.pz" comment="建立期初凭证">
+		<![CDATA[
+		insert into account_move(id,create_uid,create_date,name,state,company_id,journal_id,period_id,date,to_check,proof,ref)
+		values(nextval('account_move_id_seq'),{0},now(),'{1}','draft',1,{2},{3},'{4}','f',0,{5});
+		update account_move_line set ref=move_id, move_id=currval('account_move_id_seq') where id in (select aml.id
+		from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id and simr.inventory_id={5});
+		delete from account_move_line where id in (select aml.id
+		from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id and simr.inventory_id={5} and aml.credit>0);
+		delete from account_move where id in (select cast(aml.ref as integer)
+		from stock_move sm,account_move_line aml,stock_inventory_move_rel simr
+		where sm.state='done' and aml.name=sm.name and sm.product_id=aml.product_id and sm.id=simr.move_id and simr.inventory_id={5} and aml.debit>0);
+		select currval('account_move_id_seq');
+		]]>
+	</sql>
+	<sql name="pzInsertHead" comment="添加凭证头">
+		<![CDATA[
+		insert into account_move(id,create_uid,create_date,name,state,company_id,journal_id,period_id,date,to_check,proof)
+			values(nextval('account_move_id_seq'),{1},now(),'{2}','draft',1,{3},{4},'{5}','f',{6});
+		update ir_sequence set number_next=number_next+number_increment where /*id=(select sequence_id from account_journal where upper(code)= 'HAND') and*/ id={7};
+		select currval('account_move_id_seq');
+		]]>
+	</sql>
+	<sql name="account.move.line.insert" comment="添加凭证行">
+		<![CDATA[
+			insert into account_move_line(id,create_uid,create_date,account_id,journal_id,blocked,
+										  analytic_account_id,credit,centralisation,company_id,state,
+										  debit,period_id,date_created,date,move_id,name,partner_id)
+						values(nextval('account_move_line_id_seq'),{1},now(),{2},{3},'f',
+										{4},{10},'normal',1,'draft',{9},{1},now(),now(),{6},'{7}',{11});
+		]]>
+	</sql>
+	<sql name="account.move.line.update" comment="添加凭证行">
+		<![CDATA[
+			update account_move_line set credit={2},debit={1} where id={0}
+		]]>
+	</sql>
+	<sql name="pzInsertLine" comment="添加凭证行">
+		<![CDATA[
+		insert into account_move_line(id,create_uid,create_date,account_id,journal_id,blocked,analytic_account_id,credit,centralisation,company_id,state,debit,period_id,date_created,date,move_id,name)
+		values(nextval('account_move_line_id_seq'),{1},now(),{2},{3},'f',{4},{10},'normal',1,'draft',{9},{1},now(),now(),{6},'{7}');
+		]]>
+	</sql>
+	<sql name="account.move.qm.query">
+		<![CDATA[
+			select aml.id,am.name,to_char(am.date,'yyyy-mm-dd'),ap.name,ap.code,aa.code,
+				   aa.name,aap.name,aml.debit,aml.credit,am.to_check,
+				   cu.name as creator,uu.name as checkor,aa.level,am.journal_id,am.id
+			  from account_move am
+			  left join res_users uu on uu.id=am.write_uid,
+				   account_move_line aml,
+				   account_journal aj,
+				   account_period ap,
+				   account_account aa,
+				   account_account aap,
+				   res_users cu
+			where aml.move_id=am.id
+			and am.journal_id=aj.id
+			and ap.date_stop=am.date
+			and aa.id=aml.account_id
+			and aap.id=aa.parent_id
+			and cu.id=am.create_uid
+			and aj.type='situation'
+			and am.period_id={0}
+		]]>
+	</sql>
+	<sql name="account.move.qm.delete" comment="删除期末结转">
+		<![CDATA[
+		delete from account_move where id={0};
+		]]>
+	</sql>
+	<sql name="account.move.qm.create" comment="期末结转凭证头">
+		<![CDATA[
+INSERT  INTO account_move
+        ( id
+        ,create_uid
+        ,create_date
+        ,name
+        ,state
+        ,company_id
+        ,journal_id
+        ,period_id
+        ,date
+        ,to_check
+        ,proof
+        )
+SELECT   nextval('account_move_id_seq')
+        ,{1}
+        ,now()
+        ,replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+						lpad(cast(i.number_next as varchar(10)),i.padding,'0')
+        ,'draft'
+        ,1
+        ,{3}
+        ,{4}
+        ,'{5}'
+        ,'f'
+        ,{6}
+  FROM  ir_sequence i,account_journal aj WHERE aj.id={3} AND i.id=aj.sequence_id;
+UPDATE  ir_sequence
+SET     number_next = number_next + number_increment
+WHERE   id = ( SELECT   sequence_id
+               FROM     account_journal
+               WHERE    id = {3}
+             ) ;
+INSERT  INTO account_move_line
+        ( id
+        ,create_uid
+        ,create_date
+        ,account_id
+        ,journal_id
+        ,blocked
+        ,analytic_account_id
+        ,credit
+        ,centralisation
+        ,company_id
+        ,state
+        ,debit
+        ,period_id
+        ,date_created
+        ,date
+        ,move_id
+        ,name
+        )
+        SELECT  nextval('account_move_line_id_seq')
+               ,{1}
+               ,now()
+               ,aa.id
+               ,{3}
+               ,'f'
+               ,NULL
+               ,case when utype.name='Expense' and SUM(aml.debit) - SUM(aml.credit)>0 then SUM(aml.debit) - SUM(aml.credit)
+                     when utype.name='Income' and SUM(aml.debit) - SUM(aml.credit)>0 then SUM(aml.debit) - SUM(aml.credit)
+				else 0
+               end as credit
+			   /*CASE utype.name
+                  WHEN 'Expense' THEN SUM(aml.debit) - SUM(aml.credit)
+                  ELSE 0
+                END AS credit20121106*/
+               ,'normal'
+               ,1
+               ,'draft'
+               ,case when utype.name='Income' and SUM(credit) - SUM(aml.debit)>0 then SUM(credit) - SUM(aml.debit)
+					when utype.name='Expense' and SUM(credit) - SUM(aml.debit)>0 then SUM(credit) - SUM(aml.debit)
+					else 0
+               end as debit
+			   /*CASE utype.name
+                  WHEN 'Income' THEN SUM(credit) - SUM(aml.debit)
+                  ELSE 0
+                END AS debit*/
+               ,{5}
+               ,now()
+               ,now()
+               ,currval('account_move_id_seq')
+               ,'结转{2}月损益'
+        FROM    account_move_line aml
+               ,account_account aa
+               ,account_account aap
+               ,account_period ap
+               ,account_move am
+               ,( SELECT    frt.account_type_id AS id
+                           ,fr.name
+                  FROM      account_financial_report fr
+                           ,account_account_type aat
+                           ,account_account_financial_report_type frt
+                  WHERE     fr.id = frt.report_id
+                            AND frt.account_type_id = aat.id
+                            AND fr.level > 0
+                            AND fr.parent_id = 1
+                ) AS utype
+        WHERE   aml.account_id = aa.id
+                AND aa.user_type = utype.id
+                AND am.id = aml.move_id
+				
+				and exists (select 1 from account_syb_type_rel r where r.account_id =aa.id
+			        union all select 1 from account_syb_type_rel r where r.account_id =aap.id)
+					
+                AND am.period_id = ap.id
+                AND aap.id = aa.parent_id
+                AND ap.id = {4}
+        GROUP BY aa.id
+               ,aa.code
+               ,aa.name
+               ,ap.name
+               ,aap.name
+               ,aa.level
+               ,utype.name
+        ORDER BY aa.code ;
+INSERT  INTO account_move_line
+        ( id
+        ,create_uid
+        ,create_date
+        ,account_id
+        ,journal_id
+        ,blocked
+        ,analytic_account_id
+        ,credit
+        ,centralisation
+        ,company_id
+        ,state
+        ,debit
+        ,period_id
+        ,date_created
+        ,date
+        ,move_id
+        ,name
+        )
+        SELECT  nextval('account_move_line_id_seq')
+               ,{1}
+               ,now()
+               ,tr.account_id
+               ,{3}
+               ,'f'
+               ,NULL
+               ,{7}
+               ,'normal'
+               ,1
+               ,'draft'
+               ,{8}
+               ,{5}
+               ,now()
+               ,now()
+               ,currval('account_move_id_seq')
+               ,'结转{2}月损益'
+        FROM    account_syb_type ast
+               ,account_syb_type_rel tr
+        WHERE   ast.id = tr.type_id
+                AND ast.num_code = ( SELECT MAX(num_code)
+                                     FROM   account_syb_type
+                                   )
+		]]>
+	</sql>
+	<sql name="account.move.qm.create1" comment="期末结转凭证头">
+		<![CDATA[
+			insert into account_move(id,create_uid,create_date,name,state,company_id,journal_id,period_id,date,to_check,proof)
+						values(nextval('account_move_id_seq'),{1},now(),'{2}','draft',1,{3},{4},'{5}','f',{6});
+			update ir_sequence set number_next=number_next+number_increment where id=(select sequence_id from account_journal where id={3});
+			insert into account_move_line(id,create_uid,create_date,account_id,journal_id,blocked,analytic_account_id,credit,centralisation,company_id,state,debit,period_id,date_created,date,move_id,name)
+			select nextval('account_move_line_id_seq'),{1},now(),aa.id,{3},'f',null,
+				case utype.name when 'Expense' then sum(aml.debit)-sum(aml.credit) else 0 end as credit,
+				'normal',1,'draft',
+				case utype.name when 'Income' then sum(credit)-sum(aml.debit) else 0 end as debit,
+				{5},now(),now(),currval('account_move_id_seq'),'结转'
+			  from account_move_line aml,
+				   account_account aa,
+				   account_account aap,
+				   account_period ap,
+				   account_move am,
+				   (select frt.account_type_id as id,fr.name
+						from account_financial_report fr,
+							 account_account_type aat,
+							 account_account_financial_report_type frt
+						where fr.id=frt.report_id
+						and frt.account_type_id=aat.id
+						and fr.level>0
+						and fr.parent_id=1) as utype
+			 where aml.account_id=aa.id
+			   and aa.user_type=utype.id
+			   and am.id=aml.move_id
+			   and am.period_id=ap.id
+			   and aap.id=aa.parent_id
+			   and ap.id={4}
+			  group by aa.id,aa.code,aa.name,ap.name,aap.name,aa.level,utype.name
+			   order by aa.code;
+		insert into account_move_line(id,create_uid,create_date,account_id,journal_id,blocked,analytic_account_id,credit,centralisation,company_id,state,debit,period_id,date_created,date,move_id,name)		
+		select nextval('account_move_line_id_seq'),{1},now(),tr.account_id,{3},'f',null,{7},
+						'normal',1,'draft',{8},
+						{5},now(),now(),currval('account_move_id_seq'),'结转'
+		From account_syb_type ast,account_syb_type_rel tr
+		where ast.id=tr.type_id
+		and ast.num_code=(select max(num_code) from account_syb_type)
+		]]>
+	</sql>
+	<sql name="account.qm.jz.query" comment="本期期末未结转">
+		<![CDATA[
+			select '' as id,'' as name,'' as date,ap.name,'' as name,aa.code,
+				   aa.name,aap.name,sum(aml.debit) as debit,sum(aml.credit) as credit,min(cast(am.to_check as int)),
+				   '' as creator,'' as checked,aa.level,(select id from account_journal where type='situation')
+			  from account_move_line aml,
+				   account_account aa,
+				   account_account aap,
+				   account_period ap,
+				   account_move am,
+				   (select frt.account_type_id as id,fr.name
+						from account_financial_report fr,
+							 account_account_type aat,
+							 account_account_financial_report_type frt
+						where fr.id=frt.report_id
+						and frt.account_type_id=aat.id
+						and fr.level>0
+						and fr.parent_id=1) as utype
+			 where aml.account_id=aa.id
+			   and aa.user_type=utype.id
+			   and am.id=aml.move_id
+			   and am.period_id=ap.id
+			   and aap.id=aa.parent_id
+			   /*20121106*/
+			   and exists (select 1 from account_syb_type_rel r where r.account_id =aa.id
+			        union all select 1 from account_syb_type_rel r where r.account_id =aap.id)
+					
+			   and ap.id={0}
+			  group by aa.code,aa.name,ap.name,aap.name,aa.level
+			   order by aa.code
+		]]>
+	</sql>
+	<sql name="account.qm.jz.query1" comment="本期期末未结转">
+		<![CDATA[
+			select '' as id,'' as name,'' as date,ap.name,'' as name,aa.code,
+				   aa.name,aap.name,
+				   case utype.name when 'Income' then sum(credit)-sum(aml.debit) else 0 end as debit,
+				   case utype.name when 'Expense' then sum(aml.debit)-sum(aml.credit) else 0 end as credit,
+				   min(cast(am.to_check as int)),
+				   '' as creator,'' as checked,aa.level,(select id from account_journal where type='situation')
+			  from account_move_line aml,
+				   account_account aa,
+				   account_account aap,
+				   account_period ap,
+				   account_move am,
+				   (select frt.account_type_id as id,fr.name
+						from account_financial_report fr,
+							 account_account_type aat,
+							 account_account_financial_report_type frt
+						where fr.id=frt.report_id
+						and frt.account_type_id=aat.id
+						and fr.level>0
+						and fr.parent_id=1) as utype
+			 where aml.account_id=aa.id
+			   and aa.user_type=utype.id
+			   and am.id=aml.move_id
+			   and am.period_id=ap.id
+			   and aap.id=aa.parent_id
+			   and ap.id={0}
+			  group by aa.code,aa.name,ap.name,aap.name,aa.level,utype.name
+			   order by aa.code
+		]]>
+	</sql>	
+	<sql name="account.zz1" comment="总账查询">
+		<![CDATA[		
+			select a.code,a.name,s.period_name,s.code,sum(s.debit) as debit,sum(s.credit) as credit,utype.fx from (
+				/*期初*/
+				select sum(aml.debit) as debit,sum(aml.credit) as credit, aml.account_id,1 as period_id,pn.name as period_name,'10qc' as code
+				from account_move_line aml,account_move am,account_period p,account_fiscalyear af,
+					(select min(p.name) as name from account_period p where p.date_start>='{0}' and p.special='f') as pn
+				where p.id=am.period_id
+				and p.date_stop<='{0}'
+				and af.date_start<='{0}'
+				and af.date_stop>='{0}'
+				and p.date_start>=af.date_start
+				and am.id=aml.move_id
+				group by aml.account_id,pn.name
+				/*本期合计*/	
+				union all
+				select sum(aml.debit) as debit,sum(aml.credit) as credit,ap.account_id,
+					   ap.period_id,ap.name,'20bq' as code
+				  from (select ap.id as period_id,aa.id as account_id,ap.name
+					  from account_period ap,account_account aa
+					 where ap.date_start>='{0}'
+					   and ap.date_stop<='{1}'
+					   and ap.special='f'	
+					   and exists (select 1 
+							 from account_move_line aml,account_move am,account_period ap,account_fiscalyear af
+							where aml.move_id=am.id
+							  and aml.account_id=aa.id
+							  and am.period_id=ap.id
+							  and ap.fiscalyear_id=af.id
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{0}'
+							)
+					   ) as ap
+				   left join (select am.period_id,aml.account_id,aml.credit,aml.debit
+						from account_move_line aml,account_move am 
+						   where aml.move_id=am.id) as aml
+					   on aml.period_id=ap.period_id
+					  and aml.account_id=ap.account_id
+				   group by ap.period_id,ap.name,ap.account_id
+				union all
+				/*本年到各个期间的累积 包括期初*/
+				select sum(aml.debit) as debit,sum(aml.credit) as credit,p.account_id,p.id,p.name,'30bn' as code
+				from (select ap.id,ap.name,ap.date_start as p_date_start,ap.date_stop,af.date_start as f_date_start,aa.id as account_id
+					    from account_period ap,account_fiscalyear af,account_account aa 
+					   where ap.fiscalyear_id=af.id /*and ap.special='f'*/
+					     and ap.date_start>='{0}'
+					     and ap.date_stop<='{1}'
+						 and exists (select 1 
+							 from account_move_line aml,account_move am,account_period ap,account_fiscalyear af
+							where aml.move_id=am.id
+							  and aml.account_id=aa.id
+							  and am.period_id=ap.id
+							  and ap.fiscalyear_id=af.id
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{0}'
+							)
+					) as p
+				left join (select p.date_start,p.date_stop,aml.debit,aml.credit,aml.account_id 
+						from account_move_line aml ,account_period p,account_move am
+						where am.period_id=p.id and am.id=aml.move_id and p.special='f') as aml
+					on aml.date_start>=p.f_date_start and aml.date_stop<=p.date_stop and aml.account_id=p.account_id
+				group by p.account_id,p.id,p.name
+			) as s, 
+			/*account_account a,		*/
+			(
+				/*select a.id,a.code,a.name,a.id as myid from account_account a where a.level=1 为2的直接记到2级上面 union all记到1级上面*/
+				select a.id,a.code,a.name,a.id as myid,a.level,a.user_type from account_account a where a.level in (1,2) and a.active='t'
+				union all
+				select a.id,ap.code,ap.name,ap.id as myid,ap.level,ap.user_type from account_account ap,account_account a where ap.id=a.parent_id and a.active='t' and ap.level=1
+			) as a,
+			(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+						from account_financial_report fr,
+							 account_account_type aat,
+							 account_account_financial_report_type frt
+						where fr.id=frt.report_id
+						and frt.account_type_id=aat.id
+						and fr.level>0) as utype
+			where a.id=s.account_id
+			  and a.code<='{3}'
+			  and a.code>='{2}'
+			  and utype.id=a.user_type
+				{4}
+				{5}
+				group by a.code,a.name,s.period_name,s.code,utype.fx
+				order by a.code,s.period_name,s.code
+		]]>
+	</sql>
+	<sql name="account.zz.partner1" comment="总账查询">
+		<![CDATA[
+			select a.code,a.name{7},s.period_name,s.code,sum(s.debit) as debit,sum(s.credit) as credit,utype.fx {6} from (
+				/*期初*/
+				select sum(aml.debit) as debit,sum(aml.credit) as credit, aa.account_id,1 as period_id,pn.name as period_name,'10qc' as code,rp.name as rname,aa.partner_id
+				from (select aml.account_id,aml.partner_id,max(1)
+							 from account_move_line aml,account_move am,account_period p,account_fiscalyear af
+							where aml.move_id=am.id
+							  and am.period_id=p.id
+							  and p.fiscalyear_id=af.id
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{0}'
+						    group by aml.account_id,aml.partner_id
+						) as aa
+					left join res_partner rp on rp.id=aa.partner_id
+					left join (select l.debit,l.credit,l.account_id,l.partner_id
+						     from account_move_line as l
+							,account_move am,account_period p,account_fiscalyear af
+							where p.id=am.period_id
+							  and p.date_stop<='{0}'
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{0}'
+							  and p.date_start>=af.date_start
+							  and am.id=l.move_id) as aml on aml.partner_id=aa.partner_id and aml.account_id=aa.account_id
+					,(select min(p.name) as name from account_period p where p.date_start>='{0}' and p.special='f') as pn				
+				group by aml.account_id,pn.name,rp.name,aa.account_id,aa.partner_id
+				/*本期合计*/	
+				union all
+				select sum(aml.debit) as debit,sum(aml.credit) as credit,ap.account_id,
+					   ap.period_id,ap.name,'20bq' as code,rp.name as rname,ap.partner_id
+				  from (select ap.id as period_id,aa.account_id,ap.name,aa.partner_id
+					  from account_period ap,
+						(select aml.account_id,aml.partner_id,max(1)
+							 from account_move_line aml,account_move am,account_period p,account_fiscalyear af
+							where aml.move_id=am.id
+							  and am.period_id=p.id
+							  and p.fiscalyear_id=af.id
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{0}'
+						    group by aml.account_id,aml.partner_id
+						) as aa					   
+					 where ap.date_start>='{0}'
+					   and ap.date_stop<='{1}'
+					   and ap.special='f'	
+					) as ap
+				   left join res_partner rp on rp.id=ap.partner_id
+				   left join (select am.period_id,aml.account_id,aml.credit,aml.debit
+						from account_move_line aml
+							,account_move am
+						   where aml.move_id=am.id) as aml
+					   on aml.period_id=ap.period_id
+					  and aml.account_id=ap.account_id
+				   group by ap.period_id,ap.name,ap.account_id,rp.name,ap.partner_id
+				union all
+				/*本年到各个期间的累积 包括期初*/
+				select sum(aml.debit) as debit,sum(aml.credit) as credit,p.account_id,p.id,p.name,'30bn' as code,rp.name as rname,p.partner_id
+				from (select ap.id,ap.name,ap.date_start as p_date_start,ap.date_stop,af.date_start as f_date_start,aa.account_id,aa.partner_id
+					    from account_period ap,account_fiscalyear af,
+						(select aml.account_id,aml.partner_id,max(1)
+							 from account_move_line aml,account_move am,account_period p,account_fiscalyear af
+							where aml.move_id=am.id
+							  and am.period_id=p.id
+							  and p.fiscalyear_id=af.id
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{1}'
+						    group by aml.account_id,aml.partner_id
+						) as aa	
+					   where ap.fiscalyear_id=af.id /*and ap.special='f'*/
+					     and ap.date_start>='{0}'
+					     and ap.date_stop<='{1}'						 
+					) as p
+				left join res_partner rp on rp.id=p.partner_id
+				left join (select p.date_start,p.date_stop,aml.debit,aml.credit,aml.account_id,rp.name as rname
+						from account_move_line aml 
+							left join res_partner rp on rp.id=aml.partner_id
+						,account_period p,account_move am
+						where am.period_id=p.id and am.id=aml.move_id and p.special='f') as aml
+					on aml.date_start>=p.f_date_start and aml.date_stop<=p.date_stop and aml.account_id=p.account_id
+				group by p.account_id,p.id,p.name,aml.rname,rp.name,p.partner_id
+			) as s, 
+			(
+				/*select a.id,a.code,a.name,a.id as myid from account_account a where a.level=1 为2的直接记到2级上面 union all记到1级上面*/
+				select a.id,a.code,a.name,a.id as myid,a.level,a.user_type from account_account a where a.level in (1,2) and a.active='t'
+				union all
+				select a.id,ap.code,ap.name,ap.id as myid,ap.level,ap.user_type from account_account ap,account_account a where ap.id=a.parent_id and a.active='t' and ap.level=1
+			) as a,
+			(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+						from account_financial_report fr,
+							 account_account_type aat,
+							 account_account_financial_report_type frt
+						where fr.id=frt.report_id
+						and frt.account_type_id=aat.id
+						and fr.level>0) as utype
+			where a.id=s.account_id
+			  and a.code<='{3}'
+			  and a.code>='{2}'
+			  and utype.id=a.user_type
+				{4}
+				{5}
+				group by a.code,a.name,s.period_name,s.code,utype.fx {6}
+				order by a.code{6},s.period_name,s.code
+		]]>
+	</sql>
+	<sql name="account.zz.partner" comment="总账查询">
+		<![CDATA[
+			select a.code,a.name{7}{9},s.period_name,s.code,sum(s.debit) as debit,sum(s.credit) as credit,utype.fx {6}{8} from (
+				/*期初*/
+				select sum(aml.debit) as debit,sum(aml.credit) as credit, aa.account_id,1 as period_id,pn.name as period_name,'10qc' as code,
+					rp.name as rname,aa.partner_id,aa.analytic_id
+				from (select aml.account_id,COALESCE(aml.partner_id,-1) partner_id,max(1),COALESCE(aml.analytic_account_id,-1) AS analytic_id
+							 from account_move_line aml								
+								,account_move am,account_period p/*,account_fiscalyear af*/
+							where aml.move_id=am.id
+							  and am.period_id=p.id
+							  /*and p.fiscalyear_id=af.id
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{0}'*/
+						    group by aml.account_id,COALESCE(aml.partner_id,-1)
+                                               ,COALESCE(aml.analytic_account_id,-1)
+						) as aa
+					left join res_partner rp on rp.id=aa.partner_id
+					inner join (select l.debit,l.credit,l.account_id,l.partner_id,l.analytic_account_id
+						     from account_move_line as l
+							,account_move am,account_period p/*,account_fiscalyear af*/
+							where p.id=am.period_id
+							  and p.date_stop<='{0}'
+							  /*and af.date_start<='{0}'
+							  and af.date_stop>='{0}'
+							  and p.date_start>=af.date_start*/
+							  and am.id=l.move_id) as aml on /*aml.partner_id=aa.partner_id and*/ aml.account_id=aa.account_id 
+												and (COALESCE(aml.partner_id,-1)=aa.partner_id)/*0710*/
+												and (COALESCE(aml.analytic_account_id,-1)=aa.analytic_id)
+					,(SELECT    p.name AS name
+                                      FROM      account_period p
+                                      WHERE     p.date_start >= '2012-11-01'
+                                                AND p.special = 'f' order by p.date_start limit 1) as pn				
+				group by aml.account_id,pn.name,rp.name,aa.account_id,aa.partner_id,aa.analytic_id
+				/*本期合计*/	
+				union all
+				select sum(aml.debit) as debit,sum(aml.credit) as credit,ap.account_id,
+					   ap.period_id,ap.name,'20bq' as code,rp.name as rname,ap.partner_id,ap.analytic_id
+				  from (select ap.id as period_id,aa.account_id,ap.name,aa.partner_id,aa.analytic_id
+					  from account_period ap,
+						(select aml.account_id,COALESCE(aml.partner_id,-1) partner_id,max(1),COALESCE(aml.analytic_account_id,-1) AS analytic_id
+							 from account_move_line aml
+							  /* left join account_voucher av on av.move_id=aml.move_id*/
+							 ,account_move am,account_period p/*,account_fiscalyear af*/
+							where aml.move_id=am.id
+							  and am.period_id=p.id
+							  /*and p.fiscalyear_id=af.id
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{0}'*/
+							  and p.special='f'	
+						    group by aml.account_id,COALESCE(aml.partner_id,-1),COALESCE(aml.analytic_account_id,-1)
+						) as aa					   
+					 where ap.date_start>='{0}'
+					   and ap.date_stop<='{1}'
+					   /*and ap.special='f'	*/
+					) as ap
+				   left join res_partner rp on rp.id=ap.partner_id
+				   inner join (select am.period_id,aml.account_id,aml.credit,aml.debit,aml.partner_id,aml.analytic_account_id
+						from account_move_line aml
+							,account_move am
+						   where aml.move_id=am.id) as aml
+					   on aml.period_id=ap.period_id
+					  and aml.account_id=ap.account_id 
+												and (COALESCE(aml.partner_id,-1)=ap.partner_id)/*0710*/
+												and (COALESCE(aml.analytic_account_id,-1)=ap.analytic_id)
+				   group by ap.period_id,ap.name,ap.account_id,rp.name,ap.partner_id,ap.analytic_id
+				union all
+				/*本年到各个期间的累积 包括期初*/
+				select sum(p.debit) as debit,sum(p.credit) as credit,p.account_id,p.id,p.name,'30bn' as code,p.name as rname,p.partner_id,p.analytic_id
+from (select aml.debit,aml.credit,p.account_id,p.id,p.name,rp.name as rname,p.partner_id,p.analytic_id
+				from (select ap.id,ap.name,ap.date_start as p_date_start,ap.date_stop,af.date_start as f_date_start,aa.account_id,aa.partner_id,aa.analytic_id
+					    from account_period ap,account_fiscalyear af,
+						(select aml.account_id,COALESCE(aml.partner_id,-1) partner_id,max(1),COALESCE(aml.analytic_account_id,-1) AS analytic_id
+							 from account_move_line aml
+							   /* left join account_voucher av on av.move_id=aml.move_id */
+							 ,account_move am,account_period p/*,account_fiscalyear af*/
+							where aml.move_id=am.id
+							  and am.period_id=p.id
+							 /* and p.fiscalyear_id=af.id
+							  and af.date_start<='{0}'
+							  and af.date_stop>='{1}'*/
+						    group by aml.account_id,COALESCE(aml.partner_id,-1),COALESCE(aml.analytic_account_id,-1)
+						) as aa	
+					   where ap.fiscalyear_id=af.id and ap.special='f'
+					     and ap.date_start>='{0}'
+					     and ap.date_stop<='{1}'						 
+					) as p
+				left join res_partner rp on rp.id=p.partner_id
+				inner join (select p.date_start,p.date_stop,aml.debit,aml.credit,aml.account_id,rp.name as rname,aml.partner_id,aml.analytic_account_id
+						from account_move_line aml 
+							left join res_partner rp on rp.id=aml.partner_id
+						,account_period p,account_move am
+						where am.period_id=p.id and am.id=aml.move_id /* and p.special='f'*/) as aml
+					on aml.date_start>=p.f_date_start and aml.date_stop<=p.date_stop 
+					   and aml.account_id=p.account_id 
+					   AND ( COALESCE(aml.partner_id, -1) = p.partner_id)/*0710*/
+                                          AND ( COALESCE(aml.analytic_account_id,
+                                                         -1) = p.analytic_id)
+																	
+		) as p
+				group by p.account_id,p.id,p.name,p.name,p.partner_id,p.analytic_id,p.rname
+				/*本年结束*/
+			) as s
+			left join account_analytic_account aaa on s.analytic_id=aaa.id
+			,(
+				/*select a.id,a.code,a.name,a.id as myid from account_account a where a.level=1 为2的直接记到2级上面 union all记到1级上面*/
+				select a.id,a.code,a.name,a.id as myid,a.level,a.user_type from account_account a where a.level in (1,2) and a.active='t'
+				union all
+				select a.id,ap.code,ap.name,ap.id as myid,ap.level,ap.user_type from account_account ap,account_account a where ap.id=a.parent_id and a.active='t' and ap.level=1
+			) as a,
+			(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+						from account_financial_report fr,
+							 account_account_type aat,
+							 account_account_financial_report_type frt
+						where fr.id=frt.report_id
+						and frt.account_type_id=aat.id
+						and fr.level>0) as utype
+			where a.id=s.account_id
+			 and a.code<='{3}'
+			  and a.code>='{2}'
+			  and utype.id=a.user_type
+				{4}
+				{5}
+				group by a.code,a.name,s.period_name,s.code,utype.fx {6}{8}
+				order by a.code{6}{8},s.period_name,s.code
+		]]>
+	</sql>
+	<sql name="a-account.move.name" comment="凭证号可以选择">
+		<![CDATA[
+SELECT  iis.isi,iis.name
+FROM    ( SELECT replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+						lpad(cast(an.num as varchar(10)),i.padding,'0') as name,
+                    CASE i.number_next
+                      WHEN an.num THEN i.id
+                      ELSE NULL
+                    END AS isi
+          FROM      aac_num an
+                   ,ir_sequence i
+                   ,account_journal aj
+				   ,account_sequence_period asp
+          WHERE     an.num <= i.number_next
+                    AND an.num > 0
+                    AND asp.sequence_main_id_p = aj.sequence_id
+					and asp.period_id={0}
+					and i.id=asp.sequence_id
+                    and aj.code='hand'
+        ) AS iis
+WHERE   NOT EXISTS ( SELECT 1
+                     FROM   account_move AS am
+                     WHERE  am.name = iis.name)
+		]]>
+	</sql>
+	<sql name="a-account.move.name.period" comment="凭证号可以选择">
+		<![CDATA[
+SELECT  iis.isi,iis.name
+FROM    ( SELECT replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+						lpad(cast(an.num as varchar(10)),i.padding,'0') as name,
+                    CASE i.number_next
+                      WHEN an.num THEN i.id
+                      ELSE NULL
+                    END AS isi
+          FROM      aac_num an
+                   ,ir_sequence i
+                   ,account_journal aj
+				   ,account_sequence_period asp
+          WHERE     an.num <= i.number_next
+                    AND an.num > 0
+                    AND asp.sequence_main_id_p = aj.sequence_id
+					and asp.period_id={1}
+					and i.id=asp.sequence_id
+                    and aj.code='hand'
+        ) AS iis
+WHERE   NOT EXISTS ( SELECT 1
+                     FROM   account_move AS am
+                     WHERE  am.name = iis.name)
+		]]>
+	</sql>
+	<sql name="a-account.move.name.rjz" comment="凭证号可以选择">
+		<![CDATA[
+SELECT  iis.isi,iis.name
+FROM    ( SELECT replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+						lpad(cast(an.num as varchar(10)),i.padding,'0') as name,
+                    CASE i.number_next
+                      WHEN an.num THEN i.id
+                      ELSE NULL
+                    END AS isi
+          FROM      aac_num an
+                   ,ir_sequence i
+                   ,account_journal aj
+				   ,account_sequence_period asp
+          WHERE     an.num <= i.number_next
+                    AND an.num > 0
+					AND aj.id={2}
+					and asp.period_id={1}					
+					  AND asp.sequence_main_id_p=aj.sequence_id
+					  AND i.id = asp.sequence_id
+                    /*and aj.code='hand'*/
+        ) AS iis
+WHERE   NOT EXISTS ( SELECT 1
+                     FROM   account_move AS am
+                     WHERE  am.name = iis.name)
+		]]>
+	</sql>
+	<sql name="account.move.reseq" comment="重新整理凭证号">
+		<![CDATA[
+UPDATE  account_move
+SET     name = irs.name
+FROM    ( SELECT    am.id AS aid
+					,replace(replace(replace(replace(i.prefix, '%(year)s', to_char(now(),'YYYY')),'%(y)s',to_char(now(),'YY')),'%(month)s',to_char(now(),'MM')),'%(day)s',to_char(now(),'DD'))||
+					lpad(cast(row_number() over(PARTITION BY i order by am.id) as varchar(10)),i.padding,'0') as name
+          FROM      account_move am
+                   ,account_journal aj
+                   ,account_period ap
+                   ,ir_sequence i
+                   ,account_sequence_period asp
+          WHERE     aj.id = am.journal_id
+                    AND ap.id=am.period_id
+                    AND ap.special='f'
+                    AND asp.sequence_main_id_p=aj.sequence_id
+                    AND i.id = asp.sequence_id
+                    AND am.period_id=asp.period_id
+        ) AS irs
+WHERE   irs.aid = id ;
+UPDATE  ir_sequence
+SET     number_next = irs.next_num + 1
+FROM    ( SELECT    i.id AS iid
+                   ,COUNT(*) AS next_num
+          FROM      account_move am
+                   ,account_journal aj
+                   ,account_period ap
+                   ,ir_sequence i
+                   ,account_sequence_period asp
+          WHERE     aj.id = am.journal_id
+                    AND ap.id=am.period_id
+                    AND ap.special='f'
+                    AND asp.sequence_main_id_p=aj.sequence_id
+                    AND i.id = asp.sequence_id
+                    AND am.period_id=asp.period_id
+          GROUP BY  i.id
+        ) irs
+WHERE   irs.iid = id ;
+		]]>
+	</sql>
+	<sql name="account.move.check" comment="审核凭证">
+		<![CDATA[
+			update account_move set to_check='t',write_date=now(),write_uid={0} where id in ({1})
+		]]>
+	</sql>
+	<sql name="account.move.uncheck" comment="反审核凭证">
+		<![CDATA[
+			update account_move set to_check='f',write_date=now(),write_uid={0} where id in ({1})
+		]]>
+	</sql>
+	<sql name="account.move.count" comment="凭证总数">
+		<![CDATA[
+			select count(1)
+              from account_move as am left join res_users as uru on uru.id=am.write_uid,account_period as ap,account_journal as aj,res_users as ru ,
+                      account_move_line aml,account_account aa,account_account aap 
+             where ru.id=am.create_uid and ap.id=am.period_id and aj.id=am.journal_id 
+			   and aml.move_id=am.id and aa.id=aml.account_id and aa.parent_id=aap.id and am.journal_id<>9 
+			   and (aml.credit+aml.debit)>0
+			   {2} ;
+		]]>
+	</sql>
+	<sql name="account.move.query" comment="凭证查询">
+		<![CDATA[
+			select am.id,am.name,am.ref,to_char(am.date,'YYYY/MM/DD') as date,ap.name,aj.name,
+				(select sum(debit) from account_move_line where move_id=am.id),balance,proof,ru.name as uname,am.period_id,am.journal_id 
+					,aml.name,aa.name||(case when aml.partner_id is not null and aa.type in ('receivable','payable') then '_'||rp.name else '' end),
+					aml.credit,aml.debit ,aa.code,aa.level,aap.name,am.to_check,uru.name,
+					'','','','','',/*21-25*/
+					ap.state,pp.name_template
+			 from account_move as am 
+					left join res_users as uru on uru.id=am.write_uid,
+				  account_period as ap,account_journal as aj,res_users as ru ,
+				  account_move_line aml      
+				    left join res_partner rp on rp.id=aml.partner_id
+					left join product_product pp on pp.id=aml.product_id,
+				  account_account aa,
+				  account_account aap
+			 where ru.id=am.create_uid 
+			   and ap.id=am.period_id 
+			   and aj.id=am.journal_id 
+			   and aml.move_id=am.id 
+			   and aa.id=aml.account_id 
+			   and aa.parent_id=aap.id
+			   and ap.special='f'
+			   and (aml.credit+aml.debit)>0
+			   {2}
+             order by am.period_id,am.name,am.id {3},aml.debit desc {1} offset {0} ;
+		]]>
+	</sql>
+	<sql name="account.move.delete" comment="凭证删除">
+		<![CDATA[
+			delete from account_move where id={0};
+		]]>
+	</sql>
+	<sql name="account.move.line.query" comment="凭证行查询">
+		<![CDATA[
+			 select aml.id,aml.name,aa.code,
+					aa.name||(case when aml.partner_id is not null and aa.type in ('receivable','payable') then '_'||rp.name else '' end) as aname,
+					aap.name as pname,debit,credit,aaa.name as aname,
+					aap.level,aa.id,aaa.id 
+			  from account_move_line as aml 
+				   left join account_analytic_account aaa on aml.analytic_account_id=aaa.id 
+				   left join res_partner rp on rp.id=aml.partner_id,
+				   account_account as aa,
+				   account_account aap 
+			 where aml.account_id=aa.id 
+			   and aa.parent_id=aap.id 			   
+			   and (aml.credit+aml.debit)>0
+			   and aml.move_id={0} 
+			order by aml.debit desc
+		]]>
+	</sql>
+	<sql name="account.account.balance" comment="科目余额">
+		<![CDATA[
+SELECT  qc.code,qc.name,qc.qcdebit,qc.qccredit,bq.bqdebit,bq.bqcredit,bn.bndebit,bn.bncredit
+FROM    ( SELECT    a.code
+                   ,a.name
+                   ,SUM(amqc.debit) AS qcdebit
+                   ,SUM(amqc.credit) AS qccredit
+          FROM      ( SELECT    a.id
+                               ,a.code
+                               ,a.name
+                               ,a.id AS myid
+                               ,a.level
+                      FROM      account_account a
+                      WHERE     a.level IN ( 1, 2 )
+                                AND a.active = 't'
+                      UNION ALL
+                      SELECT    a.id
+                               ,ap.code
+                               ,ap.name
+                               ,ap.id AS myid
+                               ,ap.level
+                      FROM      account_account ap
+                               ,account_account a
+                      WHERE     ap.id = a.parent_id
+                                AND ap.level = 1
+                                AND a.active = 't'
+                    ) AS a
+                    LEFT JOIN ( SELECT  aml.credit
+                                       ,aml.debit
+                                       ,am.period_id
+                                       ,aml.account_id /*期初*/
+                                FROM    account_move am
+                                       ,account_move_line aml
+                                       ,account_period ap
+                                       /*,account_fiscalyear af*/
+                                WHERE   aml.move_id = am.id
+                                        AND ap.id = am.period_id
+                                        /*AND af.date_start <= '{0}'
+                                        AND af.date_stop >= '{1}'
+                                        AND ap.date_start >= af.date_start*/
+                                        AND ap.date_stop <= '{0}'
+                              ) AS amqc ON a.id = amqc.account_id
+          WHERE     a.code<='{3}'
+			  and a.code>='{2}'
+				{4}
+          GROUP BY  a.code
+                   ,a.name
+          ORDER BY  a.code
+        ) AS qc
+       ,( SELECT    a.code
+                   ,a.name
+                   ,SUM(ambq.debit) AS bqdebit
+                   ,SUM(ambq.credit) AS bqcredit
+          FROM      ( SELECT    a.id
+                               ,a.code
+                               ,a.name
+                               ,a.id AS myid
+                               ,a.level
+                      FROM      account_account a
+                      WHERE     a.level IN ( 1, 2 )
+                                AND a.active = 't'
+                      UNION ALL
+                      SELECT    a.id
+                               ,ap.code
+                               ,ap.name
+                               ,ap.id AS myid
+                               ,ap.level
+                      FROM      account_account ap
+                               ,account_account a
+                      WHERE     ap.id = a.parent_id
+                                AND ap.level = 1
+                                AND a.active = 't'
+                    ) AS a
+                    LEFT JOIN ( SELECT  aml.credit
+                                       ,aml.debit
+                                       ,am.period_id
+                                       ,aml.account_id /*本期*/
+                                FROM    account_move am
+                                       ,account_move_line aml
+                                       ,account_period ap
+                                WHERE   aml.move_id = am.id
+                                        AND ap.id = am.period_id
+                                        AND ap.date_start >= '{0}'
+                                        AND ap.date_stop <= '{1}'
+                                        AND ap.special = 'f'
+                              ) AS ambq ON a.id = ambq.account_id
+          WHERE    a.code<='{3}'
+			  and a.code>='{2}'
+				{4}
+          GROUP BY  a.code
+                   ,a.name
+          ORDER BY  a.code
+        ) AS bq
+       ,( SELECT    a.code
+                   ,a.name
+                   ,SUM(ambn.debit) AS bndebit
+                   ,SUM(ambn.credit) AS bncredit
+          FROM      ( SELECT    a.id
+                               ,a.code
+                               ,a.name
+                               ,a.id AS myid
+                               ,a.level
+                      FROM      account_account a
+                      WHERE     a.level IN ( 1, 2 )
+                                AND a.active = 't'
+                      UNION ALL
+                      SELECT    a.id
+                               ,ap.code
+                               ,ap.name
+                               ,ap.id AS myid
+                               ,ap.level
+                      FROM      account_account ap
+                               ,account_account a
+                      WHERE     ap.id = a.parent_id
+                                AND ap.level = 1
+                                AND a.active = 't'
+                    ) AS a
+                    LEFT JOIN ( SELECT  aml.credit
+                                       ,aml.debit
+                                       ,am.period_id
+                                       ,aml.account_id /*本年*/
+                                FROM    account_move am
+                                       ,account_move_line aml
+                                       ,account_period ap
+                                       /*,account_fiscalyear af*/
+                                WHERE   aml.move_id = am.id
+                                        AND ap.id = am.period_id
+                                        AND ap.date_stop <= '{1}'
+                                       /* AND af.date_start <= '{0}'
+                                        AND af.date_stop >= '{1}'
+                                        AND ap.date_start >= af.date_start*/
+                                        AND ap.special = 'f'
+                              ) AS ambn ON a.id = ambn.account_id
+          WHERE     a.code<='{3}'
+			  and a.code>='{2}'
+				{4}
+          GROUP BY  a.code
+                   ,a.name
+          ORDER BY  a.code
+        ) AS bn
+WHERE   qc.code = bq.code
+        AND qc.code = bn.code
+		]]>
+	</sql>
+	<sql name="account.account.balance1" comment="科目余额">
+		<![CDATA[
+			select a.code,a.name,
+					sum(amqc.debit) as qcdebit,sum(amqc.credit) as qccredit,
+				   sum(ambq.debit) as bqdebit,sum(ambq.credit) as bqcredit,
+				   sum(ambn.debit) as bndebit,sum(ambn.credit) as bncredit
+			 from (select a.id,a.code,a.name,a.id as myid,a.level from account_account a where a.level in (1,2) and a.active='t'
+				 union all
+				 select a.id,ap.code,ap.name,ap.id as myid,ap.level from account_account ap,account_account a where ap.id=a.parent_id and ap.level=1 and a.active='t') as a
+				 left join (select aml.credit,aml.debit,am.period_id,aml.account_id /*期初*/
+						  from account_move am,account_move_line aml,account_period ap,account_fiscalyear af
+						 where aml.move_id=am.id
+						   and ap.id=am.period_id
+						   and af.date_start<='{0}'
+						   and af.date_stop>='{1}'
+						   and ap.date_start>=af.date_start
+						   and ap.date_stop<='{0}') as amqc on a.id=amqc.account_id
+				 left join (select aml.credit,aml.debit,am.period_id,aml.account_id /*本期*/
+						  from account_move am,account_move_line aml,account_period ap
+						 where aml.move_id=am.id
+						   and ap.id=am.period_id
+						   and ap.date_start>='{0}'
+						   and ap.date_stop<='{1}'
+						   and ap.special='f') as ambq on a.id=ambq.account_id
+				 left join (select aml.credit,aml.debit,am.period_id,aml.account_id /*本年*/
+						  from account_move am,account_move_line aml,account_period ap,account_fiscalyear af
+						 where aml.move_id=am.id
+						   and ap.id=am.period_id
+						   and ap.date_stop<='{1}'
+						   and af.date_start<='{0}'
+						   and af.date_stop>='{1}'
+						   and ap.date_start>=af.date_start
+						   and ap.special='f') as ambn on a.id=ambn.account_id
+			where a.code<='{3}'
+			  and a.code>='{2}'
+				{4}
+			group by a.code,a.name
+			order by a.code;
+		]]>
+	</sql>
+	<sql name="account.rjz.account" comment="日记账科目">
+		<![CDATA[
+select id,code,name,parent_id,level,null
+ FROM    account_account aa
+WHERE   active = 't'
+  AND type = 'liquidity'
+  and exists (select 1 from account_move_line where account_id=aa.id)
+ORDER BY code
+		]]>
+	</sql>
+	<sql name="account.mxb.account.partner" comment="明细表">
+		<![CDATA[
+		 select * from(
+			select id,code,name,parent_id,level,null as partner_id
+			  from account_account aa
+			 where 1=1 {0} and active='t' 
+			   and code>='{1}' and code<='{2}' 
+				union all 
+			select aa.id*-1,aa.code,rp.name,aa.id,2,rp.id
+			  from account_account aa,res_partner rp
+			 where 1=1 {0} and aa.active='t' and rp.active='t'
+			   and code>='{1}' and code<='{2}' 
+			  {3}
+			  and exists(select 1 from account_move_line aml where aa.id=aml.account_id and aml.partner_id=rp.id)
+			 ) as a order by code,level
+		]]>
+	</sql>
+	<sql name="account.mxb.account" comment="明细表科目">
+		<![CDATA[
+			select * 
+			from(
+				select cast(aa.id as varchar(10)),aa.code,aa.name,
+					cast(aa.parent_id as varchar(10)) as parent_id,level,null as partner_id,
+					cast(null as integer) as analytic_id,null as analytic_name,aa.id as account_id,1 as level_type
+				  from account_account aa
+				 where 1=1 {0} and active='t' 
+				   and aa.code>='{1}' and aa.code<='{2}' 
+					union all 
+				select cast(aa.id as varchar(10))||'_'||cast(rp.id as varchar(10)),aa.code,rp.name,
+					cast(aa.id as varchar(10)),2,rp.id,
+					null,null,aa.id,2 as level_type
+				  from account_account aa,res_partner rp
+				 where 1=1 {0} and aa.active='t' and rp.active='t'				   
+				   and aa.code>='{1}' and aa.code<='{2}' 
+				   and exists(select 1 from account_move_line aml where aa.id=aml.account_id and aml.partner_id=rp.id)
+				  union all 
+				select null,aa.code,aaa.name,
+					cast(aa.id as varchar(10))||'_'||cast(rp.id as varchar(10)),3,rp.id,
+					aaa.id,aaa.name,aa.id,3 as level_type
+				  from account_account aa,res_partner rp,account_analytic_account aaa
+				 where 1=1 {0} and aa.active='t' and rp.active='t'				   
+				   and aa.code>='{1}' and aa.code<='{2}' 	   
+				   and exists(select 1 from account_move_line aml where aaa.id=aml.analytic_account_id and aml.partner_id=rp.id)
+				) as a
+			where a.level_type in ({3}) and a.account_id in (
+					 select a.id from account_account a,account_move_line aml where aml.account_id=a.id
+					 union all
+					 select a.parent_id from account_account a,account_move_line aml where aml.account_id=a.id)
+			 order by code asc,partner_id desc,level
+		]]>
+	</sql>
+	<sql name="account.mxb.account.analytic" comment="明细表科目">
+		<![CDATA[
+			select * 
+			from(
+				select cast(aa.id as varchar(10)),aa.code,aa.name,
+					cast(aa.parent_id as varchar(10)) as parent_id,level,cast(null as integer) as partner_id,
+					cast(null as integer) as analytic_id,null as analytic_name,aa.id as account_id,1 as level_type
+				  from account_account aa
+				 where 1=1 {0} and active='t' 
+					 and aa.id in (
+						 select a.id from account_account a,account_move_line aml where aml.account_id=a.id
+						 union all
+						 select a.parent_id from account_account a,account_move_line aml where aml.account_id=a.id)	
+				   and aa.code>='{1}' and aa.code<='{2}' 					
+				  union all 
+				select cast(aa.id as varchar(10))||'_'||cast(aaa.id as varchar(10)),aa.code,aaa.name,
+					cast(aa.id as varchar(10)),2,null,
+					aaa.id,aaa.name,aa.id,3 as level_type
+				  from account_account aa,account_analytic_account aaa
+				 where 1=1 {0} and aa.active='t' 			   
+				   and aa.code>='{1}' and aa.code<='{2}' 	   
+				   and exists(select 1 from account_move_line aml where aaa.id=aml.analytic_account_id)
+				   and aa.id in (
+					 select a.id from account_account a,account_move_line aml
+						where aml.account_id=a.id 
+						  and aml.move_id in (select move_id from account_voucher where analytic_id=aaa.id union all  
+									select move_id from account_invoice ai,account_invoice_line ail where ail.invoice_id=ai.id and ail.account_analytic_id=aaa.id)
+					 union all
+					 select a.parent_id from account_account a,account_move_line aml where aml.account_id=a.id
+						and aml.move_id in (select move_id from account_voucher where analytic_id=aaa.id union all  
+									select move_id from account_invoice ai,account_invoice_line ail where ail.invoice_id=ai.id and ail.account_analytic_id=aaa.id)
+					)
+				   union all 
+				select null,aa.code,rp.name,
+					cast(aa.id as varchar(10))||'_'||cast(aaa.id as varchar(10)),3,rp.id,
+					null,null,aa.id,2 as level_type
+				  from account_account aa,res_partner rp,account_analytic_account aaa
+				 where 1=1 {0} and aa.active='t' and rp.active='t'				   
+				   and aa.code>='{1}' and aa.code<='{2}'   
+				   and exists(select 1 from account_move_line aml where aaa.id=aml.analytic_account_id and aml.partner_id=rp.id)
+				   and exists (
+					 select 1 from account_account a,account_move_line aml
+						where aml.account_id=a.id
+						  and aa.id=a.id
+						  and aml.partner_id=rp.id
+						  and aml.move_id in (select move_id from account_voucher where analytic_id=aaa.id union all  
+									select move_id from account_invoice ai,account_invoice_line ail where ail.invoice_id=ai.id and ail.account_analytic_id=aaa.id)
+					 union all
+					 select 1 from account_account a,account_move_line aml 
+						where aml.account_id=a.id
+						 and aa.id=a.parent_id
+						  and aml.partner_id=rp.id
+						and aml.move_id in (select move_id from account_voucher where analytic_id=aaa.id union all  
+									select move_id from account_invoice ai,account_invoice_line ail where ail.invoice_id=ai.id and ail.account_analytic_id=aaa.id)
+					)
+				) as a
+			where a.level_type in ({3}) and a.account_id in (
+					 select a.id from account_account a,account_move_line aml where aml.account_id=a.id
+					 union all
+					 select a.parent_id from account_account a,account_move_line aml where aml.account_id=a.id)
+			 order by code asc,id,analytic_id asc,level
+		]]>
+	</sql>
+	<sql name="account.mxb.mx" comment="明细表明细">
+		<![CDATA[
+			 select cast('{1}' as varchar(10)) as date,cast('' as varchar(10)) as name, cast('本期期初' as varchar(10)) as name,
+				    a.debit,a.credit,a.fx,b.t,null as move_id
+			  from (select cast('qc' as varchar(10)) as t) as b 
+				 left join (select cast('{1}' as varchar(10)) as date,cast('' as varchar(10)) as name, cast('本期期初' as varchar(10)) as name,sum(aml.debit) as debit,sum(aml.credit) as credit,utype.fx,cast('qc' as varchar(10)) as type
+							  from account_move_line aml,account_move am,account_account aa,account_journal aj,account_period ap,/*account_fiscalyear af,*/
+								(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+														from account_financial_report fr,
+															 account_account_type aat,
+															 account_account_financial_report_type frt
+														where fr.id=frt.report_id
+														and frt.account_type_id=aat.id
+														and fr.level>0) as utype
+							 where aml.account_id=aa.id
+							   {3}
+							   and am.id=aml.move_id
+							   and utype.id=aa.user_type
+							   and aj.id=am.journal_id
+							   and ap.id=am.period_id
+							   and ap.date_stop<='{1}'
+							  /* and af.id=ap.fiscalyear_id
+							   and af.date_start<='{1}'
+							   and af.date_stop>='{1}'
+							   and ap.date_start>=af.date_start*/
+							   and aa.code like '{0}%'
+							  group by utype.fx) as a on a.type=b.t
+			union all
+			select * from(
+			select to_char(am.date,'yyyy-mm-dd'),am.name,aml.name,aml.debit,aml.credit,utype.fx,cast('' as varchar(10)),am.id
+			  from account_move_line aml,account_move am,account_account aa,account_journal aj,account_period ap,
+				(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+										from account_financial_report fr,
+											 account_account_type aat,
+											 account_account_financial_report_type frt
+										where fr.id=frt.report_id
+										and frt.account_type_id=aat.id
+										and fr.level>0) as utype
+			 where aml.account_id=aa.id
+			   {3}
+			   and am.id=aml.move_id
+			   and utype.id=aa.user_type
+			   and aj.id=am.journal_id			   
+			   and (aml.credit+aml.debit)>0
+			   /*and aj.type!='situation'*/
+			   and ap.special='f'
+			   and ap.id=am.period_id
+			   and ap.date_start>='{1}'
+			   and ap.date_stop<='{2}'
+			   and aa.code like '{0}%'
+			 order by am.date asc,am.name,aml.debit
+			 ) as a
+			  union all
+			select '{2}','','本期合计',sum(aml.debit),sum(aml.credit),utype.fx,cast('bq' as varchar(10)),null
+			  from account_move_line aml,account_move am,account_account aa,account_journal aj,account_period ap,
+				(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+										from account_financial_report fr,
+											 account_account_type aat,
+											 account_account_financial_report_type frt
+										where fr.id=frt.report_id
+										and frt.account_type_id=aat.id
+										and fr.level>0) as utype
+			 where aml.account_id=aa.id
+			   {3}
+			   and am.id=aml.move_id
+			   and utype.id=aa.user_type
+			   and aj.id=am.journal_id
+			   /*and aj.type!='situation'*/
+			   and ap.special='f'
+			   and ap.id=am.period_id
+			   and ap.date_start>='{1}'
+			   and ap.date_stop<='{2}'
+			   and aa.code like '{0}%'
+			  group by utype.fx			  
+			   union all
+			 select '{2}' as date,'' as name, '本年累积' as name,sum(aml.debit) as debit,sum(aml.credit) as credit,utype.fx,cast('bn' as varchar(10)),null
+			  from account_move_line aml,account_move am,account_account aa,account_journal aj,account_period ap,/*account_fiscalyear af,*/
+				(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+										from account_financial_report fr,
+											 account_account_type aat,
+											 account_account_financial_report_type frt
+										where fr.id=frt.report_id
+										and frt.account_type_id=aat.id
+										and fr.level>0) as utype
+			 where aml.account_id=aa.id
+			   {3}
+			   and am.id=aml.move_id
+			   and utype.id=aa.user_type
+			   and aj.id=am.journal_id
+			   and ap.id=am.period_id
+			   and ap.date_stop<='{2}'
+			   /*and af.id=ap.fiscalyear_id
+			   and af.date_start<='{1}'
+			   and af.date_stop>='{1}'
+			   and ap.date_start>=af.date_start*/
+			   and aa.code like '{0}%'
+			  group by utype.fx
+		]]>
+	</sql>
+
+	<sql name="account.rjz.account" comment="日记账科目">
+		<![CDATA[
+select id,code,name,parent_id,level,null
+ FROM    account_account aa
+WHERE   active = 't'
+  AND type = 'liquidity'
+  and exists (select 1 from account_move_line where account_id=aa.id)
+ORDER BY code
+		]]>
+	</sql>
+	<sql name="account.rjz.detail" comment="明细表编辑">
+		<![CDATA[
+select  aa.code,aa.id,aj.id,
+	am.to_check,am.name,to_char(am.date,'yyyy/mm/dd'),ap.name,'','',am.create_uid,am.proof,ru.name,ap.id,'',am.id,
+	aml.id,aml.name,aa.code,
+	aa.name||(case when aml.partner_id is not null and aa.type in ('receivable','payable') then '_'||rp.name else '' end) as aname,
+	aap.name as pname,debit,credit,'' as aname,
+	aap.level,aa.id,null 
+from account_move_line aml
+	left join res_partner rp on rp.id=aml.partner_id,
+     account_move am,
+     account_account aa,
+     account_account aap,
+     account_journal aj,
+     account_period ap,
+     res_users	ru
+where aa.id=aml.account_id 
+and am.id=aml.move_id 
+and aap.id=aa.parent_id
+and ap.id=am.period_id
+and aj.id=am.journal_id
+and ru.id=am.create_uid
+and am.id={0}
+order by aa.code asc
+		]]>
+	</sql>
+	<sql name="account.move.rjz.insert" comment="添加凭证头">
+		<![CDATA[
+		insert into account_move(id,create_uid,create_date,name,state,company_id,journal_id,period_id,date,to_check,proof)
+			values(nextval('account_move_id_seq'),{1},now(),'{2}','draft',1,{3},{4},'{5}','f',{6});
+		update ir_sequence set number_next=number_next+number_increment where /*id=(select sequence_id from account_journal where upper(code)= 'HAND') and*/ id={7};
+		select currval('account_move_id_seq');delete from account_move where id={0};
+		]]>
+	</sql>
+	<sql name="account.rjz.mx" comment="明细表明细">
+		<![CDATA[
+			 select cast('{1}' as varchar(10)) as date,cast('' as varchar(10)) as name, cast('本期期初' as varchar(10)) as name,
+				    a.debit,a.credit,a.fx,b.t
+			  from (select cast('qc' as varchar(10)) as t) as b 
+				 left join (select cast('{1}' as varchar(10)) as date,cast('' as varchar(10)) as name, cast('本期期初' as varchar(10)) as name,sum(aml.debit) as debit,sum(aml.credit) as credit,utype.fx,cast('qc' as varchar(10)) as type
+							  from account_move_line aml,account_move am,account_account aa,account_journal aj,account_period ap,account_fiscalyear af,
+								(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+														from account_financial_report fr,
+															 account_account_type aat,
+															 account_account_financial_report_type frt
+														where fr.id=frt.report_id
+														and frt.account_type_id=aat.id
+														and fr.level>0) as utype
+							 where aml.account_id=aa.id
+							   {3}
+							   and am.id=aml.move_id
+							   and utype.id=aa.user_type
+							   and aj.id=am.journal_id
+							   and ap.id=am.period_id
+							   and ap.date_stop<='{1}'
+							   and af.id=ap.fiscalyear_id
+							   and af.date_start<='{1}'
+							   and af.date_stop>='{1}'
+							   and ap.date_start>=af.date_start
+							   and aa.code like '{0}%'
+							  group by utype.fx) as a on a.type=b.t
+			union all
+			select * from(
+			select to_char(am.date,'yyyy-mm-dd'),am.name,aml.name,aml.debit,aml.credit,utype.fx,cast('' as varchar(10))
+			  from account_move_line aml,account_move am,account_account aa,account_journal aj,account_period ap,
+				(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+										from account_financial_report fr,
+											 account_account_type aat,
+											 account_account_financial_report_type frt
+										where fr.id=frt.report_id
+										and frt.account_type_id=aat.id
+										and fr.level>0) as utype
+			 where aml.account_id=aa.id
+			   {3}
+			   and am.id=aml.move_id
+			   and utype.id=aa.user_type
+			   and aj.id=am.journal_id
+			   /*and aj.type!='situation'*/
+			   and ap.special='f'
+			   and ap.id=am.period_id
+			   and ap.date_start>='{1}'
+			   and ap.date_stop<='{2}'
+			   and aa.code like '{0}%'
+			 order by am.date asc,am.name,aml.debit
+			 ) as a
+			  union all
+			select '{2}','','本期合计',sum(aml.debit),sum(aml.credit),utype.fx,cast('bq' as varchar(10))
+			  from account_move_line aml,account_move am,account_account aa,account_journal aj,account_period ap,
+				(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+										from account_financial_report fr,
+											 account_account_type aat,
+											 account_account_financial_report_type frt
+										where fr.id=frt.report_id
+										and frt.account_type_id=aat.id
+										and fr.level>0) as utype
+			 where aml.account_id=aa.id
+			   {3}
+			   and am.id=aml.move_id
+			   and utype.id=aa.user_type
+			   and aj.id=am.journal_id
+			   /*and aj.type!='situation'*/
+			   and ap.special='f'
+			   and ap.id=am.period_id
+			   and ap.date_start>='{1}'
+			   and ap.date_stop<='{2}'
+			   and aa.code like '{0}%'
+			  group by utype.fx			  
+			   union all
+			 select '{2}' as date,'' as name, '本年累积' as name,sum(aml.debit) as debit,sum(aml.credit) as credit,utype.fx,cast('bn' as varchar(10))
+			  from account_move_line aml,account_move am,account_account aa,account_journal aj,account_period ap,account_fiscalyear af,
+				(select frt.account_type_id as id,fr.name,case when fr.name in ('Liability','Income') then '+' else '-' end as fx
+										from account_financial_report fr,
+											 account_account_type aat,
+											 account_account_financial_report_type frt
+										where fr.id=frt.report_id
+										and frt.account_type_id=aat.id
+										and fr.level>0) as utype
+			 where aml.account_id=aa.id
+			   {3}
+			   and am.id=aml.move_id
+			   and utype.id=aa.user_type
+			   and aj.id=am.journal_id
+			   and ap.id=am.period_id
+			   and ap.date_stop<='{2}'
+			   and af.id=ap.fiscalyear_id
+			   and af.date_start<='{1}'
+			   and af.date_stop>='{1}'
+			   and ap.date_start>=af.date_start
+			   and aa.code like '{0}%'
+			  group by utype.fx
+		]]>
+	</sql>
+	<sql name="member.customer.ye" comment="会员系统中客户看自己的余额">
+		<![CDATA[
+SELECT  m.*
+       ,aaa.name
+       ,so.amount_total
+FROM    ( SELECT    'invoice' AS type
+                   ,ai.reference
+                   ,ai.partner_id
+                   ,ai.date_invoice
+                   ,SUM(ail.price_subtotal) AS i_amount
+                   ,0 AS v_amount
+                   ,ail.account_analytic_id
+                   ,si.order_id
+				   ,null
+          FROM      account_invoice ai
+                   ,account_invoice_line ail
+                   ,sale_order_invoice_rel si
+          WHERE     ai.id = ail.invoice_id
+                    AND ai.type = 'out_invoice'
+                    AND ai.state IN ( 'paid', 'done' )
+                    and si.invoice_id=ai.id
+          GROUP BY  ai.reference
+                   ,ai.partner_id
+                   ,ai.date_invoice
+                   ,ail.account_analytic_id
+                   ,si.order_id
+          UNION ALL
+          SELECT    'voucher' AS type
+                   ,''
+                   ,partner_id
+                   ,date
+                   ,null AS i_amount
+                   ,amount
+                   ,analytic_id
+                   ,0
+				   ,x_money
+          FROM      account_voucher
+          WHERE     type = 'receipt'
+                    AND state IN ( 'posted' )
+                    AND amount > 0
+        ) AS m
+        LEFT JOIN account_analytic_account aaa ON m.account_analytic_id = aaa.id
+        left join sale_order so on so.id=m.order_id
+WHERE   m.partner_id = {0}
+		]]>
+	</sql>
+	<sql name="oe.customer.ye" comment="oe系统中客户看自己的余额">
+		<![CDATA[
+SELECT  s.*
+       ,d.amount_total
+       ,s.x_money - COALESCE(d.amount_total, 0.00)
+FROM    ( SELECT    aaa.name
+                   ,av.partner_id
+                   ,rp.name AS partner_name
+                   ,SUM(COALESCE(aar.amount, 0.00)) AS x_money
+                   ,aar.analytic_id
+          FROM      account_voucher av
+                   ,res_partner rp
+                   ,aac_account_analytic_rel aar
+                   ,account_analytic_account aaa
+          WHERE     aar.analytic_id = aaa.id
+                    AND av.partner_id = rp.id
+                    AND av.state = 'posted'
+                    AND av.id = aar.voucher_id
+					{0}
+          GROUP BY  aaa.name
+                   ,av.partner_id
+                   ,rp.name
+                   ,aar.analytic_id
+        ) AS s
+        LEFT JOIN ( SELECT  so.partner_id
+                           ,SUM(so.amount_total-COALESCE((select sum(m.product_qty*ol.price_unit*(100-discount)/100) 
+														from sale_order_line ol,stock_move m,stock_picking sp
+														where m.sale_line_id=ol.id 
+														 and ol.order_id=so.id
+														 and sp.id=m.picking_id
+													and sp.type='in'),0)) AS amount_total
+                           ,so.project_id
+                    FROM    sale_order so
+                           ,res_partner rp
+                           ,account_analytic_account aaa
+                    WHERE   so.partner_id = rp.id
+                            AND aaa.id = so.project_id
+                            AND EXISTS ( SELECT 1
+                                         FROM   sale_order_invoice_rel ir
+                                               ,account_invoice ai
+                                         WHERE  ir.invoice_id = ai.id
+                                                AND ir.order_id = so.id
+                                                AND ai.state IN ( 'paid',
+                                                              'open' ) )
+                    GROUP BY so.partner_id
+                           ,so.project_id
+                  ) AS d ON s.partner_id = d.partner_id
+                            AND d.project_id = s.analytic_id
+		]]>
+	</sql>
+	<sql name="member.stock.move" comment="会员系统中查看出库">
+		<![CDATA[
+SELECT  sm.id
+       ,sm.origin
+       ,pt.name AS productName
+       ,pc.name AS categName
+       ,product_qty
+       ,pu.name AS uname
+       ,ol.price_unit * COALESCE(discount, 100) / 100 AS price_unit
+       ,sm.date
+       ,''
+       ,pc.id AS categID
+       ,pp.id AS productID
+       ,sm.sale_line_id
+	   ,sp.name
+       ,sp.note
+       ,rank() over(partition by sp.id order by sm.id desc)     
+       ,rank() over(partition by sp.id order by sm.id)
+	   ,pp.ean13
+FROM    stock_move sm
+       ,product_product pp
+       ,product_template pt
+       ,product_category pc
+       ,product_uom pu
+       ,sale_order_line ol
+       ,stock_picking sp
+WHERE   sm.state = 'done'
+        AND pp.id = sm.product_id
+        AND pp.product_tmpl_id = pt.id
+        AND pc.id = pt.categ_id
+        AND sm.move_dest_id IS NULL
+        AND pu.id = pt.uom_id
+        AND ol.id = sale_line_id 
+        and sp.id=sm.picking_id
+		and sm.partner_id={0}
+		order by sp.id
+		limit {1}
+		]]>
+	</sql>
+	<sql name="agent.so.line.create" comment="代理商系统中建立采购订单行 {0}是销售单头 {1}是物料ID {2}订单行数量">
+		<![CDATA[
+ insert into sale_order_line(create_uid,create_date,product_uos_qty,discount,product_uom,sequence,order_id,price_unit,
+							product_uom_qty,invoiced,delay,name,company_id,
+                     salesman_id,state,product_id,order_partner_id,th_weight,type,notes) 
+               select so.create_uid,so.create_date,{2},{3},pt.uom_id,10,so.id,pt.list_price,{2},'f',7,'['||pp.default_code||']'||pt.name,1,
+						so.create_uid,'draft',pp.id,partner_order_id,pt.weight_net,'make_to_stock','{6}'
+                from sale_order so,product_template pt,product_product pp 
+               where pp.product_tmpl_id=pt.id and so.id={0} and pp.id={1};
+		]]>
+	</sql>
+	<sql name="agent.so.head.create.hasAddress" comment="新建销售订单">
+		<![CDATA[
+insert into res_partner_address(id,create_uid,create_date,street,active,partner_id,name,zip,mobile,country_id,company_id,type)
+values(nextval('res_partner_address_id_seq'),1,now(),'{7}','t',{0},'{5}','{8}','{6}',49,1,'delivery');
+insert into sale_order
+			(create_uid,create_date,picking_policy,order_policy,
+			shop_id,date_order,partner_id,note,amount_untaxed,company_id,
+			state,pricelist_id,partner_order_id,partner_invoice_id,
+			user_id,amount_total,name,partner_shipping_id,
+			shipped,invoice_quantity,amount_tax,project_id,client_order_ref)
+select u.id,now(),'direct',(select COALESCE(max(substring(value for position('''' in value)-1)),'prepaid') 
+							from (select substring(value from position('''' in value)+1 ) as value 
+							from ir_values where key='default' and key2='partner_id='||'{0}' and name='order_policy') as b) as a
+                            ,1,now(),p.id,'{2}',{1},1,'draft',1,pa.id,pa.id,p.user_id,{1},
+                            'SO' || cast(nextval('ir_sequence_029') as varchar(10)),currval('res_partner_address_id_seq'),
+							'f','order',0.00,{3},'{4}'
+  from res_partner p 
+ left join res_users u on u.partner_id=p.id 
+ left join res_partner_address pa on pa.partner_id=p.id and pa.active='t' 
+ where p.id={0} order by pa.type desc limit 1;
+insert into wkf_instance(wkf_id,uid,res_id,res_type,state) values(6,1,currval('sale_order_id_seq'),'sale.order','active');
+insert into wkf_workitem(act_id,inst_id,state) values(34,currval('wkf_instance_id_seq'),'complete');
+select currval('sale_order_id_seq')
+		]]>
+	</sql>
+	<sql name="agent.so.head.create" comment="新建销售订单">		
+		<![CDATA[
+insert into sale_order
+			(create_uid,create_date,picking_policy,order_policy,
+			shop_id,date_order,partner_id,note,amount_untaxed,company_id,
+			state,pricelist_id,partner_order_id,partner_invoice_id,
+			user_id,amount_total,name,partner_shipping_id,
+			shipped,invoice_quantity,amount_tax,project_id,client_order_ref)
+select u.id,now(),'direct',(select COALESCE(max(substring(value for position('''' in value)-1)),'prepaid') 
+							from (select substring(value from position('''' in value)+1 ) as value 
+							from ir_values where key='default' and key2='partner_id='||'{0}' and name='order_policy') as b) as a
+                            ,1,now(),p.id,'{2}',{1},1,'draft',1,pa.id,pa.id,p.user_id,{1},
+                            'SO' || cast(nextval('ir_sequence_029') as varchar(10)),pa.id,'f','order',0.00,{3},'{4}'
+  from res_partner p 
+ left join res_users u on u.partner_id=p.id 
+ left join res_partner_address pa on pa.partner_id=p.id and pa.active='t' 
+ where p.id={0} order by pa.type desc limit 1;
+insert into wkf_instance(wkf_id,uid,res_id,res_type,state) values(6,1,currval('sale_order_id_seq'),'sale.order','active');
+insert into wkf_workitem(act_id,inst_id,state) values(34,currval('wkf_instance_id_seq'),'complete');
+select currval('sale_order_id_seq')
+		]]>
+	</sql>
+	<sql name="agent.so.query" comment="查询所有的销售订单">
+		<![CDATA[
+SELECT  so.id
+       ,so.name
+       ,date_order
+       ,amount_total
+       ,date_confirm
+       ,( SELECT    SUM(m.product_qty)
+          FROM      stock_move m
+                   ,sale_order_line l
+          WHERE     m.id = m.id
+                    AND m.state = 'done'
+                    AND m.sale_line_id = l.id
+                    AND l.order_id = so.id
+        ) / ( SELECT    SUM(sm.product_qty)
+              FROM      stock_move sm
+                       ,sale_order_line ol
+              WHERE     sm.sale_line_id = ol.id
+                        AND ol.order_id = so.id
+            ) AS shipped
+       ,ss.name AS shopName
+       ,to_char(date_order, 'mm-dd')
+       ,to_char(date_confirm, 'mm-dd')
+	   ,state
+	   ,so.client_order_ref
+FROM    sale_order so
+       ,sale_shop ss
+WHERE   ss.id = so.shop_id
+        AND so.partner_id = {0} and {1} 
+ORDER BY so.date_order DESC,so.name desc limit {2};
+		]]>
+	</sql>
+	<sql name="agent.so.head.query" comment="代理商系统中查询采购订单头">
+		<![CDATA[
+select so.id,ss.name as shopName,date_order,amount_untaxed,so.project_id,so.note,so.create_uid,so.name,so.client_order_ref
+from sale_order so,sale_shop ss where ss.id=so.shop_id and so.id={0}
+		]]>
+	</sql>
+	<sql name="agent.so.line.query" comment="代理商系统中查询采购订单行">
+		<![CDATA[
+select sol.id,pp.name_template,sol.product_uom_qty,price_unit,pu.name as uName,discount,
+product_uom_qty*price_unit*(100-COALESCE(discount,100))/100 as amount,sol.notes
+ from sale_order_line sol,product_category pc,product_product pp,product_uom pu,product_template pt 
+ where pc.id=pt.categ_id 
+   and pt.id=pp.product_tmpl_id 
+   and sol.product_id=pp.id 
+   and sol.product_uom=pu.id 
+   and sol.order_id={0}
+		]]>
+	</sql>
+	<sql name="sale.order.customer.ph" comment="销售客户进货排行">
+		<![CDATA[
+select rp.name,a.at from (
+select sum(ai.amount_total) as at,so.partner_id 
+from sale_order so,sale_order_invoice_rel soi,account_invoice ai 
+where soi.order_id=so.id 
+and ai.state in ('paid','open')
+and ai.id=soi.invoice_id {0} group by so.partner_id
+) as a,res_partner as rp 
+where rp.id=a.partner_id
+order by a.at desc
+		]]>
+	</sql>
+	<sql name="sale.order.product.ph" comment="产品排行">
+		<![CDATA[
+create or replace view sale_order_product_ph as
+SELECT  row_number() OVER ( PARTITION BY a.p_id ORDER BY a.qty DESC )
+       ,a.*
+FROM    ( SELECT    SUM(sol.product_uom_qty-coalesce(e.product_qty,0)) qty
+                   ,pt.name
+                   ,pt.categ_id AS p_id
+                   ,pt.id AS myid
+          FROM      sale_order_line sol
+                   left join (
+			select sp.sale_line_id,product_qty 
+			from stock_move sp,stock_picking pik
+			where pik.id=sp.picking_id
+			and pik.type = 'in'
+                   ) as e on e.sale_line_id=sol.id
+                   ,product_product pp
+                   ,product_template pt
+                   ,sale_order so
+          WHERE     sol.product_id = pp.id
+                    AND pp.product_tmpl_id = pt.id
+                    and so.id=sol.order_id
+					{0}
+                    and so.state in ('done','confirm')
+          GROUP BY  pt.name
+                   ,pt.categ_id
+                   ,pt.id
+          UNION ALL
+          SELECT    SUM(sol.product_uom_qty-coalesce(e.product_qty,0)) qty
+                   ,pc.name
+                   ,pc.parent_id
+                   ,pc.id
+          FROM      sale_order_line sol
+                   left join (
+			select sp.sale_line_id,product_qty 
+			from stock_move sp,stock_picking pik
+			where pik.id=sp.picking_id
+			and pik.type = 'in'
+                   ) as e on e.sale_line_id=sol.id
+                   ,product_product pp
+                   ,product_template pt
+                   ,product_category pc
+                   ,sale_order so
+          WHERE     sol.product_id = pp.id
+                    AND pp.product_tmpl_id = pt.id
+                    AND pc.id = pt.categ_id
+					{0}
+                    and so.state in ('done','confirm')
+                    and so.id=sol.order_id
+          GROUP BY  pc.name
+                   ,pc.parent_id
+                   ,pc.id
+          UNION ALL
+          SELECT    SUM(sol.product_uom_qty-coalesce(e.product_qty,0)) qty
+                   ,pcp.name
+                   ,pcp.parent_id
+                   ,pcp.id
+          FROM      sale_order_line sol
+                   left join (
+			select sp.sale_line_id,product_qty 
+			from stock_move sp,stock_picking pik
+			where pik.id=sp.picking_id
+			and pik.type = 'in'
+                   ) as e on e.sale_line_id=sol.id
+                   ,product_product pp
+                   ,product_template pt
+                   ,product_category pc
+                   ,product_category pcp
+                   ,sale_order so
+          WHERE     sol.product_id = pp.id
+                    AND pp.product_tmpl_id = pt.id
+                    AND pc.id = pt.categ_id
+                    AND pcp.id = pc.parent_id
+					{0}
+                    and so.state in ('done','confirm')
+                    and so.id=sol.order_id
+          GROUP BY  pcp.name
+                   ,pcp.id
+                   ,pcp.parent_id
+        ) AS a ;
+WITH RECURSIVE r AS ( 
+       SELECT   lpad(CAST(row_number() OVER ( ORDER BY b.qty DESC ) AS VARCHAR),
+                     3, '0') AS code
+               ,b.*
+       FROM     sale_order_product_ph AS b
+               ,product_category pc
+       WHERE    pc.x_code = 'CP'
+                AND pc.id = b.p_id
+     union   ALL 
+       SELECT (r.code || lpad(cast(row_number() over(order by b.qty desc) as varchar),3,'0')) as code,b.* 
+       FROM sale_order_product_ph as b, r 
+       WHERE b.p_id=r.myid
+     ) 
+   SELECT r.* FROM r
+   order by r.code
+		]]>
+	</sql>
+	<sql name="agent.so.return" comment="产品排行">
+		<![CDATA[
+select id,number,date_invoice,amount_total,origin,state,x_customer_confirm
+from account_invoice 
+where type='out_refund' 
+and state in ('paid','open','draft')
+and partner_id={0}
+and {1}
+order by date_invoice desc
+limit {2}
+		]]>
+	</sql>
+	<sql name="agent.stock.out" comment="产品在代理商系统中退货出库查询">
+		<![CDATA[
+		update account_invoice set x_customer_confirm=amount_total where id={0};
+	select il.product_id,pp.name_template as pname,pt.categ_id,pc.name as cname
+	,il.quantity,il.price_unit*(100-discount)/100 as price,pu.name as uname
+	,{1} as fromId,{2},{2},{3},'OERT',il.id,null,ai.name,pp.ean13,to_char(now(), 'YYYY-MM-DD')
+	from account_invoice_line il,account_invoice ai,product_product pp,product_uom pu,product_template pt,product_category pc
+	where invoice_id={0}	
+  and ai.id=il.invoice_id
+	and il.product_id=pp.id
+	and pu.id=il.uos_id
+	and pp.product_tmpl_id=pt.id
+	and pt.categ_id=pc.id;
+		]]>
+	</sql>
+	<sql name="agent.fin.mx" comment="代理商查询消费明细">
+		<![CDATA[
+select number,to_char(date,'YYYY-MM-DD') as date,name,amount,type from (
+
+select av.amount,aaa.name,av.date,av.number,av.analytic_id,'充值' as type
+from account_voucher av left join account_analytic_account aaa on aaa.id=av.analytic_id
+where av.amount>0 and av.state='posted' and av.type='receipt'
+and av.partner_id={0}
+union all
+select sum(price_unit*(100-discount)*quantity/100)*-1 as amount,aaa.name,ai.date_invoice,ai.origin,aaa.id,'消费'
+from account_invoice ai,account_invoice_line ail left join account_analytic_account aaa on aaa.id=ail.account_analytic_id
+where ai.state in ('paid','open')
+and ai.type ='out_invoice'
+and ail.invoice_id=ai.id
+and ai.amount_total>0
+and ai.partner_id={0}
+group by aaa.name,ai.date_invoice,ai.origin,aaa.id
+union all
+select sum(price_unit*(100-discount)*quantity/100)*-1 as amount,aaa.name,ai.date_invoice,ai.origin,aaa.id,'退货'
+from account_invoice ai,account_invoice_line ail left join account_analytic_account aaa on aaa.id=ail.account_analytic_id
+where ai.state in ('paid','open')
+and ai.type ='in_invoice'
+and ail.invoice_id=ai.id
+and ai.amount_total>0
+and ai.partner_id={0}
+group by aaa.name,ai.date_invoice,ai.origin,aaa.id
+union all
+select aml.debit-aml.credit,aaa.name,av.date,av.number,av.analytic_id,'核销'
+from account_voucher av left join account_analytic_account aaa on aaa.id=av.analytic_id,account_move_line aml
+where av.state='posted' and av.type='receipt'
+and aml.move_id=av.move_id
+and av.payment_option='with_writeoff'
+and av.writeoff_acc_id=aml.account_id
+and av.partner_id={0}
+) as a 
+where {1}
+order by a.date desc
+limit {2}
+		]]>
+	</sql>
+	<sql name="agent.fin.ye" comment="活动余额">
+		<![CDATA[
+select sum(amount),name from (
+select av.amount,aaa.name,av.date,av.number,av.analytic_id
+from account_voucher av left join account_analytic_account aaa on aaa.id=av.analytic_id
+where av.amount>0 and av.state='posted' and av.type='receipt'
+and av.partner_id={0}
+union all
+select sum(price_unit*(100-discount)*quantity/100)*-1 as amount,aaa.name,ai.date_invoice,ai.origin,aaa.id
+from account_invoice ai,account_invoice_line ail left join account_analytic_account aaa on aaa.id=ail.account_analytic_id
+where ai.state in ('paid','open')
+and ai.type ='out_invoice'
+and ail.invoice_id=ai.id
+and ai.amount_total>0
+and ai.partner_id={0}
+group by aaa.name,ai.date_invoice,ai.origin,aaa.id
+union all
+select sum(price_unit*(100-discount)*quantity/100)*-1 as amount,aaa.name,ai.date_invoice,ai.origin,aaa.id
+from account_invoice ai,account_invoice_line ail left join account_analytic_account aaa on aaa.id=ail.account_analytic_id
+where ai.state in ('paid','open')
+and ai.type ='in_invoice'
+and ail.invoice_id=ai.id
+and ai.amount_total>0
+and ai.partner_id={0}
+group by aaa.name,ai.date_invoice,ai.origin,aaa.id
+union all
+select aml.debit-aml.credit,aaa.name,av.date,av.number,av.analytic_id
+from account_voucher av left join account_analytic_account aaa on aaa.id=av.analytic_id,account_move_line aml
+where av.amount>0 and av.state='posted' and av.type='receipt'
+and aml.move_id=av.move_id
+and av.payment_option='with_writeoff'
+and av.writeoff_acc_id=aml.account_id
+and av.partner_id={0}
+) as a 
+where {1}
+group by name
+		]]>
+	</sql>
+
+	<sql name="oe.stock.warn" comment="库存警报">
+		<![CDATA[
+SELECT  iqty - oqty AS stock
+       ,stock_out.product_id
+       ,pp.name_template,pp.default_code
+       ,CASE WHEN ( iqty - oqty < swo.product_min_qty
+                    OR iqty - oqty < 0
+                  ) THEN '低量'
+             WHEN ( iqty - oqty > swo.product_max_qty ) THEN '超量'
+        END AS type,COALESCE(swo.product_min_qty,0) min_qty,swo.product_max_qty
+FROM    ( SELECT    COALESCE(SUM(smo.product_qty), 0) oqty
+                   ,smo.product_id
+                   ,lot.id AS location_id
+          FROM      stock_move smo
+                   ,( SELECT    lot_stock_id AS id
+                      FROM      sale_shop ss
+                               ,stock_warehouse sw
+                      WHERE     ss.warehouse_id = sw.id
+                    ) AS lot
+          WHERE     smo.location_id = lot.id
+                    AND smo.state = 'done'
+          GROUP BY  smo.product_id
+                   ,lot.id
+        ) AS stock_out
+        LEFT JOIN stock_warehouse_orderpoint swo ON swo.location_id = stock_out.location_id
+                                                    AND swo.product_id = stock_out.product_id
+       ,( SELECT    COALESCE(SUM(smi.product_qty), 0) iqty
+                   ,smi.product_id
+                   ,lot.id AS location_id
+          FROM      stock_move smi
+                   ,( SELECT    lot_stock_id AS id
+                      FROM      sale_shop ss
+                               ,stock_warehouse sw
+                      WHERE     ss.warehouse_id = sw.id
+                    ) AS lot
+          WHERE     smi.location_dest_id = lot.id
+                    AND smi.state = 'done'
+          GROUP BY  smi.product_id
+                   ,lot.id
+        ) AS stock_in
+       ,product_product pp
+       ,product_template pt
+WHERE   stock_in.product_id = stock_out.product_id
+        AND stock_in.location_id = stock_out.location_id
+        AND stock_out.product_id = pp.id
+        AND stock_out.oqty > 0
+        AND ( ( iqty - oqty < product_min_qty
+                OR iqty - oqty < 0
+              )
+              OR ( iqty - oqty > swo.product_max_qty )
+            )
+        AND pt.id = pp.product_tmpl_id
+        AND pt.type != 'consu'		
+        and (pt.state not in ('obsolete') or pt.state is null)
+        and pp.active='t'
+ORDER BY pt.categ_id
+		]]>
+	</sql>
+</aac-oe>

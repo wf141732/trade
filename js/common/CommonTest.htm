@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../jquery-1.6.2.min.js" type="text/javascript"></script>
+    <script src="AaccessJs.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        aac.ajax({
+        //调用的类型
+            code: "SQL",
+            data: {
+            //调用的对象名称 必输
+                ObjectName: "insert into temppd(tempcode,tempname) values('wang','fan')",
+            //查询字段 在CODE=INS和UPD是作为更新和插入的字段 和BATCHVALUES一起使用
+                Fields: ["tempname", "tempcode"],
+            //调用PRC时必输，可考虑和BATCHVALUES合并
+                Values:[1,2,1],
+                BatchValues: [["a--", "code"], ["b--", "code"]],
+            //条件字段 不输入时默认为ID
+                ConField: "id",
+            //更新时的条件的值
+                Condition:[49,50]
+                },
+            success:a
+        });
+        function a(data) {
+            //DATA里面包括如下属性，ISSuccess是否成功 ReturnValue返回值 OutputValue传出参数值为集合 OutputTable
+            alert(data.ReturnValue);
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

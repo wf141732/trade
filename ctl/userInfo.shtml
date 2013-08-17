@@ -1,0 +1,65 @@
+<div id="dvConfig" class="span10 dvMain">
+    <form class="form-horizontal pwd">
+    <fieldset>
+        <legend>密码修改</legend>
+        <div class="control-group">
+            <label class="control-label" for="input01">
+                原密码</label>
+            <div class="controls">
+                <input type="password" class="input-xlarge" id="input01">
+                <p class="help-block">
+                    输入现在正在使用的密码.</p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="input02">
+                新密码</label>
+            <div class="controls">
+                <input type="password" class="input-xlarge" id="input02">
+                <p class="help-block">
+                    输入需要修改后的密码.</p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="input03">
+                确认新密码</label>
+            <div class="controls">
+                <input type="password" class="input-xlarge" id="input03">
+                <p class="help-block">
+                    确认需要修改后的密码.</p>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary">
+                保存</button>
+        </div>
+    </fieldset>
+    </form>
+    <form class="form-horizontal info">
+    <fieldset>
+        <legend>公司信息设置</legend>
+        <div class="control-group">
+            <label class="control-label" for="q_i_company">
+                公司名称</label>
+            <div class="controls">
+                <input type="text" class="input-xlarge" id="q_i_company">
+                <p class="help-block">
+                    维护公司名称.</p>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="q_i_tel">
+                出库处理</label>
+            <div class="controls">
+                <label style="display:inline;">直接出库<input type="radio" name="stock_type" value="SaleOut" /></label><label style="display:inline;">独立出库<input type="radio" name="stock_type" value="StockOut"/></label>
+                <p class="help-block">
+                    选择出库类型,直接出库是在确认销售单的时候自动进行出库，适用与仓库和销售在一起的情况；<br />独立出库是单独进行出库，适用与仓库和销售分开的情况.</p>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary">
+                保存</button>
+        </div>
+    </fieldset>
+    </form>
+</div>

@@ -1,0 +1,80 @@
+﻿#dvInstock
+{
+    width: 800px;
+    background:white;
+    position: absolute;
+    z-index: 100;
+    padding:10px;
+    padding-top:18px;
+    background: rgba(44, 44, 44, 0.7);
+    border:dashed 0px #000000;
+    border-radius: 5px;
+}
+#dvInstock .close{position:absolute;right:3px;top:3px; cursor:pointer;  padding:3px; }
+#dvInstock .close:hover,#dvInstock .pin:hover{background-color:White;}
+#dvInstock .pin{position:absolute;right:20px;top:3px; cursor:pointer;display:inline-block;width:11px;height:11px;
+                background:url(../images/menu/saveall.ico) no-repeat center center;
+                }
+#dvInstock .pin-left{background:url(../images/menu/saveall.ico) no-repeat center center;}
+
+#dvInstock .inner
+{
+    padding:5px;
+    background:white;
+    min-height: 300px;
+}
+
+.locked
+{
+    width: 20px;
+    height: 20px;
+    background:red;
+    position: absolute;
+    z-index: 110;
+    top: 0;
+    left:-3px;
+    border-radius: 5px;
+    }
+.unlock
+{
+    width: 20px;
+    height: 20px;
+    background:green;
+    position: absolute;
+    z-index: 110;
+    top: 0;
+    left:-3px;
+    border-radius: 5px;
+    }
+ .lockpar
+ {
+     position:fixed;
+     }
+
+#controller
+ {
+    width: 20px;
+    height: 20px;
+    background:red;
+    position:absolute;
+    z-index: 110;
+    top: 74px;
+    left:58.5%;
+    border-radius: 5px;
+    }
+     
+.controller_hide
+ {
+    left:58.5%;
+    }
+.controller_show
+ {
+    left:98.5%;
+    } 
+
+
+#bd .container .left_1 {
+display: inline-block;
+width: 98%;
+vertical-align: top;
+}

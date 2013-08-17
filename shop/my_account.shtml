@@ -1,0 +1,87 @@
+﻿<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/bootstrap.css" rel="stylesheet"/>
+        <link href="css/main.css" rel="stylesheet"/>
+        <link href="css/jquery.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <!-- Start Header-->
+            <!--#include file="ctl/header.shtml"-->
+            <!-- End Header-->
+            <!-- Start Navigation -->
+            <!--#include file="ctl/nav.shtml"-->
+            <!-- End Navigation -->
+            <div class="row">
+                <div class="span12">
+                    <ul class="breadcrumb">
+                        <li><a href="index.shtml">主页</a><span class="divider">/</span></li>
+                        <li><a href="#">账号</a> <span class="divider">/</span></li>
+                        <li class="active"><a href="#">登陆</a></li>
+                    </ul>
+
+                    <div class="row">
+                        <div class="span9">
+                            <h1>系统登陆</h1>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="row">
+
+                        <div class="span5 well">
+                            <h2>注册新的账号</h2>
+                            <p style="text-indent:2em;">商海茫茫，千舟竞发。自信使我们在这个“竞争与发展同在，机遇与挑战并存”的环境中信心更足；
+                                努力让我们学会脚踏实地和孜孜不倦，坚持让我们不言放弃、不懈追求。
+                                “长风破浪会有时，直挂云帆济沧海”，让我们一起来感受青春的脉息、畅想共同成长的快乐！ </p><br />
+                            <a href="register.html" class="btn btn-primary pull-right">创建一个新账号</a>
+                        </div>	 		
+
+                        <div class="span5 well pull-right">
+                            <h2>老用户</h2>
+                            <p>已经在门店领取过会员卡.</p>
+
+                            <form class="" action="/Login" method="post">
+                                <fieldset>
+                                    <div class="control-group">
+                                        <label for="focusedInput" class="control-label">用户名</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="输入你的登陆号" id="username" name="username" class="input-xlarge focused">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">密码</label>
+                                        <div class="controls">
+                                            <input type="password" placeholder="输入你的密码" id="password" name="password" class="input-xlarge">
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-primary pull-right" type="submit">登陆</button>
+                                </fieldset>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!--#include file="ctl/footer.shtml"-->
+        </div>
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="/ui/bootstrap/js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="/js/base.js?ver=0.1"></script>
+        <script src="js/shop.base.js" type="text/javascript"></script>
+        <script src="js/shop.login.js?ver=0.1" type="text/javascript"></script>
+    </body>
+</html>

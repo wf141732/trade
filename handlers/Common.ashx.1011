@@ -1,0 +1,275 @@
+﻿<%@ WebHandler Language="C#" Class="Common" %>
+
+using System;
+using System.Web;
+using Aaccess.DB;
+using System.Runtime.Serialization.Json;
+using System.IO;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Configuration;
+using Aaccess.Data;
+
+public class Common : IHttpHandler {
+    static string conName = "crmnewConnectionString";
+    string dbcon = System.Configuration.ConfigurationManager.ConnectionStrings[conName].ToString();
+    static Dictionary<int, ConnectionStringSettings> dicCSS=null;
+    /// <summary>
+    /// 数据提供层,唯一与前端作数据交换的接口
+    /// </summary>
+    /// <param name="context"></param>
+    public void ProcessRequest (HttpContext context) {
+        
+        context.Response.ContentType = "text/plain";
+        string jsonText = "";
+        ProcedureType pt = new ProcedureType();
+        int uid = 0;
+        
+        if (dicCSS == null)
+           dicCSS = BaseFun.GetConnstrs();//getConnstr();
+        string operationData = "";
+
+        JsonOutputParameters jsop = new JsonOutputParameters();
+        try
+        {
+            HttpCookie u = HttpContext.Current.Request.Cookies["userid"];
+            uid = int.Parse(u == null ? "0" : u.Value);
+            pt.OperationCode = context.Request.Form["OperationCode"];
+            operationData = context.Request.Form["OperationData"];
+
+            if (pt.OperationCode == null)
+            {
+                pt.OperationCode = context.Request.QueryString["OperationCode"];
+                operationData = context.Request.QueryString["OperationData"];
+            }
+
+            DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(CommonParameter));
+
+            MemoryStream ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(operationData));
+            CommonParameter cp = (CommonParameter)js.ReadObject(ms);
+
+            ConnectionStringSettings css = dicCSS[cp.ConType];
+            conName = css.Name;
+            dbcon = css.ConnectionString;
+
+            DbCommonDDL dcd = new DbCommonDDL(dbcon, dicCSS[1].ConnectionString, uid);
+            DbProcedure dp = new DbProcedure(dbcon);
+
+            switch (pt.OperationCode)
+            {
+                //paging
+                case "PAG":
+                    dcd.ConName = conName;
+                    cp.ObjectName = "sp_PageView";
+                    jsop = dcd.CommonProcedure(cp);
+                    break;
+                // Execute SQL 
+                case "SQL":
+                    jsop = dcd.ExecuteSQL(cp);
+                    break;
+
+                //batch update
+                case "UPD":
+                    jsop = dcd.BatchOpertion(cp, DDLOperationType.Update);
+                    break;
+
+                //batch insert
+                case "INS":
+                    jsop = dcd.BatchOpertion(cp, DDLOperationType.Insert);
+                    break;
+                    
+                //bulk copy
+                case "BIN":
+                    jsop = dcd.BulkBatchOperation(cp);
+                    break;
+                //procedure
+                case "PRC":
+                    jsop = dcd.CommonProcedure(cp);
+                    break;
+                    
+                //batch procedure
+                case "BPR":
+                    jsop = dcd.BatchCommonProcedure(cp);
+                    break;
+
+                //export excel
+                case "XLS":
+                    string fileName = cp.ObjectName;
+                    cp.ObjectName = "up_exportExcel";
+                    jsop = dcd.CommonProcedure(cp);
+
+                    if (jsop.ISSuccess == 1)
+                    {
+                        context.Response.Clear();
+                        context.Response.Charset = "GB2312";
+                        context.Response.ContentEncoding = System.Text.Encoding.UTF8;
+                        context.Response.Write("<meta http-equiv=Content-Type content=application/ms-excel;charset=utf-8>");
+                        context.Response.AppendHeader("Content-Disposition", "attachment;filename=" + fileName+".xls");
+                        context.Response.ContentType = "application/ms-excel";
+                        jsonText = jsopToHtml(jsop,cp.Fields);
+                        goto ExportExcel;
+                    }
+                    break;
+                default:
+                    OperationBase(operationData, js, ms, dp, ref pt);
+                    jsonText = pt.ProcedureOutParJson.Json();
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            BaseFun.DbLog(ex.Message, operationData, dicCSS[1].ConnectionString, uid);
+            jsop.ErrorMessage = ex.ToString();
+        }
+        
+        jsonText = jsop.Json();
+        //context.Response.Write(jsonText);
+        
+        ExportExcel:
+            context.Response.Write(jsonText);
+            //context.Response.End();
+    }
+ 
+    
+    public bool IsReusable {
+        get {
+            return false;
+        }
+    }
+    /// <summary>
+    /// 将jsop中的outtable转换成html表格的字符串
+    /// </summary>
+    /// <param name="jsop"></param>
+    /// <returns></returns>
+    private string jsopToHtml(JsonOutputParameters jsop,string[] fields)
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder("<table>");
+        object[] table=jsop.OutputTable;
+        sb.Append("<tr>");
+        for (int i = 0; i < fields.Length; i++)
+        {
+            sb.Append("<th>");
+            sb.Append(fields[i]);
+            sb.Append("</th>");
+        }
+        sb.Append("</tr>");
+        for (int i = 0; i < table.Length; i++)
+        {
+            object[] row = (object[])table[i];
+            sb.Append("<tr>");
+            for (int j = 0; j < row.Length; j++)
+            {
+                sb.Append("<td>");
+                sb.Append(row[j]);
+                sb.Append("</td>");
+            }
+            sb.Append("</tr>");
+        }
+        sb.Append("</table>");
+        return sb.ToString();
+    }
+    /// <summary>
+    /// 处理通用
+    /// </summary>
+    /// <param name="operationData"></param>
+    /// <param name="js"></param>
+    /// <param name="ms"></param>
+    /// <param name="dp"></param>
+    /// <param name="pt"></param>
+    private void OperationBase(string operationData, DataContractJsonSerializer js, MemoryStream ms,DbProcedure dp ,ref ProcedureType pt)
+    {
+        InputParameters[] ips = null;
+        InputParameters ip;
+        int arrayDeap = 0;
+
+        for (int i = 0; i < operationData.Length; i++)
+        {
+            if (operationData[i] != '[')
+            {
+                arrayDeap = i;
+                break;
+            }
+        }
+        switch (arrayDeap)
+        {
+            case 1:
+
+                js = new DataContractJsonSerializer(typeof(List<object>));
+
+                ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(operationData));
+                List<object> List1 = (List<object>)js.ReadObject(ms);
+                ip = new InputParameters();
+                ip.Parameters = BaseFun.ArrayOfStringToArrayOfIp(List1.ToArray(), BaseFun.BASE_PARAMETER_VALUE);
+                ips = new InputParameters[] { ip };
+                break;
+            //多组数据传进来
+            case 2:
+                js = new DataContractJsonSerializer(typeof(List<List<object>>));
+
+                ms = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(operationData));
+                List<List<object>> List2 = (List<List<object>>)js.ReadObject(ms);
+
+                ip = new InputParameters();
+                ip.Parameters = BaseFun.ArrayOfStringToArrayOfIp(List2[0].ToArray(), BaseFun.BASE_PARAMETER_VALUE);
+                InputParameters ip2 = new InputParameters();
+                ip2.Parameters = BaseFun.ArrayOfStringToArrayOfIp(List2[1].ToArray(), BaseFun.BASE_PARAMETER_VALUE);
+                ips = new InputParameters[] { ip, ip2 };
+                break;
+            default:
+                break;
+
+        }
+        if (ms != null)
+        {
+            ms.Close();
+            ms.Dispose();
+        }
+
+        pt.ProcedureInParameters = ips;
+
+        dp.CommonProcedure(ref pt);
+    }
+    /// <summary>
+    /// 连接Oralce数据库，做批量操作
+    /// </summary>
+    /// <param name="cp"></param>
+    /// <param name="dbcon"></param>
+    /// <returns></returns>
+    //private JsonOutputParameters oraBatchInsert(CommonParameter cp,string dbcon)
+    //{
+    //    Aaccess.DB.Oracle.OraCommonDDL ocd = new Aaccess.DB.Oracle.OraCommonDDL(dbcon);
+    //    return ocd.BatchOperation(cp, DDLOperationType.BatchCopy);
+    //}
+    /// <summary>
+    /// 得到连接属性集合
+    /// </summary>
+    /// <returns></returns>
+    //private Dictionary<int, ConnectionStringSettings> getConnstr()
+    //{
+    //    Dictionary<int, ConnectionStringSettings> dic = new Dictionary<int, ConnectionStringSettings>();
+    //    ConnectionStringSettingsCollection cssc = ConfigurationManager.ConnectionStrings;
+    //    int j = 1;
+    //    for (int i = 0; i < cssc.Count; i++)
+    //    {
+    //        if (cssc[i].Name.ToLower().IndexOf("local") < 0)
+    //        {
+    //            dic.Add(j, cssc[i]);
+    //            j++;
+    //        }
+    //    }
+    //    return dic;
+    //}
+
+}
+namespace Aaccess.Data {
+    internal class Common
+    {
+        private static Dictionary<int, ConnectionStringSettings> dicCSS = null;
+        internal Dictionary<int, ConnectionStringSettings> GetDicCss()
+        {
+            if (dicCSS == null)
+                dicCSS = BaseFun.GetConnstrs();//getConnstr();
+            return dicCSS;
+        }
+    }
+}

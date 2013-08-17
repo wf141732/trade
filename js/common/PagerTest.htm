@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="tangram-pager.js"></script>
+    <link href="pager.css" rel="stylesheet"  />
+    <script type="text/javascript">
+        var pager;
+        var disposePager = function () {
+            pager.dispose();
+        }
+        var createPager = function () {
+            pager = new T.ui.Pager({
+                beginPage: 1,
+                endPage: 0,
+                currentPage: 1,
+                itemCount: 5,
+                ongotopage: function (obj) {
+                    obj.page;
+                },
+                element: "pagerBox",
+                tplLabel: "[#{page}]",
+                autoRender: false,
+                leftItemCount: 2
+            });
+        }
+        createPager();
+        window.onload = function () { pager.render('a'); pager.update({ endPage: 10 }) };
+    </script>
+    <style >
+        .style1
+        {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+ <div id="a">
+     <table class="style1">
+        <thead>
+         <tr onclick='test'>
+             <th id=1>
+                 &nbsp;</th>
+             <th id=2>
+                 &nbsp;</th>
+         </tr>
+        </thead>
+     </table>
+    </div>
+
+</body>
+</html>

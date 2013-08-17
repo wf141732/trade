@@ -1,0 +1,383 @@
+/* iTaobao Project Global CSS by yubo **/
+h1{display:none}
+.clearfloat:after{
+    content:".";
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden;
+}
+h3, h4{font-size:12px}
+
+a:link, a:visited{color:#545454}
+a:hover, a:active{color:#f50}
+ 
+
+
+.sub-content{width:250px; float:left}
+.main-content{width:690px; float:right}
+ 
+
+
+.tb-box{
+position:relative;
+    background:#fff;  border:1px solid #f5d9bb; 
+    margin-bottom:10px;
+    zoom:1;
+}
+.tb-box-hd{padding:5px 5px 0}
+.tb-box-hd h3{
+font-size:14px; line-height:16px; color:#c46039;
+background:url('../../images/sprite.png') repeat-x scroll 0 -123px;
+padding-bottom:5px; margin:3px 5px;
+zoom:1;
+}
+
+.tb-box-bd{padding:0 5px 5px; overflow:hidden}
+.tb-box .corner{
+    position:absolute;
+    background:#fff url('../../images/sprite.png') no-repeat;
+    display:block; width:4px; height:4px; overflow:hidden;
+    margin:0; padding:0;
+    font-size:0; line-height:0; zoom:1;
+}
+.tb-box .corner-tl{top:-1px; left:-1px; background-position:0px -190px}
+.tb-box .corner-tr{top:-1px; right:-1px; background-position:-4px -190px}
+.tb-box .corner-bl{bottom:-1px; left:-1px; background-position:0px -194px}
+.tb-box .corner-br{bottom:-1px; right:-1px; background-position:-4px -194px}
+
+.tb-box-ft{clear:both; position:relative; height:4px}
+
+.sub-content .tb-box-bd{width:240px; _width:238px}
+ 
+
+
+.tb-main-box{background:#fff; border:1px solid #f5d9bb}
+
+.tb-main-box .corner-tl{top:-1px; left:-1px; background-position:0 0; width:6px; height:29px}
+.tb-main-box .corner-tr{top:-1px; right:-1px; background-position:right -228px; width:7px; height:29px}
+.tb-main-box .corner-bl{bottom:-1px; left:-1px; background-position:0px -307px}
+.tb-main-box .corner-br{bottom:-1px; right:-1px; background-position:-4px -307px}
+
+.tb-main-box h3{
+height:29px; line-height:29px;
+background:url('../../images/sprite.png') repeat-x scroll 0px -56px;
+position:relative; top:-6px;
+margin:0; padding:0 0 0 5px; *padding-top:2px;
+}
+ 
+
+
+.thumb-list li{float:left; margin:5px; overflow:hidden; line-height:15px}
+.thumb-list li a{display:block; cursor:pointer; margin:0 auto; text-align:center}
+.thumb-list li span{display:block; text-align:center}
+
+.thumb-list li .title,
+.thumb-list li .txt{height:31px; overflow:hidden}
+.thumb-list li .price{color:#f50!important; font-weight:bold}
+.thumb-list li .price sup{
+color:#3A3A3A;
+font-size:11px;
+margin-right:1px;
+vertical-align:baseline;
+}
+.thumb-list li .price sub{
+font-size:10px;
+vertical-align:text-bottom;
+}
+
+.sub-content .thumb-list li{width:69px; height:96px}
+
+.main-content .thumb-list li{
+width:130px; height:172px; overflow:hidden;
+margin:7px 19px; _margin:7px 15px;
+}
+
+.thumb-list li .title{*padding-top:5px}
+ 
+
+
+.billboard{margin:5px; zoom:1}
+
+.billboard li{
+    line-height:20px;
+   /* background:url('http://assets.taobaocdn.com/img/app/dating/dating_bg.png') no-repeat scroll 0 -712px; */
+    overflow:hidden;
+    padding-left:14px;
+}
+.billboard .no_1{background-position:0 -712px}
+.billboard .no_2{background-position:0 -791px}
+.billboard .no_3{background-position:0 -870px}
+.billboard .no_4{background-position:0 -949px}
+.billboard .no_5{background-position:0 -1028px}
+.billboard .no_6{background-position:0 -1107px}
+.billboard .no_7{background-position:0 -1186px}
+.billboard .no_8{background-position:0 -1265px}
+.billboard li a:link,
+.billboard li a:visited{color:#000}
+.billboard li a:hover{color:#f50}
+
+.sub-content .billboard li{width:230px; height:20px}
+ 
+
+
+#recent-browsed-goods .thumb-list li{clear:both; width:230px; height:90px}
+#recent-browsed-goods .thumb-list li a{text-align:left}
+#recent-browsed-goods .thumb-list b{display:block; float:left; margin-right:10px}
+#recent-browsed-goods .thumb-list li span{width:140px; _width:135px; overflow:hidden; text-align:left}
+#recent-browsed-goods .thumb-list .title{padding-top:20px;}
+#recent-browsed-goods .thumb-list .txt{color:#838383}
+#recent-browsed-goods .compare-goods{clear:both; position:absolute; bottom:10px; right:20px}
+#recent-browsed-goods .compare-goods a{text-decoration:underline; color:#AA6023}
+ 
+
+
+#starting-board{
+margin-bottom:10px;
+color:#656565;
+position:relative;
+}
+#starting-board .tb-box-bd{padding:10px 25px}
+#starting-board h3{color:#c46039}
+#starting-board h3 a{color:#ff8a00; text-decoration:underline}
+#starting-board p{margin-top:8px; line-height:16px}
+
+#starting-board .operations{position:absolute; top:3px; right:10px}
+#starting-board .operations a{
+display:block; height:24px; line-height:24px; width:91px;
+text-align:center;
+background:#fff url('../../images/bg_btn.png') no-repeat;
+color:#BE6B39;
+margin:5px 0;
+cursor:pointer;
+}
+ 
+
+
+.tv-nav{position:absolute; z-index:2; top:4px; right:50px; padding-left:2px}
+.tv-nav li{
+float:left;
+margin-left:-1px; margin-top:2px;
+width:80px;  overflow:hidden;
+height:20px;
+line-height:20px; text-align:center;
+border:1px solid #f4d5b4;
+cursor:pointer;
+background:#FFF;
+}
+.tv-nav .current{height:23px; margin-top:0; border-bottom:none; cursor:default!important}
+.tv-nav .current{color:#333; font-weight:bold}
+.tv-nav .current a:hover,
+.tv-nav .current a:active{text-decoration:none; cursor:default}
+.tv-nav a{font-weight:bold; color:#C55F39 !important}
+
+.tv-wrapper{
+clear:both;
+position:relative;
+height:185px; overflow:hidden;
+}
+ 
+
+
+#fav-goods-list .tv-wrapper{height:auto;  margin-top:8px}
+
+.fav-goods-panel{position:relative}
+.fav-goods-panel .more{clear:both; float:right; text-align:right; padding-right:5px; position:relative; _top:-5px}
+.fav-goods-panel .more a{text-decoration:underline; color:#aa6023}
+ 
+
+
+#fav-shops-list .tb-box-bd{padding:0 3px; margin-top:-3px}
+
+.shop-item{height:143px; border-bottom:5px solid #F3F0E9; margin-bottom:3px}
+
+.shop-info-item{float:left; width:100px; height:133px; text-align:center; overflow:hidden; background:#F3F0E9; padding:10px 15px 0}
+.shop-info-item li{padding:2px}
+#fav-shops-list .user-avator{display:block; width:100px; height:55px}
+
+.shop-info-item .shop-name a{display:block; height:30px; overflow:hidden}
+.shop-goods-list{float:right; width:530px}
+
+#fav-shops-list .thumb-list li{width:125px; height:133px; margin:7px 2px}
+#fav-shops-list .thumb-list .price{width:100px}
+ 
+
+
+#related-shops-list .shop-info-item{padding:20px 2px; background:#FFF; margin:10px; width:142px; _width:138px}
+#related-shops-list .shop-info li{margin:0; padding:2px; width:100%; height:auto}
+#related-shops-list .shop-info-item .user-avator a{padding-left:46px}
+ 
+
+
+#hot-collection b,
+#my-friends b{
+display:table-cell; *display:inline;
+padding:0 5px 5px;
+overflow:hidden;
+vertical-align:middle;
+width:60px; height:60px;
+*font-size:52px; 
+*font-family:Arial; 
+
+text-align:center;
+}
+#hot-collection b img,
+#my-friends b img{
+max-width:60px; max-height:60px; _width:60px; _height:60px;
+vertical-align:middle;
+}
+
+#recent-browsed-goods b a{
+display:table-cell; *display:block;
+overflow:hidden;
+vertical-align:middle;
+width:80px; height:80px;
+*font-size:70px; 
+*font-family:Arial; 
+*float:left;
+text-align:center!important;
+}
+#recent-browsed-goods b a img{
+max-width:80px; max-height:80px; 
+vertical-align:middle;
+}
+
+.main-content .thumb-list b{
+display:table-cell;
+overflow:hidden;
+vertical-align:middle;
+width:120px; height:120px;
+*font-size:105px; 
+*font-family:Arial; 
+text-align:center;
+padding:0 5px 5px;
+}
+.main-content .thumb-list b img{
+max-width:120px; max-height:120px; 
+vertical-align:middle;
+}
+
+#fav-shops-list .thumb-list b{
+width:80px; height:80px;
+*font-size:70px;
+padding:0 22px 5px;
+}
+#fav-shops-list .thumb-list b img{
+max-width:80px; max-height:80px; 
+}
+
+.shop-info-item .user-avator a{
+display:table-cell; *display:block;
+overflow:hidden;
+vertical-align:middle;
+width:50px; height:50px;
+*font-size:44px; 
+*font-family:Arial; 
+*float:left;
+text-align:center;
+padding:0 25px 5px;
+}
+.shop-info-item .user-avator a img{
+max-width:50px; max-height:50px; _width:50px; _height:50px;
+vertical-align:middle;
+}
+ 
+
+
+.tb-rank{
+background:url('http://pics.taobao.com/2k7/sys/rank_bg.gif') repeat-x;
+display:-moz-inline-box;
+display:inline-block;
+height:16px;
+margin-left:5px;
+overflow:hidden;
+vertical-align:text-bottom;
+}
+.buyer-rank-1, .buyer-rank-6, .buyer-rank-11, .seller-rank-1, .seller-rank-6, .seller-rank-11{width:17px}
+.buyer-rank-2, .buyer-rank-7, .buyer-rank-12, .seller-rank-2, .seller-rank-7, .seller-rank-12{width:34px}
+.buyer-rank-3, .buyer-rank-8, .buyer-rank-13, .seller-rank-3, .seller-rank-8, .seller-rank-13{width:51px}
+.buyer-rank-4, .buyer-rank-9, .buyer-rank-14, .seller-rank-4, .seller-rank-9, .seller-rank-14{width:68px}
+.buyer-rank-5, .buyer-rank-10, .buyer-rank-15, .seller-rank-5, .seller-rank-10, .seller-rank-15{width:85px}
+.seller-rank-1, .seller-rank-2, .seller-rank-3, .seller-rank-4, .seller-rank-5{background-position:0}
+.buyer-rank-1, .buyer-rank-2, .buyer-rank-3, .buyer-rank-4, .buyer-rank-5{background-position:0 -16px}
+.seller-rank-6, .seller-rank-7, .seller-rank-8, .seller-rank-9, .seller-rank-10{background-position:0 -32px}
+.buyer-rank-6, .buyer-rank-7, .buyer-rank-8, .buyer-rank-9, .buyer-rank-10{background-position:0 -48px}
+.seller-rank-11, .seller-rank-12, .seller-rank-13, .seller-rank-14, .seller-rank-15{background-position:0 -64px}
+.buyer-rank-11, .buyer-rank-12, .buyer-rank-13, .buyer-rank-14, .buyer-rank-15{background-position:0 -80px}
+ 
+
+
+.nav-main ul{width:713px!important}
+.nav-main ul li{font-size:14px!important}
+
+
+
+.CurItaobao{width:950px; margin:0 auto}
+
+.CurItaobao .nav-main{
+border-color:#f67096;
+background-color:#ff7da2;
+margin-bottom:5px;
+}
+.CurItaobao #MenuItaobao{
+position:relative;
+margin:0 -2px 0 0;
+background-image:none;
+}
+.CurItaobao #MenuItaobao a{
+height:30px;
+font-size:14px;
+color:#000;
+line-height:32px;
+*overflow:hidden;
+background-color:#fff;
+background-position:0 -143px;
+}
+.CurItaobao #MenuItaobao span{
+background-position:100% -143px;
+}
+.CurItaobao #MenuItaobao span small{
+display:block;
+color:#666;
+background:#fff;
+text-indent:-9999px;
+font-weight:normal;
+padding-left:5px;
+background:url('../../images/beta.gif') no-repeat;
+width:37px; height:21px;
+position:absolute;
+top:-13px; left:40px;
+z-index:100;
+
+}
+ 
+
+
+.sub-content .banner img{
+    
+    margin:5px 0 2px 1px;
+}
+
+.newbie-tips,
+.no-items-tips{
+margin:20px;
+color:#c46039!important;
+line-height:18px
+}
+.newbie-tips{text-align:center; margin:-25px 0 5px 10px; *margin-top:-7px}
+.newbie-tips a, 
+.no-items-tips a{text-decoration:underline!important; color:#ff8a00!important}
+
+.loading{
+background:url('../../images/loading.gif') no-repeat;
+padding-left:20px;
+margin:20px;
+}
+
+.error-tips{margin:20px}
+
+.sub-content .tb-box-bd{_margin-left:-6px}
+#hot-activities .tb-box-bd{_margin-left:0}
+ 
+
+

@@ -1,0 +1,84 @@
+﻿<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <!--#include file="ctl/head.shtml"-->
+    <body>
+        <div class="container">
+            <!-- Start Header-->
+            <!--#include file="ctl/header.shtml"-->
+            <!-- End Header-->
+            <!-- Start Navigation -->
+            <!--#include file="ctl/nav.shtml"-->
+            <!-- End Navigation -->
+
+            <div class="row">
+
+
+                <div class="span12">
+                    <div class="page-header">
+                        <h1>关于我们 <small>我们在做的</small></h1>
+                    </div>
+
+                    <!-- Headings & Paragraph Copy -->
+                    <div class="row">
+
+
+                        <div class="span12">
+                            <blockquote class="pull-right">
+                                <p>京东商城始终坚持以纯电子商务模式运营，缩减中间环节，为消费者在第一时间提供优质的产品及满意的服务。</p>
+                                <small>企业 <cite title="">经营</cite></small>
+                            </blockquote>
+
+                        </div>
+                        <style>
+                            .span12 p{ text-indent:2em;}
+                        </style>
+                        <div class="span12">
+                            <h3>飞速发展 捷报频传</h3>
+                            <p>京东商城目前拥有遍及全国超过6000万注册用户，近万家供应商，在线销售家电、数码通讯、电脑、家居百货、服装服饰、母婴、图书、食品等12大类数万个品牌百万种优质商品，日订单处理量超过50万单，网站日均PV超过1亿。2010年，京东商城跃升为中国首家规模超过百亿的网络零售企业。</p>
+
+                            <p>高速发展的京东商城获得了多项殊荣，"中国企业未来之星"、"2008中国最具投资价值企业50强"、"年度商业模式10强"、"2009年度网民最喜爱的网上购物商城"、"2009中国最具投资价值企业50强"、"2009年度北京十大商业品牌"、"2010德勤高科技高增长中国50强"、“2011年最具信赖的电子商务网站”、“2011年中国企业成长百强榜”、“2011年度世界最佳纯网络零售商奖”、“2010-2011年中国最佳B2C网络购物平台” 等奖项的荣膺，不仅是对京东商城业绩的肯定，更是对公司未来前景的充分认可。</p>
+                        </div>
+
+                        <div class="span12">
+                            <h3>资本注入 势不可挡</h3>
+                            <p>京东商城无论在访问量、点击率、销售量及行业影响力上，均在国内B2C网购平台中首屈一指。飞速发展和广阔前景赢得了国际著名风险投资基金的青睐。2007年，京东商城获得了来自今日资本千万美元的融资。2008年底，今日资本、雄牛资本以及亚洲著名投资银行家梁伯韬先生私人公司共计2100万美元的联合注资，为京东商城的高速发展提供了资金保障。</p>
+
+                            <p>2011年初，京东商城获得俄罗斯投资者数字天空技术(DST)、老虎基金等共6家基金和社会知名人融资共计15亿美元。这是中国互联网市场迄今为止单笔金额最大的融资，说明投资者对京东商业模式和出色经营业绩的认可，对于正在发展的京东商城乃至中国电子商务行业具有非常积极的意义。</p>
+                        </div>
+
+                        <div class="span12">
+                            <h3>用户体验 以人为本</h3>
+                            <p>京东商城提供了灵活多样的商品展示空间，消费者查询、购物都将不受时间和地域的限制。依托多年打造的庞大物流体系，消费者充分享受了"足不出户，坐享其成"的便捷。2009年初，京东商城斥资成立物流公司,布局全国物流体系。目前，京东商城分布在华北、华东、华南、西南、华中、东北的六大物流中心覆盖了全国各大城市，并在西安、杭州等城市设立二级库房，仓储总面积超过50万平方米。</p>
+
+                            <p>京东商城在为消费者提供正品行货、机打发票、售后服务的同时，还推出了"价格保护"、"延保服务"等举措，京东商城通过不断优化的服务引领网络零售市场，率先为中国电子商务行业树立了诚信经营的标杆。</p>
+                        </div>
+
+                        <div class="span12">
+                            <h3>发展理念 先人后企</h3>
+                            <p>京东的发展首先得益于组织中“人”的发展，是因为人的发展带动了京东的企业发展，“人”是京东发展的核心助推器。京东相信，人的潜能是无限的，人是京东最基本的源动力，对人的深入关怀和挖掘，就是对京东发展战略的彻底实践。</p>
+
+                            <p>同时，京东坚信，创新是京东发展的不二法则，而唯有人能够推动发展创新，唯有京东人不断追求发展、创新方能为消费者持续创造价值。</p>
+                        </div>
+
+
+                        <!-- Misc Elements -->
+
+                    </div><!-- /row -->
+
+                </div>
+
+            </div>
+
+            <!--#include file="ctl/footer.shtml"-->
+        </div>
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="/ui/bootstrap/js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="/js/base.js"></script>
+        <script src="js/shop.base.js" type="text/javascript"></script>
+    </body>
+</html>

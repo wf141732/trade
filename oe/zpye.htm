@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="/js/oe/js.js" type="text/javascript"></script>
+    <script src="/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="/js/jquery-ui-1.8.10/js/jquery-ui-1.8.10.custom.min.js" type="text/javascript" ></script>
+    <script src="/js/jquery.aac.js?ver=v1.0"  type="text/javascript"></script>
+    <script src="/js/common.js?ver=v1.0" type="text/javascript"></script>
+    <script src="/js/common05.js?ver=v1.1" type="text/javascript"></script>
+    <script src="/js/oe/yee.js?ver=v1.0" type="text/javascript"></script>
+    <link href="/css/oe/css.css" rel="stylesheet" type="text/css" />
+    <style>
+        #tblMain tbody tr{height:19px;}
+    </style>
+</head>
+<body class="openerp">
+    <table cellpadding="0" cellspacing="0" class="view-manager-main-table">
+        <tbody>
+            <tr>
+                <td class="view-manager-main-content">
+                    <div class="oe-view-manager-header">
+                        <h2 class="oe_view_title">
+                            <a class="oe-shortcut-toggle" href="javascript: void(0)" title="添加/删除快捷方式" style="">
+                            </a><span class="oe_view_title_text"><span class="oe_searchable_view">搜索： </span>客户赠品信息</span>
+                        </h2>
+                        <div class="oe_vm_switch">
+                            <button type="button" data-view-type="list" title="列表" class="oe_vm_switch_list"
+                                disabled="disabled">
+                                <span>列表</span>
+                            </button>
+                            <button type="button" data-view-type="form" title="表单" class="oe_vm_switch_form">
+                                <span>表单</span>
+                            </button>
+                            <button type="button" data-view-type="page" title="页面" class="oe_vm_switch_page">
+                                <span>页面</span>
+                            </button>
+                            <button type="button" data-view-type="calendar" title="日历" class="oe_vm_switch_calendar">
+                                <span>日历</span>
+                            </button>
+                            <button type="button" data-view-type="graph" title="图表" class="oe_vm_switch_graph">
+                                <span>图表</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="oe-view-manager-logs oe-folded" style="display: none;">
+                        <ul>
+                        </ul>
+                        <a class="oe-more-logs" href="#">更多...</a> <a class="oe-remove-everything ui-icon ui-icon-closethick">
+                        </a>
+                    </div>
+                    <div id="widget-85_search" class="dvSearch">
+                        <div style="">
+                            <form class="oe_forms" action="">
+                            <table border="0" cellpadding="0" cellspacing="0" class="oe-searchview-render-line">
+                                <tbody>
+                                    <tr>
+                                        <td class="oe_searchview_field">
+                                            <span class="filter_label_group">
+                                                <button type="button" autofocus="autofocus" class="filter_label" id="search_filter_95"
+                                                    title="未确认的销售单">
+                                                    <img height="16" width="16" src="http://58.53.128.165:8069/web/static/src/img/icons/terp-document-new.png">
+                                                    <br>
+                                                    报价单
+                                                </button>
+                                                <button type="button" class="filter_label" id="search_filter_97">
+                                                    <img height="16" width="16" src="http://58.53.128.165:8069/web/static/src/img/icons/terp-check.png">
+                                                    <br>
+                                                    销售
+                                                </button>
+                                            </span>
+                                        </td>
+                                        <td class="oe_searchview_field">
+                                            <span class="filter_label_group">
+                                                <button type="button" class="filter_label" id="search_filter_100" title="准备支付的销售单">
+                                                    <img height="16" width="16" src="http://58.53.128.165:8069/web/static/src/img/icons/terp-dolar_ok!.png">
+                                                    <br>
+                                                    开票
+                                                </button>
+                                            </span>
+                                        </td>
+                                        <td class="oe_searchview_field">
+                                            <label class="oe_label" for="search_input_char_name_104">
+                                                单号
+                                            </label>
+                                            <div>
+                                                <input size="15" type="text" id="search_input_char_name_104" name="name" value="">
+                                            </div>
+                                        </td>
+                                        <td class="oe_searchview_field">
+                                            <label class="oe_label" for="search_input_many2one_partner_id_107">
+                                                客户
+                                            </label>
+                                            <div>
+                                                <input size="15" type="text" id="search_input_many2one_partner_id_107" name="partner_id"
+                                                    value="" class="ui-autocomplete-input ui-autocomplete-loading" autocomplete="off"
+                                                    role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                                            </div>
+                                        </td>
+                                        <td class="oe_searchview_field">
+                                            <label class="oe_label_help" for="search_input_many2one_project_id_111" title="销售订单相关的辅助核算项。">
+                                                辅助核算项 <span>?</span>
+                                            </label>
+                                            <div>
+                                                <input size="15" type="text" id="search_input_many2one_project_id_111" name="project_id"
+                                                    value="" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list"
+                                                    aria-haspopup="true">
+                                            </div>
+                                        </td>
+                                        <td class="oe_searchview_field">
+                                            <label class="oe_label" for="search_input_many2one_user_id_117">
+                                                业务员
+                                            </label>
+                                            <div>
+                                                <input size="15" type="text" id="search_input_many2one_user_id_117" name="user_id"
+                                                    value="" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list"
+                                                    aria-haspopup="true">
+                                                <span class="filter_label_group">
+                                                    <button type="button" class="filter_icon" id="search_filter_115" title="我的销售单">
+                                                        <img height="16" width="16" src="http://58.53.128.165:8069/web/static/src/img/icons/terp-personal.png">
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            </form>
+                            <div class="oe_search-view-buttons">
+                                <button class="oe_button btnSearch">
+                                    搜索</button>
+                                <button class="oe_button" type="reset">
+                                    清除</button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div id="widget-85_view_list">
+                        <div class="oe-listview" style="">
+                            <table id="tblMain" class="oe-listview-content">
+                                <thead class="ui-widget-header">
+                                    <tr>
+                                        <th colspan="13">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="oe-actions">
+                                                            <button class="oe_button oe-list-add" type="button">
+                                                                新建
+                                                            </button>
+                                                            <button class="oe_button oe-list-delete" type="button">
+                                                                删除</button>
+                                                        </td>
+                                                        <th class="oe-list-pager" colspan="13">
+                                                            <button class="oe_button oe_button_pager" data-pager-action="first" type="button"
+                                                                disabled="disabled">
+                                                                <img src="http://58.53.128.165:8069/web/static/src/img/pager_first.png">
+                                                            </button>
+                                                            <button class="oe_button oe_button_pager" data-pager-action="previous" type="button"
+                                                                disabled="disabled">
+                                                                <img src="http://58.53.128.165:8069/web/static/src/img/pager_previous.png">
+                                                            </button>
+                                                            <span class="oe-pager-state">[第 1 条至 1 条] 共 1 条</span>
+                                                            <button class="oe_button oe_button_pager" data-pager-action="next" type="button"
+                                                                disabled="disabled">
+                                                                <img src="http://58.53.128.165:8069/web/static/src/img/pager_next.png">
+                                                            </button>
+                                                            <button class="oe_button oe_button_pager" data-pager-action="last" type="button"
+                                                                disabled="disabled">
+                                                                <img src="http://58.53.128.165:8069/web/static/src/img/pager_last.png">
+                                                            </button>
+                                                        </th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </th>
+                                    </tr>
+                                    <tr class="oe-listview-header-columns">
+                                        <th width="1">
+                                           
+                                        </th>
+                                        <th width="1">
+                                        </th>
+                                        <th class="oe-sortable" data-id="name">
+                                            类型
+                                        </th>
+                                        <th class="oe-sortable" data-id="date_order">
+                                            客户
+                                        </th>
+                                        <th class="oe-sortable" data-id="partner_id">
+                                            单号
+                                        </th>
+                                        <th class="oe-sortable" data-id="user_id">
+                                            日期
+                                        </th>
+                                        <th class="oe-sortable" data-id="picked_rate">
+                                            赠送金额
+                                        </th>
+                                        <th class="oe-sortable" data-id="invoiced_rate">
+                                            赠品订单金额
+                                        </th>
+                                        <th class="oe-sortable">
+                                            余额
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tfoot class="ui-widget-header">
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td class="oe-list-footer oe-number">
+                                        </td>
+                                        <td class="oe-list-footer oe-number">
+                                        </td>
+                                        <td class="oe-list-footer oe-number">
+                                        </td>
+                                        <td class="oe-list-footer oe-number">
+                                        </td>
+                                        <td class="oe-list-footer oe-number">
+                                        </td>
+                                        <td class="oe-list-footer oe-number">
+                                        </td>
+                                       
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="oe-list-pager" colspan="13">
+                                            <button class="oe_button oe_button_pager" data-pager-action="first" type="button"
+                                                disabled="disabled">
+                                                <img src="http://58.53.128.165:8069/web/static/src/img/pager_first.png">
+                                            </button>
+                                            <button class="oe_button oe_button_pager" data-pager-action="previous" type="button"
+                                                disabled="disabled">
+                                                <img src="http://58.53.128.165:8069/web/static/src/img/pager_previous.png">
+                                            </button>
+                                            <span class="oe-pager-state">[第 1 条至 1 条] 共 1 条</span>
+                                            <button class="oe_button oe_button_pager" data-pager-action="next" type="button"
+                                                disabled="disabled">
+                                                <img src="http://58.53.128.165:8069/web/static/src/img/pager_next.png">
+                                            </button>
+                                            <button class="oe_button oe_button_pager" data-pager-action="last" type="button"
+                                                disabled="disabled">
+                                                <img src="http://58.53.128.165:8069/web/static/src/img/pager_last.png">
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                                <tbody class="ui-widget-content">
+                                    <tr class="even" data-id="2" style="">
+                                        <th class="oe-record-selector" width="1">                                            
+                                        </th>
+                                        <th class="oe-record-edit-link" width="1">
+                                        </th>
+                                        <td class="oe-field-cell" data-field="name">
+                                        </td>
+                                        <td class="oe-field-cell" data-field="date_order">
+                                        </td>
+                                        <td class="oe-field-cell" data-field="partner_id">
+                                        </td>
+                                        <td class="oe-field-cell" data-field="user_id">
+                                        </td>
+                                        <td class="oe-field-cell oe-number" data-field="picked_rate">
+                                        </td>
+                                        <td class="oe-field-cell oe-number" data-field="invoiced_rate">
+                                        </td>
+                                        <td class="oe-record-delete" width="1">
+                                            <button name="delete" type="button">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <th class="oe-record-selector">
+                                        </th>
+                                        <th class="oe-record-edit-link">
+                                        </th>
+                                        <td title="单号">
+                                            &nbsp;
+                                        </td>
+                                        <td title="订单日期">
+                                            &nbsp;
+                                        </td>
+                                        <td title="客户">
+                                            &nbsp;
+                                        </td>
+                                        <td title="业务员">
+                                            &nbsp;
+                                        </td>
+                                        <td title="已领料/退货">
+                                            &nbsp;
+                                        </td>
+                                        <td title="已开发票">
+                                            &nbsp;
+                                        </td>
+                                        
+                                        <td class="oe-record-delete">
+                                            <button type="button" style="visibility: hidden">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="even">
+                                        <th class="oe-record-selector">
+                                        </th>
+                                        <th class="oe-record-edit-link">
+                                        </th>
+                                        <td title="单号">
+                                            &nbsp;
+                                        </td>
+                                        <td title="订单日期">
+                                            &nbsp;
+                                        </td>
+                                        <td title="客户">
+                                            &nbsp;
+                                        </td>
+                                        <td title="业务员">
+                                            &nbsp;
+                                        </td>
+                                        <td title="已领料/退货">
+                                            &nbsp;
+                                        </td>
+                                        <td title="已开发票">
+                                            &nbsp;
+                                        </td>
+                                        
+                                        <td class="oe-record-delete">
+                                            <button type="button" style="visibility: hidden">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="odd">
+                                        <th class="oe-record-selector">
+                                        </th>
+                                        <th class="oe-record-edit-link">
+                                        </th>
+                                        <td title="单号">
+                                            &nbsp;
+                                        </td>
+                                        <td title="订单日期">
+                                            &nbsp;
+                                        </td>
+                                        <td title="客户">
+                                            &nbsp;
+                                        </td>
+                                        <td title="业务员">
+                                            &nbsp;
+                                        </td>
+                                        <td title="已领料/退货">
+                                            &nbsp;
+                                        </td>
+                                        <td title="已开发票">
+                                            &nbsp;
+                                        </td>
+                                        
+                                        <td class="oe-record-delete">
+                                            <button type="button" style="visibility: hidden">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="even">
+                                        <th class="oe-record-selector">
+                                        </th>
+                                        <th class="oe-record-edit-link">
+                                        </th>
+                                        <td title="单号">
+                                            &nbsp;
+                                        </td>
+                                        <td title="订单日期">
+                                            &nbsp;
+                                        </td>
+                                        <td title="客户">
+                                            &nbsp;
+                                        </td>
+                                        <td title="业务员">
+                                            &nbsp;
+                                        </td>
+                                        <td title="已领料/退货">
+                                            &nbsp;
+                                        </td>
+                                        <td title="已开发票">
+                                            &nbsp;
+                                        </td>
+                                        
+                                        <td class="oe-record-delete">
+                                            <button type="button" style="visibility: hidden">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="widget-85_view_form">
+                    </div>
+                    <div id="widget-85_view_page">
+                    </div>
+                    <div id="widget-85_view_calendar">
+                    </div>
+                    <div id="widget-85_view_graph">
+                    </div>
+                </td>
+                <td class="view-manager-main-sidebar" height="100%">
+                    <div class="sidebar-main-div open-sidebar" style="" id="widget-85_sidebar_list">
+                        <a class="toggle-sidebar"></a>
+                        <div class="sidebar-content">
+                            <div class="sidebar-actions">
+                                <div class="oe_sidebar_print" id="widget-85_sidebar_list_section_print_135">
+                                    <h2>
+                                        报表</h2>
+                                    <ul>
+                                        <li class="oe_sidebar_print"><a class="oe_sidebar_action_a" href="#" id="widget-85_sidebar_list_section_print_135_item_136">
+                                            报价单/订单 </a></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_sidebar_action" id="widget-85_sidebar_list_section_action_137">
+                                    <h2>
+                                        动作</h2>
+                                    <ul>
+                                        <li class="oe_sidebar_action"><a class="oe_sidebar_action_a" href="#" id="widget-85_sidebar_list_section_action_137_item_138">
+                                            生成发票 </a></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_sidebar_customize" id="widget-85_sidebar_list_section_customize_139">
+                                    <h2>
+                                        自定义</h2>
+                                    <ul>
+                                        <li><a class="oe_sidebar_action_a" href="#" id="widget-85_sidebar_list_section_customize_139_item_140"
+                                            title="技术翻译">翻译 </a></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_sidebar_other" id="widget-85_sidebar_list_section_other_141">
+                                    <h2>
+                                        其他选项</h2>
+                                    <ul>
+                                        <li><a class="oe_sidebar_action_a" href="#" id="widget-85_sidebar_list_section_other_141_item_142">
+                                            导入 </a></li>
+                                        <li><a class="oe_sidebar_action_a" href="#" id="widget-85_sidebar_list_section_other_141_item_143">
+                                            导出 </a></li>
+                                        <li class="oe-share"><a class="oe_sidebar_action_a" href="#" id="widget-85_sidebar_list_section_other_141_item_144">
+                                            Share </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sidebar-main-div closed-sidebar" style="display: none" id="widget-85_sidebar_form">
+                    </div>
+                    <div class="sidebar-main-div closed-sidebar" style="display: none" id="widget-85_sidebar_page">
+                    </div>
+                    <div class="sidebar-main-div closed-sidebar" style="display: none" id="widget-85_sidebar_calendar">
+                    </div>
+                    <div class="sidebar-main-div closed-sidebar" style="display: none" id="widget-85_sidebar_graph">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

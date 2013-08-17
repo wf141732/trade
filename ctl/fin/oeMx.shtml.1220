@@ -1,0 +1,71 @@
+﻿<div id="dvOeMx" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span3">
+                    <label for="q_om_number">
+                        关联单号</label>
+                    <input type="text" id="q_om_number" value="" placeholder="关联的出库单号或销售单号" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_om_date_start">
+                        日期起</label>
+                    <input type="text" id="q_om_date_start" value="" placeholder="日期范围开始时间" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_om_date_end">
+                        日期止</label>
+                    <input type="text" id="q_om_date_end" value="" placeholder="日期范围结束时间" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <div class="clearfix">
+                        <label for="q_om_a_id">
+                            活动</label>
+                        <select class="input-medium" data-placeholder="选择状态" id="q_om_a_id" name="q[date_in_time_frame]">                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="excel">
+                <i class="icon-search icon-white"></i>&nbsp;导出到excel</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">类型 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">编号 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">日期</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">活动</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">金额</a>
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../jquery-1.7.1.js" type="text/javascript"></script>
+    <script>
+//        var gf = {// 全局函数变量
+//            log: function (msg) {// 控制台输出
+//                if ($.isArray(msg)) msg = JSON.stringify(msg);
+//                console.log(msg);
+//            },
+//            ajax: function (submit_data, success) {
+//                par = {
+//                    success: success,
+//                    error: function (msg) {
+//                        'ajax error:' + gf.log(msg);
+//                    }
+//                };
+//                jQuery.ajax({
+//                    type: 'post',
+//                    dataType: 'json',
+//                    url: 'http://localhost/handlers/test.ashx',
+//                    data: { OperationData: JSON.stringify(submit_data) },
+//                    beforeSend: function (XMLHttpRequest) { },
+//                    success: function (data, textStatus) {
+//                        if (textStatus == "success") {                            
+//                            par.success(data);
+//                        }
+//                    },
+//                    error: function (XMLHttpRequest, status) {
+//                        if (par.error)
+//                            par.error(XMLHttpRequest.responseText);
+//                        //请求出错处理
+//                    }
+//                })
+//            }
+//        }
+        var reqData = { "name": "深圳鹏诚达电子", "aMain": [["", "b", "连接器"]], "aGt": [["", "广东省新亚洲电子城I期", "1A024"]], "aPhone": [["", "2", "82812744"], ["", "1", "13530994838"], ["", "1", "13530994898"]] };
+        //gf.ajax(reqData, function (d) { alert(d) });
+        //function ca(d) { alert(d.msg); }
+        jQuery.getJSON('http://localhost:82/handlers/test.ashx?callback=?&a='+ JSON.stringify({piNo:"abc",poId:123}), function (data) {
+            alert(data.msg);
+        })
+    </script>
+    
+</head>
+<body>
+
+</body>
+</html>

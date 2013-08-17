@@ -1,0 +1,19 @@
+<div class="row-fluid">
+    <div class="fr span7">
+        <h4>
+            <e>共计<g>0</g>条记录</e>，
+                                当前查询<c>0</c>条记录 <small>查询日期<d></d></small>
+        </h4>
+    </div>
+    <div class="pagination span5 span-right">
+        <ul>
+            <li>
+                <select>
+                    <option value="30">显示30条</option>
+                    <option value="50">显示50条</option>
+                    <option value="100">显示100条</option>
+                </select></li>
+        </ul>
+        <f class="btn"><i class="icon-search icon-white"></i>&nbsp;入库</f>
+    </div>
+</div>

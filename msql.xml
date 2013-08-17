@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!---
+{0}统一定义为storeId
+{1}统一定义为userId
+以上两个取自Session中
+-->
+<aac-m>
+	<sql name="agent.base.soAnalytic" comment="销售分析">
+		<![CDATA[
+SELECT  {3}
+       ,SUM(a.subAmount) AS amount
+       ,SUM(a.qty) AS qty
+FROM    ( SELECT    a.name AS partner
+                   ,c.name AS category
+                   ,p.name AS product
+                   ,( l.price * ( 100 - ISNULL(l.discount, 0) ) / 100 * l.qty ) AS subAmount
+                   ,( l.qty ) AS qty
+                   ,CONVERT(varchar(7), h.orderDate, 23) AS month
+          FROM      member.storeOrderHead h
+                   ,member.storeOrderLine l
+                   ,member.users u
+                   ,member.users su
+                   ,member.agent a
+                   ,member.storeProduct p
+                   ,member.storeCategory c
+          WHERE     h.id = l.headID
+                    AND h.memberID = u.ID
+                    AND u.agentId = a.id
+                    AND su.id = h.saleID
+                    AND p.id = l.productID
+                    AND c.id = p.categoryID
+					and h.type='SO'
+                    AND h.status='confirm'
+                    AND su.agentId={0}
+                    AND h.orderDate>='{1}'
+                    AND h.orderDate<'{2}'
+			union all
+	SELECT  '淘宝'
+       ,sc.name
+       ,sp.name
+       ,( o.payment - h.discount_fee
+          / ( COUNT(1) OVER ( PARTITION BY o.tid ) ) ) / 100
+       ,o.num
+       ,CONVERT(VARCHAR(7), o.pay_time, 23) AS month
+FROM    ( SELECT    o.*
+                   ,ISNULL(i.storeProductId, s.storeProductId) AS storeProductId
+          FROM      dbo.orders o
+                    LEFT JOIN dbo.skus s ON s.sku_id = o.sku_id
+                    INNER JOIN dbo.items i ON i.num_iid = o.num_iid
+          WHERE     is_detail = 1
+        ) o
+        INNER JOIN member.storeProduct sp ON sp.id = o.storeProductId
+        INNER JOIN member.storeCategory sc ON sc.id = sp.categoryID
+        INNER JOIN dbo.orders h ON h.oid != o.oid
+                                   AND h.oid = o.tid
+                                   AND h.is_main = 1 
+  where o.pay_time>='{1}'
+        AND o.pay_time<'{2}'
+		and sp.storeId={0}
+		and o.status in ('TRADE_FINISHED',
+'WAIT_SELLER_SEND_GOODS',
+'WAIT_BUYER_CONFIRM_GOODS')
+        ) AS a
+GROUP BY {3}
+ORDER BY SUM(a.subAmount) DESC
+		]]>
+	</sql>
+	<sql name="agent.base.soReturnAnalytic" comment="退货分析">
+		<![CDATA[
+SELECT  {3}
+       ,SUM(a.subAmount) AS amount
+       ,SUM(a.qty) AS qty
+FROM    ( SELECT    a.name AS partner
+                   ,c.name AS category
+                   ,p.name AS product
+                   ,( l.price * ( ISNULL(l.discount, 0)-100 ) / 100 * l.qty ) AS subAmount
+                   ,( l.qty*-1 ) AS qty
+				   ,rr.name as reason
+                   ,CONVERT(varchar(7), h.orderDate, 23) AS month
+          FROM      member.storeOrderHead h
+                   ,member.storeOrderLine l
+                   ,member.users u
+                   ,member.users su
+                   ,member.agent a
+                   ,member.storeProduct p
+                   ,member.storeCategory c
+				   ,member.soReturnReason rr
+          WHERE     h.id = l.headID
+                    AND h.memberID = u.ID
+                    AND u.agentId = a.id
+                    AND su.id = h.saleID
+					and h.type='RT'
+					and rr.id=h.reasonId
+                    AND p.id = l.productID
+                    AND c.id = p.categoryID
+                    AND h.status='confirm'
+                    AND su.agentId={0}
+                    AND h.orderDate>='{1}'
+                    AND h.orderDate<'{2}'
+        ) AS a
+GROUP BY {3}
+ORDER BY SUM(a.subAmount) DESC
+		]]>
+	</sql>
+	<sql name="agent.factory.openMarketing" comment="开通门店的营销资格">
+		<![CDATA[
+UPDATE member.agent SET companyId={0} WHERE id IN ({1})
+		]]>
+	</sql>
+	<sql name="agent.base.stockInSta" comment="入库分析">
+		<![CDATA[
+		SELECT  {3}
+       ,SUM(a.qty) AS qty
+FROM    (
+SELECT  st.qty 
+	,sp.name AS product
+	,sc.name AS category
+	,CONVERT(varchar(7), st.inDate, 23) AS month
+FROM    member.stockTran st
+       ,member.storeProduct sp
+       ,member.storeCategory sc
+WHERE   st.destID = {0}
+  AND sp.fromID=st.productID
+  AND sp.storeID=st.destID
+  AND sc.id=sp.categoryID
+                    AND st.inDate>='{1}'
+                    AND st.inDate<'{2}'
+					) as a
+					group by {3}
+					order by sum(qty) desc
+		]]>
+	</sql>
+	<sql name="agent.base.soProductQuery" comment="退货中查询未退的销售单">
+		<![CDATA[
+select * from (
+SELECT  'MSO' + CAST(h.id AS VARCHAR(10)) AS num
+       ,a.name as aname
+       ,p.name as pname
+       ,l.qty+(SELECT ISNULL(SUM(sl.qty),0) FROM member.storeOrderLine sl WHERE sl.fromId=l.id) as qty
+       ,ISNULL(l.comment, h.note) AS comment
+	   ,h.orderDate
+	   ,l.id
+	   ,p.fromId
+	   ,l.price*(100-l.discount)/100 as price
+	   ,f.id as fid
+	   ,f.text
+FROM    member.storeOrderHead h
+       ,member.storeOrderLine l
+       ,member.storeProduct p
+       ,member.users u
+       ,member.agent a
+       ,member.users su
+	   ,dbo.flex f
+WHERE   h.id = l.headID
+        AND l.productID = p.fromID
+        AND p.storeID = su.agentId
+        AND su.id = h.saleID
+        AND u.id = h.memberID
+        AND u.agentId = a.id
+		and f.type=10000
+		and f.value=p.uom
+		and u.id={0}
+		and h.saleId={1}
+		and {2}
+		and h.type in ('SO')
+		) as a
+where a.qty>0
+order by a.num desc,a.id
+/*在多用户的情况下存在bug*/
+		]]>
+	</sql>
+	<sql name="base.productQueryLov" comment="单个本地产品的Lov">
+		<![CDATA[
+SELECT  sp.fromID
+       ,sc.name
+       ,sp.name
+       ,s.qty
+       ,sp.price
+       ,sp.description
+	   ,sp.id storeProductId
+FROM    member.storeProduct sp
+       ,member.stock s
+       ,member.storeCategory sc
+WHERE   sp.storeID = {0}
+        AND sc.id = sp.categoryID
+        AND s.productId = sp.fromID
+        AND s.agentId = sp.storeID
+		and sc.id={2}
+		]]>
+	</sql>
+	<sql name="agent.stock.tran.picking.out" comment="打印出库单的行信息">
+		<![CDATA[
+SELECT  l.productID
+       ,ISNULL(sp.name, p.name) AS NAME
+       ,l.price
+       ,f.text AS uom
+       ,l.qty
+       ,NULL,discount
+       ,NULL comment
+       ,l.id
+       ,NULL amount
+       ,ISNULL(sp.code, p.code) AS code
+       ,'MSO' + CAST(sh.id AS VARCHAR(10)) AS hNumber
+       ,av1.text AS attr1text
+       ,av2.text AS attr2text
+       ,sp.categoryID
+	   ,l.pickingId
+FROM    member.stockTran l
+        LEFT JOIN member.storeOrderLine sl ON sl.id = l.fromId
+        LEFT JOIN member.storeOrderHead sh ON sh.id = sl.headID
+        LEFT JOIN member.storeProduct sp ON sp.storeID = l.fromID
+                                            AND l.productID = sp.fromID
+       ,member.product p
+        LEFT JOIN base.attributeValue av1 ON av1.id = p.attribute1
+        LEFT JOIN base.attributeValue av2 ON av2.id = p.attribute2
+       ,dbo.Flex AS f
+WHERE   l.productID = p.id
+        AND p.uom = f.value
+        AND f.type = 10000
+        AND l.pickingId in ({0})
+		order by l.pickingId
+		]]>
+	</sql>
+	<sql name="agent.order.so2po.forErpLine" comment="将订单转换到erp中做数据准备">
+		<![CDATA[
+ SELECT  p.fromID
+               ,sp.name
+               ,l.price
+               ,f.text
+               ,4 as 'a'
+               ,5 as 'b'
+               ,6 as 'c'
+               ,l.qty
+               ,l.discount
+               ,l.comment
+        FROM    dbo.soLine_v l
+               ,member.storeProduct sp
+               LEFT JOIN dbo.Flex f ON f.value=sp.uom AND f.type=10000
+               ,member.product p
+        WHERE   headID in ({2})
+                AND l.storeProductId = sp.id
+                AND sp.fromID = p.id
+                AND p.fromID > 0
+		]]>
+	</sql>
+</aac-m>

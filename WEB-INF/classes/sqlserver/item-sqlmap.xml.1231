@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap>
+	<resultMap id="SKUDO" class="com.taobao.top.syncserver.domain.SKUDO" >
+		<result  property="created" column="created"/>
+		<result  property="modified" column="modified"/>
+		<result  property="numIid" column="num_iid"/>
+		<result  property="outerId" column="outer_id"/>
+		<result  property="price" column="price"/>
+		<result  property="properties" column="properties"/>
+		<result  property="quantity" column="quantity"/>
+		<result  property="skuId" column="sku_id"/>
+		<result  property="status" column="status"/>
+	</resultMap>
+
+	<select id="sku.select" resultMap="SKUDO"
+		parameterClass="java.lang.Long"> 
+		SELECT 
+		created, 
+		modified, 
+		num_iid, 
+		outer_id, 
+		price, 
+		properties, 
+		quantity, 
+		sku_id, 
+		status 
+		FROM skus s WHERE s.num_iid = #value#
+	</select>
+	
+	<select id="item.select.maxmodified" resultClass="java.util.Date"
+		parameterClass="java.lang.Long"> 
+		SELECT MAX(i.modified) AS modified FROM items i WHERE i.seller_id = #value#
+	</select>
+	<select id="item.select.modified" resultClass="java.util.Date" parameterClass="java.lang.Long">
+		SELECT i.modified FROM items i WHERE i.num_iid = #vlaue#
+	</select>
+	<insert id="item.insert" parameterClass="com.taobao.top.syncserver.domain.ItemDO">
+		merge items as target
+ using (select 
+ 		#approveStatus#, 
+		#created#,
+		#delistTime#, 
+		#detailUrl#, 
+		#hasShowcase#, 
+		#inputPids#, 
+		#inputStr#, 
+		#listTime#, 
+		#modified#, 
+		#nick#,
+		#num#,
+		#numIid#, 
+		#outerId#, 
+		#picUrl#, 
+		#price#, 
+		#propertyAlias#,
+		#propsName#, 
+		#sellerId#, 
+		#title#,
+		#violation#,
+		#isVirtual#,
+		#sellerCids#
+	) as source (
+ 		approve_status, 
+		created, 
+		delist_time, 
+		detail_url, 
+		has_showcase, 
+		input_pids, 
+		input_str, 
+		list_time, 
+		modified, 
+		nick, 
+		num, 
+		num_iid,
+		outer_id, 
+		pic_url, 
+		price, 
+		property_alias, 
+		props_name, 
+		seller_id, 
+		title, 
+		violation,
+		is_virtual,
+		seller_cids)
+ on (target.num_iid=source.num_iid)
+ when matched then update set 
+		approve_status=source.approve_status, 
+		created=source.created, 
+		delist_time=source.delist_time, 
+		detail_url=source.detail_url, 
+		has_showcase=source.has_showcase, 
+		input_pids=source.input_pids, 
+		input_str=source.input_str, 
+		list_time=source.list_time, 
+		modified=source.modified, 
+		nick=source.nick, 
+		num=source.num, 
+		num_iid=source.num_iid,
+		outer_id=source.outer_id, 
+		pic_url=source.pic_url, 
+		price=source.price, 
+		property_alias=source.property_alias, 
+		props_name=source.props_name, 
+		seller_id=source.seller_id, 
+		title=source.title, 
+		violation=source.violation,
+		is_virtual=source.is_virtual,
+		seller_cids=source.seller_cids
+ when not matched then insert(
+		approve_status, 
+		created, 
+		delist_time, 
+		detail_url, 
+		has_showcase, 
+		input_pids, 
+		input_str, 
+		list_time, 
+		modified, 
+		nick, 
+		num, 
+		num_iid,
+		outer_id, 
+		pic_url, 
+		price, 
+		property_alias, 
+		props_name, 
+		seller_id, 
+		title, 
+		violation,
+		is_virtual,
+		seller_cids
+)values(
+		source.approve_status, 
+		source.created, 
+		source.delist_time, 
+		source.detail_url, 
+		source.has_showcase, 
+		source.input_pids, 
+		source.input_str, 
+		source.list_time, 
+		source.modified, 
+		source.nick, 
+		source.num, 
+		source.num_iid,
+		source.outer_id, 
+		source.pic_url, 
+		source.price, 
+		source.property_alias, 
+		source.props_name, 
+		source.seller_id, 
+		source.title, 
+		source.violation,
+		source.is_virtual,
+		source.seller_cids
+		);
+	</insert>
+	<insert id="item.insert1" parameterClass="com.taobao.top.syncserver.domain.ItemDO">
+		INSERT INTO items 
+		(
+		approve_status, 
+		created, 
+		delist_time, 
+		detail_url, 
+		has_showcase, 
+		input_pids, 
+		input_str, 
+		list_time, 
+		modified, 
+		nick, 
+		num, 
+		num_iid,
+		outer_id, 
+		pic_url, 
+		price, 
+		property_alias, 
+		props_name, 
+		seller_id, 
+		title, 
+		violation,
+		is_virtual,
+		seller_cids
+		) 
+		VALUES 
+		(
+		#approveStatus#, 
+		#created#,
+		#delistTime#, 
+		#detailUrl#, 
+		#hasShowcase#, 
+		#inputPids#, 
+		#inputStr#, 
+		#listTime#, 
+		#modified#, 
+		#nick#,
+		#num#,
+		#numIid#, 
+		#outerId#, 
+		#picUrl#, 
+		#price#, 
+		#propertyAlias#,
+		#propsName#, 
+		#sellerId#, 
+		#title#,
+		#violation#,
+		#isVirtual#,
+		#sellerCids#)
+	</insert>
+	<insert id="sku.insert" parameterClass="com.taobao.top.syncserver.domain.SKUDO">
+		merge skus as target
+ using (select 
+ 		#created#, 
+		#modified#, 
+		#numIid#, 
+		#outerId#, 
+		#price#, 
+		#properties#, 
+		#quantity#, 
+		#skuId#, 
+		#status#
+ ) as source (
+ 		created, 
+		modified, 
+		num_iid, 
+		outer_id, 
+		price, 
+		properties, 
+		quantity, 
+		sku_id, 
+		status)
+ on (target.sku_id=source.sku_id)
+ when matched then update set 
+ 		created=source.created, 
+		modified=source.modified, 
+		num_iid=source.num_iid, 
+		outer_id=source.outer_id, 
+		price=source.price, 
+		properties=source.properties, 
+		quantity=source.quantity, 
+		sku_id=source.sku_id, 
+		status=source.status
+ when not matched then insert(
+ 		created, 
+		modified, 
+		num_iid, 
+		outer_id, 
+		price, 
+		properties, 
+		quantity, 
+		sku_id, 
+		status
+ 	)values(
+ 		source.created, 
+		source.modified, 
+		source.num_iid, 
+		source.outer_id, 
+		source.price, 
+		source.properties, 
+		source.quantity, 
+		source.sku_id, 
+		source.status
+ 	);
+	</insert>
+	<insert id="sku.insert1" parameterClass="com.taobao.top.syncserver.domain.SKUDO">
+		INSERT INTO skus 
+		(
+		created, 
+		modified, 
+		num_iid, 
+		outer_id, 
+		price, 
+		properties, 
+		quantity, 
+		sku_id, 
+		status
+		) VALUES 
+		(
+		#created#, 
+		#modified#, 
+		#numIid#, 
+		#outerId#, 
+		#price#, 
+		#properties#, 
+		#quantity#, 
+		#skuId#, 
+		#status#
+		)
+	</insert>
+	<delete id="sku.delete" parameterClass="java.lang.Long"> 
+		DELETE FROM skus WHERE sku_id = #value#
+	</delete>
+	<delete id="item.delete" parameterClass="java.lang.Long">
+		DELETE FROM items WHERE num_iid = #value#
+	</delete>
+	<delete id="sku.delete.numiid" parameterClass="java.lang.Long">
+		DELETE FROM skus WHERE num_iid = #value#
+	</delete>
+	<update id="item.update" parameterClass="com.taobao.top.syncserver.domain.ItemDO"> 
+		UPDATE i SET 
+		<isNotNull property="approveStatus">
+		i.approve_status = #approveStatus#,
+		</isNotNull> 
+		<isNotNull property="created">
+		i.created = #created#, 
+		</isNotNull>
+		<isNotNull property="delistTime">
+		i.delist_time = #delistTime#,
+		</isNotNull>
+		<isNotNull property="detailUrl"> 
+		i.detail_url = #detailUrl#,
+		</isNotNull>
+		<isNotNull property="hasShowcase"> 
+		i.has_showcase = #hasShowcase#,
+		</isNotNull>
+		<isNotNull property="inputPids"> 
+		i.input_pids = #inputPids#,
+		</isNotNull>
+		<isNotNull property="inputStr"> 
+		i.input_str = #inputStr#,
+		</isNotNull>
+		<isNotNull property="listTime"> 
+		i.list_time = #listTime#,
+		</isNotNull>
+		<isNotNull property="nick"> 
+		i.nick = #nick#,
+		</isNotNull>
+		<isNotNull property="num">
+		i.num = #num#, 
+		</isNotNull>
+		<isNotNull property="outerId">
+		i.outer_id = #outerId#,
+		</isNotNull>
+		<isNotNull property="picUrl"> 
+		i.pic_url = #picUrl#, 
+		</isNotNull>
+		<isNotNull property="price">
+		i.price = #price#, 
+		</isNotNull>
+		<isNotNull property="propertyAlias">
+		i.property_alias = #propertyAlias#,
+		</isNotNull>
+		<isNotNull property="propsName"> 
+		i.props_name = #propsName#,
+		</isNotNull>
+		<isNotNull property="sellerId"> 
+		i.seller_id = #sellerId#,
+		</isNotNull>
+		<isNotNull property="title"> 
+		i.title = #title#, 
+		</isNotNull>
+		<isNotNull property="violation">
+		i.violation = #violation#, 
+		</isNotNull>
+		
+		<isNotNull property="isVirtual">
+		i.is_virtual = #isVirtual#, 
+		</isNotNull>
+		<isNotNull property="sellerCids">
+		i.seller_cids = #sellerCids#, 
+		</isNotNull>
+		
+		<isNotNull property="modified"> 
+		i.modified = #modified#
+		</isNotNull>
+		from items i WHERE i.num_iid = #numIid# AND #modified# > i.modified
+	</update>
+	<update id="sku.update" parameterClass="com.taobao.top.syncserver.domain.SKUDO">
+		UPDATE s SET
+		<isNotNull property="created"> 
+		s.created = #created#,
+		</isNotNull> 
+		<isNotNull property="numIid"> 
+		s.num_iid = #numIid#, 
+		</isNotNull>
+		<isNotNull property="outerId">
+		s.outer_id = #outerId#,
+		</isNotNull>
+		<isNotNull property="price"> 
+		s.price = #price#, 
+		</isNotNull>
+		<isNotNull property="properties">
+		s.properties = #properties#,
+		</isNotNull>
+		<isNotNull property="quantity"> 
+		s.quantity = #quantity#,
+		</isNotNull>
+		<isNotNull property="status"> 
+		s.status =  #status# ,
+		</isNotNull>
+		<isNotNull property="modified">
+		s.modified = #modified#
+		</isNotNull>
+		from skus s WHERE s.sku_id = #skuId# AND #modified# > s.modified
+	</update>
+</sqlMap>

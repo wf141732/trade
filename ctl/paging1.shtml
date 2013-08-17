@@ -1,0 +1,24 @@
+<style>
+.pagination .disabled span,
+.pagination .disabled a,
+.pagination .disabled a:hover {
+  color: #999999;
+  background-color: transparent;
+  cursor: default;
+}
+</style>
+<div class="row-fluid">
+    <div class="fr span7">
+        <h4>
+            <e>共计<g>0</g>条记录</e>，
+                                当前查询<c>0</c>条记录 <small>查询日期<d></d></small>
+        </h4>
+    </div>
+    <div class="pagination span5 span-right">
+        <ul>
+            <li><a href="#" class="prev">前一页</a></li>
+            <li><a class="cur">0</a></li>
+            <li><a href="#" class="next">后一页</a></li>
+        </ul>
+    </div>
+</div>

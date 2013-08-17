@@ -1,0 +1,17 @@
+<property name="MinPoolSize" value="3"/>
+			<!-- //当连接池中的连接耗尽后一次同时获取的连接数  -->
+			<property name="AcquireIncrement" value="3"/>
+			<!--  //每过多久检查连接池中空闲的连接,单位s -->
+			<property name="IdleConnectionTestPeriod" value="300"/>
+			<!-- //多久没有使用连接被丢弃，单位s  -->
+			<property name="MaxIdleTime" value="180"/>
+			<!-- //当连接不够用的时候等待连接池中的连接数可用的超时时间，ms  -->
+			<property name="CheckoutTimeout" value="3000"/>
+			<property name="AcquireRetryAttempts" value="2"/>
+			<!-- //每个连接可用的最大缓存数 -->
+			<property name="MaxStatementsPerConnection" value="20"/>
+			<property name="NumHelperThreads" value="5"/>
+				
+			<!-- //for debug -->
+			<property name="DebugUnreturnedConnectionStackTraces" value="true"/>
+			<property name="UnreturnedConnectionTimeout" value="195"/>

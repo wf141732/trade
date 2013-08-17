@@ -1,0 +1,75 @@
+<div id="dvMemberStaGroup" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span3 lov">
+                    <label for="q_ms_store_no">
+                        终端店</label>
+                    <input type="text" id="q_ms_store_no" value="" placeholder="店铺编号" class="default" autocomplete="off">
+                    <button class="btn">
+                            ...</button>
+                </div>
+                <div class="span2">
+                    <div class="clearfix">
+                        <label for="q_vehicle_status_id_in">
+                            月份</label>
+                        <select class="input-medium month" data-placeholder="选择状态" id="Select2" name="q[date_in_time_frame]">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="span3 date">
+                    <label for="q_msg_date_start">
+                        注册日期起</label>
+                    <input type="text" id="q_msg_date_start" value="" placeholder="注册日期范围开始时间" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3 date">
+                    <label for="q_msg_date_end">
+                        注册日期止</label>
+                    <input type="text" id="q_msg_date_end" value="" placeholder="注册日期范围结束时间" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <!--<button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>-->
+        </div>
+    </div>
+    <div class="page-header">
+        <div class="row-fluid">
+            <div class="fr span5">
+                <h4>
+                    <c>0</c>
+                    条记录 <small>查询日期
+                        <d></d>
+                    </small>
+                </h4>
+            </div>
+        </div>
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">类型</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link asc">门店</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">会员数</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>

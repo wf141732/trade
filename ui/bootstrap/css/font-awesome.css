@@ -1,0 +1,303 @@
+/*  Font Awesome
+    the iconic font designed for use with Twitter Bootstrap
+    -------------------------------------------------------
+    The full suite of pictographic icons, examples, and documentation
+    can be found at: http://fortawesome.github.com/Font-Awesome/
+
+    License
+    -------------------------------------------------------
+    The Font Awesome webfont, CSS, and LESS files are licensed under CC BY 3.0:
+    http://creativecommons.org/licenses/by/3.0/ A mention of
+    'Font Awesome - http://fortawesome.github.com/Font-Awesome' in human-readable
+    source code is considered acceptable attribution (most common on the web).
+    If human readable source code is not available to the end user, a mention in
+    an 'About' or 'Credits' screen is considered acceptable (most common in desktop
+    or mobile software).
+
+    Contact
+    -------------------------------------------------------
+    Email: dave@davegandy.com
+    Twitter: http://twitter.com/fortaweso_me
+    Work: http://lemonwi.se co-founder
+
+    */
+@font-face {
+  font-family: "FontAwesome";
+  src: url('../font/fontawesome-webfont.eot');
+  src: url('../font/fontawesome-webfont.eot?#iefix') format('eot'), url('../font/fontawesome-webfont.woff') format('woff'), url('../font/fontawesome-webfont.ttf') format('truetype'), url('../font/fontawesome-webfont.svg#FontAwesome') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*  Font Awesome styles
+    ------------------------------------------------------- */
+[class^="f-icon-"]:before, [class*=" f-icon-"]:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+a [class^="f-icon-"], a [class*=" f-icon-"] {
+  display: inline-block;
+  text-decoration: inherit;
+}
+/* makes the font 33% larger relative to the icon container */
+.f-icon-large:before {
+  vertical-align: top;
+  font-size: 1.3333333333333333em;
+}
+.btn [class^="f-icon-"], .btn [class*=" f-icon-"] {
+  /* keeps button heights with and without icons the same */
+
+  line-height: .9em;
+}
+li [class^="f-icon-"], li [class*=" f-icon-"] {
+  display: inline-block;
+  width: 1.25em;
+  text-align: center;
+}
+li .f-icon-large[class^="f-icon-"], li .f-icon-large[class*=" f-icon-"] {
+  /* 1.5 increased font size for f-icon-large * 1.25 width */
+
+  width: 1.875em;
+}
+li[class^="f-icon-"], li[class*=" f-icon-"] {
+  margin-left: 0;
+  list-style-type: none;
+}
+li[class^="f-icon-"]:before, li[class*=" f-icon-"]:before {
+  text-indent: -2em;
+  text-align: center;
+}
+li[class^="f-icon-"].f-icon-large:before, li[class*=" f-icon-"].f-icon-large:before {
+  text-indent: -1.3333333333333333em;
+}
+/*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+    readers do not read off random characters that represent icons */
+.f-icon-glass:before                { content: "\f000"; }
+.f-icon-music:before                { content: "\f001"; }
+.f-icon-search:before               { content: "\f002"; }
+.f-icon-envelope:before             { content: "\f003"; }
+.f-icon-heart:before                { content: "\f004"; }
+.f-icon-star:before                 { content: "\f005"; }
+.f-icon-star-empty:before           { content: "\f006"; }
+.f-icon-user:before                 { content: "\f007"; }
+.f-icon-film:before                 { content: "\f008"; }
+.f-icon-th-large:before             { content: "\f009"; }
+.f-icon-th:before                   { content: "\f00a"; }
+.f-icon-th-list:before              { content: "\f00b"; }
+.f-icon-ok:before                   { content: "\f00c"; }
+.f-icon-remove:before               { content: "\f00d"; }
+.f-icon-zoom-in:before              { content: "\f00e"; }
+
+.f-icon-zoom-out:before             { content: "\f010"; }
+.f-icon-off:before                  { content: "\f011"; }
+.f-icon-signal:before               { content: "\f012"; }
+.f-icon-cog:before                  { content: "\f013"; }
+.f-icon-trash:before                { content: "\f014"; }
+.f-icon-home:before                 { content: "\f015"; }
+.f-icon-file:before                 { content: "\f016"; }
+.f-icon-time:before                 { content: "\f017"; }
+.f-icon-road:before                 { content: "\f018"; }
+.f-icon-download-alt:before         { content: "\f019"; }
+.f-icon-download:before             { content: "\f01a"; }
+.f-icon-upload:before               { content: "\f01b"; }
+.f-icon-inbox:before                { content: "\f01c"; }
+.f-icon-play-circle:before          { content: "\f01d"; }
+.f-icon-repeat:before               { content: "\f01e"; }
+
+/* \f020 doesn't work in Safari. all shifted one down */
+.f-icon-refresh:before              { content: "\f021"; }
+.f-icon-list-alt:before             { content: "\f022"; }
+.f-icon-lock:before                 { content: "\f023"; }
+.f-icon-flag:before                 { content: "\f024"; }
+.f-icon-headphones:before           { content: "\f025"; }
+.f-icon-volume-off:before           { content: "\f026"; }
+.f-icon-volume-down:before          { content: "\f027"; }
+.f-icon-volume-up:before            { content: "\f028"; }
+.f-icon-qrcode:before               { content: "\f029"; }
+.f-icon-barcode:before              { content: "\f02a"; }
+.f-icon-tag:before                  { content: "\f02b"; }
+.f-icon-tags:before                 { content: "\f02c"; }
+.f-icon-book:before                 { content: "\f02d"; }
+.f-icon-bookmark:before             { content: "\f02e"; }
+.f-icon-print:before                { content: "\f02f"; }
+
+.f-icon-camera:before               { content: "\f030"; }
+.f-icon-font:before                 { content: "\f031"; }
+.f-icon-bold:before                 { content: "\f032"; }
+.f-icon-italic:before               { content: "\f033"; }
+.f-icon-text-height:before          { content: "\f034"; }
+.f-icon-text-width:before           { content: "\f035"; }
+.f-icon-align-left:before           { content: "\f036"; }
+.f-icon-align-center:before         { content: "\f037"; }
+.f-icon-align-right:before          { content: "\f038"; }
+.f-icon-align-justify:before        { content: "\f039"; }
+.f-icon-list:before                 { content: "\f03a"; }
+.f-icon-indent-left:before          { content: "\f03b"; }
+.f-icon-indent-right:before         { content: "\f03c"; }
+.f-icon-facetime-video:before       { content: "\f03d"; }
+.f-icon-picture:before              { content: "\f03e"; }
+
+.f-icon-pencil:before               { content: "\f040"; }
+.f-icon-map-marker:before           { content: "\f041"; }
+.f-icon-adjust:before               { content: "\f042"; }
+.f-icon-tint:before                 { content: "\f043"; }
+.f-icon-edit:before                 { content: "\f044"; }
+.f-icon-share:before                { content: "\f045"; }
+.f-icon-check:before                { content: "\f046"; }
+.f-icon-move:before                 { content: "\f047"; }
+.f-icon-step-backward:before        { content: "\f048"; }
+.f-icon-fast-backward:before        { content: "\f049"; }
+.f-icon-backward:before             { content: "\f04a"; }
+.f-icon-play:before                 { content: "\f04b"; }
+.f-icon-pause:before                { content: "\f04c"; }
+.f-icon-stop:before                 { content: "\f04d"; }
+.f-icon-forward:before              { content: "\f04e"; }
+
+.f-icon-fast-forward:before         { content: "\f050"; }
+.f-icon-step-forward:before         { content: "\f051"; }
+.f-icon-eject:before                { content: "\f052"; }
+.f-icon-chevron-left:before         { content: "\f053"; }
+.f-icon-chevron-right:before        { content: "\f054"; }
+.f-icon-plus-sign:before            { content: "\f055"; }
+.f-icon-minus-sign:before           { content: "\f056"; }
+.f-icon-remove-sign:before          { content: "\f057"; }
+.f-icon-ok-sign:before              { content: "\f058"; }
+.f-icon-question-sign:before        { content: "\f059"; }
+.f-icon-info-sign:before            { content: "\f05a"; }
+.f-icon-screenshot:before           { content: "\f05b"; }
+.f-icon-remove-circle:before        { content: "\f05c"; }
+.f-icon-ok-circle:before            { content: "\f05d"; }
+.f-icon-ban-circle:before           { content: "\f05e"; }
+
+.f-icon-arrow-left:before           { content: "\f060"; }
+.f-icon-arrow-right:before          { content: "\f061"; }
+.f-icon-arrow-up:before             { content: "\f062"; }
+.f-icon-arrow-down:before           { content: "\f063"; }
+.f-icon-share-alt:before            { content: "\f064"; }
+.f-icon-resize-full:before          { content: "\f065"; }
+.f-icon-resize-small:before         { content: "\f066"; }
+.f-icon-plus:before                 { content: "\f067"; }
+.f-icon-minus:before                { content: "\f068"; }
+.f-icon-asterisk:before             { content: "\f069"; }
+.f-icon-exclamation-sign:before     { content: "\f06a"; }
+.f-icon-gift:before                 { content: "\f06b"; }
+.f-icon-leaf:before                 { content: "\f06c"; }
+.f-icon-fire:before                 { content: "\f06d"; }
+.f-icon-eye-open:before             { content: "\f06e"; }
+
+.f-icon-eye-close:before            { content: "\f070"; }
+.f-icon-warning-sign:before         { content: "\f071"; }
+.f-icon-plane:before                { content: "\f072"; }
+.f-icon-calendar:before             { content: "\f073"; }
+.f-icon-random:before               { content: "\f074"; }
+.f-icon-comment:before              { content: "\f075"; }
+.f-icon-magnet:before               { content: "\f076"; }
+.f-icon-chevron-up:before           { content: "\f077"; }
+.f-icon-chevron-down:before         { content: "\f078"; }
+.f-icon-retweet:before              { content: "\f079"; }
+.f-icon-shopping-cart:before        { content: "\f07a"; }
+.f-icon-folder-close:before         { content: "\f07b"; }
+.f-icon-folder-open:before          { content: "\f07c"; }
+.f-icon-resize-vertical:before      { content: "\f07d"; }
+.f-icon-resize-horizontal:before    { content: "\f07e"; }
+
+.f-icon-bar-chart:before            { content: "\f080"; }
+.f-icon-twitter-sign:before         { content: "\f081"; }
+.f-icon-facebook-sign:before        { content: "\f082"; }
+.f-icon-camera-retro:before         { content: "\f083"; }
+.f-icon-key:before                  { content: "\f084"; }
+.f-icon-cogs:before                 { content: "\f085"; }
+.f-icon-comments:before             { content: "\f086"; }
+.f-icon-thumbs-up:before            { content: "\f087"; }
+.f-icon-thumbs-down:before          { content: "\f088"; }
+.f-icon-star-half:before            { content: "\f089"; }
+.f-icon-heart-empty:before          { content: "\f08a"; }
+.f-icon-signout:before              { content: "\f08b"; }
+.f-icon-linkedin-sign:before        { content: "\f08c"; }
+.f-icon-pushpin:before              { content: "\f08d"; }
+.f-icon-external-link:before        { content: "\f08e"; }
+
+.f-icon-signin:before               { content: "\f090"; }
+.f-icon-trophy:before               { content: "\f091"; }
+.f-icon-github-sign:before          { content: "\f092"; }
+.f-icon-upload-alt:before           { content: "\f093"; }
+.f-icon-lemon:before                { content: "\f094"; }
+.f-icon-phone:before                { content: "\f095"; }
+.f-icon-check-empty:before          { content: "\f096"; }
+.f-icon-bookmark-empty:before       { content: "\f097"; }
+.f-icon-phone-sign:before           { content: "\f098"; }
+.f-icon-twitter:before              { content: "\f099"; }
+.f-icon-facebook:before             { content: "\f09a"; }
+.f-icon-github:before               { content: "\f09b"; }
+.f-icon-unlock:before               { content: "\f09c"; }
+.f-icon-credit-card:before          { content: "\f09d"; }
+.f-icon-rss:before                  { content: "\f09e"; }
+
+.f-icon-hdd:before                  { content: "\f0a0"; }
+.f-icon-bullhorn:before             { content: "\f0a1"; }
+.f-icon-bell:before                 { content: "\f0a2"; }
+.f-icon-certificate:before          { content: "\f0a3"; }
+.f-icon-hand-right:before           { content: "\f0a4"; }
+.f-icon-hand-left:before            { content: "\f0a5"; }
+.f-icon-hand-up:before              { content: "\f0a6"; }
+.f-icon-hand-down:before            { content: "\f0a7"; }
+.f-icon-circle-arrow-left:before    { content: "\f0a8"; }
+.f-icon-circle-arrow-right:before   { content: "\f0a9"; }
+.f-icon-circle-arrow-up:before      { content: "\f0aa"; }
+.f-icon-circle-arrow-down:before    { content: "\f0ab"; }
+.f-icon-globe:before                { content: "\f0ac"; }
+.f-icon-wrench:before               { content: "\f0ad"; }
+.f-icon-tasks:before                { content: "\f0ae"; }
+
+.f-icon-filter:before               { content: "\f0b0"; }
+.f-icon-briefcase:before            { content: "\f0b1"; }
+.f-icon-fullscreen:before           { content: "\f0b2"; }
+
+.f-icon-group:before                { content: "\f0c0"; }
+.f-icon-link:before                 { content: "\f0c1"; }
+.f-icon-cloud:before                { content: "\f0c2"; }
+.f-icon-beaker:before               { content: "\f0c3"; }
+.f-icon-cut:before                  { content: "\f0c4"; }
+.f-icon-copy:before                 { content: "\f0c5"; }
+.f-icon-paper-clip:before           { content: "\f0c6"; }
+.f-icon-save:before                 { content: "\f0c7"; }
+.f-icon-sign-blank:before           { content: "\f0c8"; }
+.f-icon-reorder:before              { content: "\f0c9"; }
+.f-icon-list-ul:before              { content: "\f0ca"; }
+.f-icon-list-ol:before              { content: "\f0cb"; }
+.f-icon-strikethrough:before        { content: "\f0cc"; }
+.f-icon-underline:before            { content: "\f0cd"; }
+.f-icon-table:before                { content: "\f0ce"; }
+
+.f-icon-magic:before                { content: "\f0d0"; }
+.f-icon-truck:before                { content: "\f0d1"; }
+.f-icon-pinterest:before            { content: "\f0d2"; }
+.f-icon-pinterest-sign:before       { content: "\f0d3"; }
+.f-icon-google-plus-sign:before     { content: "\f0d4"; }
+.f-icon-google-plus:before          { content: "\f0d5"; }
+.f-icon-money:before                { content: "\f0d6"; }
+.f-icon-caret-down:before           { content: "\f0d7"; }
+.f-icon-caret-up:before             { content: "\f0d8"; }
+.f-icon-caret-left:before           { content: "\f0d9"; }
+.f-icon-caret-right:before          { content: "\f0da"; }
+.f-icon-columns:before              { content: "\f0db"; }
+.f-icon-sort:before                 { content: "\f0dc"; }
+.f-icon-sort-down:before            { content: "\f0dd"; }
+.f-icon-sort-up:before              { content: "\f0de"; }
+
+.f-icon-envelope-alt:before         { content: "\f0e0"; }
+.f-icon-linkedin:before             { content: "\f0e1"; }
+.f-icon-undo:before                 { content: "\f0e2"; }
+.f-icon-legal:before                { content: "\f0e3"; }
+.f-icon-dashboard:before            { content: "\f0e4"; }
+.f-icon-comment-alt:before          { content: "\f0e5"; }
+.f-icon-comments-alt:before         { content: "\f0e6"; }
+.f-icon-bolt:before                 { content: "\f0e7"; }
+.f-icon-sitemap:before              { content: "\f0e8"; }
+.f-icon-umbrella:before             { content: "\f0e9"; }
+.f-icon-paste:before                { content: "\f0ea"; }
+
+.f-icon-user-md:before              { content: "\f200"; }

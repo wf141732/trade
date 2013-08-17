@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings cacheModelsEnabled="false" enhancementEnabled="true"
+		lazyLoadingEnabled="false" maxRequests="3000" maxSessions="3000"
+		maxTransactions="3000" useStatementNamespaces="false" />
+	<typeAlias alias="C3P0" type="com.taobao.top.syncserver.util.C3P0DataSourceFactory" />
+	<transactionManager type="JDBC">
+		<dataSource type="C3P0">
+			<property name="DriverClass" value="com.mysql.jdbc.Driver" />
+			<property name="JdbcUrl" value="${db_jdbc_url}" />
+			<property name="User" value="${db_username}" />
+			<property name="Password" value="${db_password}" />
+			<property name="InitialPoolSize" value="${db_initial_poolsize}" />
+			<property name="MaxPoolSize" value="${db_max_poolsize}" />
+		</dataSource>
+	</transactionManager>
+	<sqlMap resource="mysql/item-sqlmap.xml" />
+	<sqlMap resource="mysql/trade-sqlmap.xml" />
+	<sqlMap resource="mysql/refund-sqlmap.xml" />
+	<sqlMap resource="mysql/toptask-sqlmap.xml"/>
+</sqlMapConfig>

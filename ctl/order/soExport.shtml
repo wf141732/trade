@@ -1,0 +1,91 @@
+<div id="dvBase" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span4">
+                    <label for="q_b_brand_code">
+                        编号</label>
+                    <input type="text" id="Text1" value="" placeholder="输入产品编号" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span4">
+                    <label for="q_b_brand_name">
+                        名称</label>
+                    <input type="text" id="Text2" value="" placeholder="输入产品名称" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span4">
+                    <label for="q_b_brand_status">
+                        状态</label>
+                    <select>
+                        <option></option><option value="1">有效</option><option value="0">无效</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+</div>
+
+<div id="dvSoExport" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div class="well">
+            <div class="row-fluid">
+                
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add" style="display:none;">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div class="well">
+            <div class="row-fluid">
+                
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="excel" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;导出</button>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="dvSoExport1" class="span10 dvMain">
+<div class="container-fluid">
+    <div class="row-fluid show-grid">
+        <div class="span12">
+            Fluid 12
+            <div class="row-fluid">
+                <div class="span6">
+                    Fluid 6
+                    <div class="row-fluid">
+                        <div class="span6">
+                            Fluid 6</div>
+                        <div class="span6">
+                            Fluid 6</div>
+                    </div>
+                </div>
+                <div class="span6">
+                    Fluid 6</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

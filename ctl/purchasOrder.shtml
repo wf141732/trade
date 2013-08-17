@@ -1,0 +1,205 @@
+<div id="dvPurchasOrder" style="display: none;" class="span10 dvMain">
+    <div accept-charset="UTF-8" class="vehicle_search">
+        <div style="margin: 0; padding: 0; display: inline">
+            <input name="utf8" type="hidden" value="✓"></div>
+        <div class="well">
+            <div class="row-fluid">
+                <div class="span3">
+                    <label for="q_po_number">
+                        订单编号</label>
+                    <input type="text" id="q_po_number" value="" placeholder="订单编号" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span2 date">
+                    <label for="q_date_start">
+                        订单日期起</label>
+                    <input type="text" id="q_date_start" value="" placeholder="订单日期范围开始时间" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span2 date">
+                    <label for="q_date_end">
+                        订单日期止</label>
+                    <input type="text" id="q_date_end" value="" placeholder="订单日期范围结束时间" class="default"
+                        autocomplete="off" style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span2">
+                    <label for="q_po_src_number">
+                        相关单号</label>
+                    <input type="text" id="q_po_src_number" value="" placeholder="订单编号" class="default" autocomplete="off"
+                        style="width: 100%; max-width: 284px;">
+                </div>
+                <div class="span3">
+                    <div class="clearfix">
+                        <label for="q_vehicle_status_id_in">
+                            状态</label>
+                        <select class="input-medium" data-placeholder="选择状态" id="q_date_in_time_frame" name="q[date_in_time_frame]">
+                            <option value=""></option>
+                            <option value="1">已确认</option>
+                            <option value="2">已发货</option>
+                            <option value="3">已入库</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                <i class="icon-search icon-white"></i>&nbsp;搜索</button>
+            <button class="btn " data-disable-with="努力查找中..." name="add">
+                <i class="icon-plus"></i>增加</button>
+        </div>
+    </div>
+    <div class="page-header">
+        <!--#include file="/ctl/paging1.shtml"-->
+    </div>
+    <div class="report-results">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="#" class="sort_link asc">订单编号 ▲</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">订单日期 ▼</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">总金额</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">供货方</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">供货方确认</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">发货情况</a>
+                    </th>
+                    <th>
+                        <a href="#" class="sort_link">相关单号</a>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="dvPoUpd" class="modal hide fade bigModal mutHead">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>
+            <c>添加</c>采购订单<small></small>
+        </h3>
+    </div>
+    <div class="modal-header">
+        <div accept-charset="UTF-8" class="vehicle_search">
+            <div style="margin: 0; padding: 0; display: inline">
+                <input name="utf8" type="hidden" value="✓"></div>
+            <div class="well1">
+                <div class="row-fluid">
+                    <div class="span4 lov">
+                        <label for="q_po_vendor">
+                            供货方</label>
+                        <input type="text" id="q_po_vendor" value="" placeholder="填写或选择供货方" class="default"
+                            style="max-width: 284px;">
+                        <button class="btn">
+                                ...</button>
+                    </div>
+                    <div class="span3 date">
+                        <label for="q_po_date">
+                            订单日期</label>
+                        <input type="text" id="q_po_date" value="" placeholder="订单日期" class="default" disabled="disabled"
+                            style="width: 100%; max-width: 284px;">
+                    </div>
+                    <div class="span2">
+                        <label for="q_po_total">
+                            金额合计</label>
+                        <input type="text" id="q_po_total" value="" placeholder="金额合计" class="default" disabled="disabled"
+                            style="width: 70%; max-width: 284px;">
+                    </div>
+                    <div class="span2">
+                        <div class="clearfix">
+                            <label for="q_po_status">
+                                状态</label>
+                            <input type="text" id="q_po_status" value="" class="default" disabled="disabled"
+                                style="width: 70%; max-width: 284px;">
+                            <!--<select data-placeholder="选择状态" id="q_po_anyltic" name="q[date_in_time_frame]">
+                                        <option value=""></option>
+                                        <option value="1">已确认</option>
+                                        <option value="2">已发货</option>
+                                        <option value="3">已入库</option>
+                                    </select>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid result-header">
+            <div class="span7">
+                <h4>
+                    <c>0</c>
+                    条记录 <small>查询日期
+                        <d></d>
+                    </small>
+                </h4>
+            </div>
+            <div class="span5 span-right">
+                <button class="btn btn-primary " data-disable-with="努力查找中..." name="query" type="submit">
+                    <i class="icon-search icon-white"></i>&nbsp;选择产品</button>
+                <button class="btn " data-disable-with="努力查找中..." name="clear">
+                    <i class="icon-trash"></i>清空</button>
+            </div>
+        </div>
+        <!--<div class="page-header">                
+                    
+                </div>-->
+    </div>
+    <div class="modal-body">
+        <div class="report-results">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="#" class="sort_link asc">产品 ▲</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">数量 ▼</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单价</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">单位</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">优惠%</a>
+                        </th>
+                        <th>
+                            <a href="#" class="sort_link">小计</a>
+                        </th>
+                        <th>
+                            <a href="#">备注</a>
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--<div class="modal-footer">nihao</div>-->
+    <div class="modal-footer">
+        <div style="float: left;">
+            备注:<textarea cols="1" style="height: 18px; width: 400px"></textarea></div>
+        <button class="btn btn-success">
+            保存并关闭</button>
+        <button href="#" class="btn btn-save-add">
+            保存并新增</button>
+        <button href="#" class="btn" data-dismiss="modal">
+            关闭</button>
+    </div>
+</div>
